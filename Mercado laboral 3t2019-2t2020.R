@@ -41,7 +41,8 @@ ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all 
 ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
                                                     ESTADO==4 ~ 0,
                                                     ESTADO==1 ~ 1,
-                                                    ESTADO==2 ~ 1))
+                                                    ESTADO==2 ~ 1)
+                                     )
 
 #Para comprobar: 
 table (ephtotalsd$ESTADO, ephtotalsd$PEA)
@@ -134,5 +135,80 @@ hombres
 #Mujeres
 mujeres <- edad60 %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>%  summarise (sum(PONDERA)/sum(mujeres$PONDERA))
+mujeres
+
+####Tasa de participacion laboral por sexo y nivel educativo####
+
+#Primaria incompleta
+
+primariaincompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==1)
+#Hombres:
+hombres <- primariaincompleta %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(hombres$PONDERA))
+hombres
+
+#Mujeres:
+mujeres <- primariaincompleta %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
+mujeres
+
+####Primaria completa####
+primariacompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==2)
+#Hombres:
+hombres <- primariacompleta %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(hombres$PONDERA))
+hombres
+
+#Mujeres:
+mujeres <- primariacompleta %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
+mujeres
+
+#Secundaria incompleta
+secundariaincompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==3)
+#Hombres:
+hombres <- secundariaincompleta %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(hombres$PONDERA))
+hombres
+
+#Mujeres:
+mujeres <- secundariaincompleta %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
+mujeres
+
+####Secundaria completa####
+secundariacompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==4)
+#Hombres:
+hombres <- secundariacompleta %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(hombres$PONDERA))
+hombres
+
+#Mujeres:
+mujeres <- secundariacompleta %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
+mujeres
+
+#Superior incompleto
+superiorincompleto <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==5)
+#Hombres:
+hombres <- superiorincompleto %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(hombres$PONDERA))
+hombres
+
+#Mujeres:
+mujeres <- superiorincompleto %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
+mujeres
+
+####Superior completo####
+superiorcompleto <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==6)
+#Hombres:
+hombres <- superiorcompleto %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(hombres$PONDERA))
+hombres
+
+#Mujeres:
+mujeres <- superiorcompleto %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
