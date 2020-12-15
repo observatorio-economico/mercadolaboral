@@ -34,5 +34,14 @@ ephtotal <- bind_rows(eph2t, eph1t, eph4t2019, eph3t2019)
 #Quitar duplicados:
 ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all = T) 
 
-#Y listo, con esta forma no hace falta bajar los archivos del INDEC. 
+#Empezamos: 
+
+#Tasa de participacion laboral:
+#Generamos la PEA
+
+ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
+                                                    ESTADO==4 ~ 0,
+                                                    ESTADO==1 ~ 1,
+                                                    ESTADO==2 ~ 1))
+
 
