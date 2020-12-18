@@ -47,8 +47,10 @@ ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
                                                          ESTADO==2 ~ 0,
                                                          ESTADO==3 ~ 0,
                                                          ESTADO==4 ~ 0),
-                                     DESOCUPADOS= case_when(PEA==1 ~ 0,
-                                                            ESTADO==2 ~ 1))
+                                     DESOCUPADOS= case_when(ESTADO==1 ~ 0,
+                                                            ESTADO==2 ~ 1),
+                                     EMPLEADOSPUB= case_when(OCUPADOS==1 ~ 0,
+                                                             PP04A==1 ~ 1))
                                 
 
 
@@ -334,6 +336,25 @@ horastrab
 horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales))
 horastrab <- horastrab %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 horastrab
+
+####Tasa de empleo####
+empleo <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(OCUPADOS))
+empleo <- empleo %>%  group_by(OCUPADOS) %>%  summarise(sum(PONDERA)/sum(empleo$PONDERA))
+empleo
+
+####Tasa de desocupacion####
+desocupacion <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(DESOCUPADOS))
+desocupacion <- desocupacion %>%  group_by(DESOCUPADOS) %>%  summarise(sum(PONDERA)/sum(desocupacion$PONDERA))
+desocupacion
+
+####Composicion del empleo####
+#Empleados publicos 
+empleadospublicos <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(EMPLEADOSPUB))
+
+
+
+
+
 
 
 
