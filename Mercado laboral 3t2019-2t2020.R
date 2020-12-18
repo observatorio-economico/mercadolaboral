@@ -292,11 +292,39 @@ mujeres
 
 
 ####Cantidad de horas trabajadas####
-
 horastrabtotales <- ephtotalsd %>% mutate(horastrabtotales= PP3E_TOT + PP3F_TOT)
 #15-24 años
-horastrab <- ephtotalsd %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15)
-#Hombres
-hombres <- horastrab %>%  filter(CH04==1)
-hombres <- horastrab %>% group_by(horastrabtotales) %>%  summarise(sum(PONDERA)/sum(hombres$PONDERA))
-hombres
+horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15 & !is.na(horastrabtotales))
+horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+horastrab
+
+#25-34
+horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=34 & CH06>=25 & !is.na(horastrabtotales))
+horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+horastrab
+
+#35 a 44
+horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=44 & CH06>=35 & !is.na(horastrabtotales))
+horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+horastrab
+
+#45 a 59
+horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=59 & CH06>=45 & !is.na(horastrabtotales))
+horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+horastrab
+
+#mayores de 60
+horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06>=60 & !is.na(horastrabtotales))
+horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+horastrab
+
+#Total mujeres y hombres
+horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales))
+horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+horastrab
+
+#Total de la poblacion
+horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales))
+horastrab <- horastrab %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+horastrab
+
