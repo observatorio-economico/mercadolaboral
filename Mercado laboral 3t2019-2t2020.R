@@ -42,8 +42,15 @@ ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all 
 ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
                                                     ESTADO==4 ~ 0,
                                                     ESTADO==1 ~ 1,
-                                                    ESTADO==2 ~ 1))
+                                                    ESTADO==2 ~ 1),
+                                     OCUPADOS= case_when(ESTADO==1 ~ 1,
+                                                         ESTADO==2 ~ 0,
+                                                         ESTADO==3 ~ 0,
+                                                         ESTADO==4 ~ 0),
+                                     DESOCUPADOS= case_when(PEA==1 ~ 0,
+                                                            ESTADO==2 ~ 1))
                                 
+
 
 #Para comprobar: 
 table (ephtotalsd$ESTADO, ephtotalsd$PEA)
@@ -327,4 +334,6 @@ horastrab
 horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales))
 horastrab <- horastrab %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 horastrab
+
+
 
