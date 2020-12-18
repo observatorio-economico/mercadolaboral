@@ -1,5 +1,6 @@
 ##Mercado laboral hasta el segundo trimestre 2020
-
+setwd("~/GitHub/mercadolaboral")
+wd()
 library(eph)
 library(tidyverse)
 
@@ -41,37 +42,37 @@ ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all 
 ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
                                                     ESTADO==4 ~ 0,
                                                     ESTADO==1 ~ 1,
-                                                    ESTADO==2 ~ 1)
-                                     )
+                                                    ESTADO==2 ~ 1))
+                                
 
 #Para comprobar: 
 table (ephtotalsd$ESTADO, ephtotalsd$PEA)
 
-######Tasa de participacion laboral de la poblacion total: #####
+######Tasa de participacion laboral de la poblacion total #####
 #Primero se filtra la base
 tablapeapt <- ephtotalsd %>% filter (AGLOMERADO==12 & ESTADO!=0)
 #Ahora armamos la tabla (cantidad de 1 sobre cantidad de 0 y 1) y se agrupa entre 0 y 1 (PEA==1), ademas se agrega la cantidad de habitantes dentro de la PEA.
 tablapeapt <- tablapeapt %>% group_by(PEA) %>%  summarise((sum(PONDERA)/sum(tablapeapt$PONDERA)), sum(PONDERA))
 tablapeapt
 
-######Tasa de participacion laboral por sexo:######
+######Tasa de participacion laboral por sexo######
 #Primero, se filtra la base:
 tablapeasexo<- ephtotalsd %>% filter (AGLOMERADO==12 & ESTADO!=0 & PEA==1)
 tablapeasexo <- tablapeasexo %>% group_by(PEA, CH04) %>%  summarise(sum(PONDERA), sum(PONDERA)/sum(tablapeasexo$PONDERA %*% tablapeasexo$PEA))
 tablapeasexo 
 
-######Proporcion de mujeres que conforman la PEA sobre el total de mujeres:#####
+#Proporcion de mujeres que conforman la PEA sobre el total de mujeres:
 tablapeamujeres <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & CH04==2)
 tablapeamujeres <- tablapeamujeres %>% group_by(PEA) %>%  summarise(sum(PONDERA)/sum(tablapeamujeres$PONDERA))
 tablapeamujeres
 
-######Proporcion de hombres que conforman la PEA sobre el total de hombres:#####
+#Proporcion de hombres que conforman la PEA sobre el total de hombres:
 tablapeahombres <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & CH04==1)
 tablapeahombres <- tablapeahombres %>% group_by(PEA) %>% summarise(sum(PONDERA)/sum(tablapeahombres$PONDERA))
 tablapeahombres
 
-######Tasa de participacion laboral por edad y sexo: #####
-######15-24 años#####
+####Tasa de participacion laboral por edad y sexo #####
+#15-24 años
 
 edad15a24 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15)
 
@@ -85,7 +86,7 @@ mujeres <- edad15a24 %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>%  summarise (sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
-######25-34 años######
+#25-34 años
 edad25a34 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=34 & CH06>=25)
 
 #Hombres
@@ -98,7 +99,7 @@ mujeres <- edad25a34 %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>%  summarise (sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
-####35-44####
+#35-44
 edad35a44 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=44 & CH06>=35)
 
 #Hombres
@@ -111,7 +112,7 @@ mujeres <- edad35a44 %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>%  summarise (sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
-####45-59####
+#45-59
 edad45a59 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=59 & CH06>=45)
 
 #Hombres
@@ -124,7 +125,7 @@ mujeres <- edad45a59 %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>%  summarise (sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
-####Mayores o iguales a 60 años####
+#Mayores o iguales a 60 años
 edad60 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06>=60)
 
 #Hombres
@@ -152,7 +153,7 @@ mujeres <- primariaincompleta %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
-####Primaria completa####
+#Primaria completa
 primariacompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==2)
 #Hombres:
 hombres <- primariacompleta %>%  filter(CH04==1)
@@ -176,7 +177,7 @@ mujeres <- secundariaincompleta %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
-####Secundaria completa####
+#Secundaria completa
 secundariacompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==4)
 #Hombres:
 hombres <- secundariacompleta %>%  filter(CH04==1)
@@ -200,7 +201,7 @@ mujeres <- superiorincompleto %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
-####Superior completo####
+#Superior completo
 superiorcompleto <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==6)
 #Hombres:
 hombres <- superiorcompleto %>%  filter(CH04==1)
@@ -212,3 +213,90 @@ mujeres <- superiorcompleto %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
+####Tasa de participacion laboral por sexo y  quintil de ingreso####
+
+install.packages("Hmisc")
+library(Hmisc)
+
+ephcorr <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0)
+deflactor <- read.csv("deflactor.csv", header=T, sep=";", dec=".")
+deflactor <- read.csv("C:/Users/Bianca/Documents/GitHub/mercadolaboral/deflactor.csv", header=T, sep=";", dec=".")
+
+ephcorr <- left_join(ephcorr, deflactor)
+ephcorr <- ephcorr %>%  mutate(IPCFR = IPCF/DEFLACTOR)
+ephcorr <- ephcorr %>%  mutate(cuantilp=as.numeric(cut(IPCFR, wtd.quantile(IPCFR, weights = PONDIH, probs = seq(0,1,length=6), na.rm = T), include.lowest = F)))
+table(ephcorr$cuantilp)
+
+#Quintil 1
+quintil1 <- ephcorr %>% filter(cuantilp==1)
+#Hombres
+hombres <- quintil1 %>%  filter (CH04==1)
+hombres <- hombres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(hombres$PONDIH))
+hombres
+
+#Mujeres
+mujeres <- quintil1 %>%  filter (CH04==2)
+mujeres <- mujeres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(mujeres$PONDIH))
+mujeres
+
+#Quintil 2
+quintil2 <- ephcorr %>% filter(cuantilp==2)
+#Hombres
+hombres <- quintil2 %>%  filter (CH04==1)
+hombres <- hombres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(hombres$PONDIH))
+hombres
+
+#Mujeres
+mujeres <- quintil2 %>%  filter (CH04==2)
+mujeres <- mujeres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(mujeres$PONDIH))
+mujeres
+
+table(ephcorr$cuantilp)
+dim(ephcorr)
+
+#Quintil 3
+quintil3 <- ephcorr %>% filter(cuantilp==3)
+#Hombres
+hombres <- quintil3 %>%  filter (CH04==1)
+hombres <- hombres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(hombres$PONDIH))
+hombres
+
+#Mujeres
+mujeres <- quintil3 %>%  filter (CH04==2)
+mujeres <- mujeres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(mujeres$PONDIH))
+mujeres
+
+#Quintil 4
+quintil4 <- ephcorr %>% filter(cuantilp==4)
+#Hombres
+hombres <- quintil4 %>%  filter (CH04==1)
+hombres <- hombres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(hombres$PONDIH))
+hombres
+
+#Mujeres
+mujeres <- quintil4 %>%  filter (CH04==2)
+mujeres <- mujeres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(mujeres$PONDIH))
+mujeres
+
+#Quintil 5
+quintil5 <- ephcorr %>% filter(cuantilp==5)
+#Hombres
+hombres <- quintil5 %>%  filter (CH04==1)
+hombres <- hombres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(hombres$PONDIH))
+hombres
+
+#Mujeres
+mujeres <- quintil5 %>%  filter (CH04==2)
+mujeres <- mujeres %>% group_by(PEA) %>% summarise(sum(PONDIH)/sum(mujeres$PONDIH))
+mujeres
+
+
+####Cantidad de horas trabajadas####
+
+horastrabtotales <- ephtotalsd %>% mutate(horastrabtotales= PP3E_TOT + PP3F_TOT)
+#15-24 años
+horastrab <- ephtotalsd %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15)
+#Hombres
+hombres <- horastrab %>%  filter(CH04==1)
+hombres <- horastrab %>% group_by(horastrabtotales) %>%  summarise(sum(PONDERA)/sum(hombres$PONDERA))
+hombres
