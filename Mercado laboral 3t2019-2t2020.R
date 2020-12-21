@@ -39,18 +39,20 @@ ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all 
 #Tasa de participacion laboral:
 
 #Generamos la PEA
-ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
-                                                    ESTADO==4 ~ 0,
-                                                    ESTADO==1 ~ 1,
-                                                    ESTADO==2 ~ 1),
-                                     OCUPADOS= case_when(ESTADO==1 ~ 1,
-                                                         ESTADO==2 ~ 0,
-                                                         ESTADO==3 ~ 0,
-                                                         ESTADO==4 ~ 0),
-                                     DESOCUPADOS= case_when(ESTADO==1 ~ 0,
-                                                            ESTADO==2 ~ 1),
-                                     EMPLEADOSPUB= case_when(OCUPADOS==1 ~ 0,
-                                                             PP04A==1 ~ 1))
+  ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
+                                                      ESTADO==4 ~ 0,
+                                                      ESTADO==1 ~ 1,
+                                                      ESTADO==2 ~ 1),
+                                       OCUPADOS= case_when(ESTADO==1 ~ 1,
+                                                           ESTADO==2 ~ 0,
+                                                           ESTADO==3 ~ 0,
+                                                           ESTADO==4 ~ 0),
+                                       DESOCUPADOS= case_when(ESTADO==1 ~ 0,
+                                                              ESTADO==2 ~ 1),
+                                       EMPLEADOS= case_when(PP04A==1 ~ "Empleados Publicos",
+                                                            PP04A==2 ~ "Empleados privados",
+                                                            PP04A==3 ~ "Otros",
+                                                            TRUE ~ NA_character_))
                                 
 
 
@@ -347,14 +349,38 @@ desocupacion <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(DESOCUPADOS))
 desocupacion <- desocupacion %>%  group_by(DESOCUPADOS) %>%  summarise(sum(PONDERA)/sum(desocupacion$PONDERA))
 desocupacion
 
-####Composicion del empleo####
-#Empleados publicos 
-empleadospublicos <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(EMPLEADOSPUB))
+#Composicion del empleo
+####Empleados publicos y privados####
+empleados <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(EMPLEADOS) & OCUPADOS==1)
+table(empleados$EMPLEADOS)
+empleados <- empleados %>%  group_by(EMPLEADOS) %>%  summarise(sum(PONDERA))
+empleados
+empleados <- empleados %>% mutate(proporcion=`sum(PONDERA)`/sum(empleados$`sum(PONDERA)`))
+empleados
 
+####Composicion del empleo publico por sexo####
 
+composicionempleados <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(EMPLEADOS) & PP04A==1)
+composicionempleados <- composicionempleados %>%  group_by(CH04) %>%  summarise(sum(PONDERA))
+composicionempleados
+composicionempleados <- composicionempleados %>% mutate(proporcion=`sum(PONDERA)`/sum(composicionempleados$`sum(PONDERA)`))
+composicionempleados
+  
+####Carga laboral####
+#Sector publico
 
+cargalaboralpub <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==1)
+cargalaboralpub <- cargalaboralpub %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+cargalaboralpub
 
+#Sector privado
+cargalaboralpriv <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==2)
+cargalaboralpriv <- cargalaboralpriv %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+cargalaboralpriv
 
-
+####Promedio de edad por sector####
+promedioedad <- ephtotalsd %>% filter (AGLOMERADO==12 & ESTADO!=0 & PP04A==1)
+promedioedad <- promedioedad %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+promedioedad
 
 
