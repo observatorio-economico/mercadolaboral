@@ -237,9 +237,8 @@ ephcorr <- left_join(ephcorr, deflactor)
 ephcorr <- ephcorr %>%  mutate(IPCFR = IPCF/DEFLACTOR)
 ephcorr <- ephcorr %>%  mutate(cuantilp=as.numeric(cut(IPCFR, wtd.quantile(IPCFR, weights = PONDIH, probs = seq(0,1,length=6), na.rm = T), include.lowest = T)))
 table(ephcorr$cuantilp)
-(ephcorr$IPCFR)
-
-ephcorr %>% summarise(IPCFR %*%PONDIH/sum(PONDIH), mean(IPCFR), wtd.mean(IPCFR, weights = PONDIH, na.rm = T) )
+#ephcorr %>% group_by(cuantilp) %>% summarise(sum(PONDIH))
+#ephcorr %>% summarise(IPCFR %*%PONDIH/sum(PONDIH), mean(IPCFR), wtd.mean(IPCFR, weights = PONDIH, na.rm = T) )
 
 #wtd.quantile(ephcorr$IPCFR, weights = ephcorr$PONDIH, probs = seq(0,1,length=6), na.rm = T)
 #quantile(ephcorr$IPCFR,probs = seq(0,1,length=6), na.rm=T )
@@ -312,7 +311,7 @@ mujeres
 horastrabtotales <- ephtotalsd %>% mutate(horastrabtotales= PP3E_TOT + PP3F_TOT)
 #15-24 a?os
 horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15 & !is.na(horastrabtotales))
-horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA), wtd.mean(horastrabtotales,weights = PONDERA))
 horastrab
 
 #25-34
@@ -347,7 +346,7 @@ horastrab
 
 ####Tasa de empleo####
 empleo <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(OCUPADOS))
-empleo <- empleo %>%  group_by(OCUPADOS) %>%  summarise(sum(PONDERA)/sum(empleo$PONDERA))
+empleo <- empleo %>%  group_by(OCUPADOS) %>%  summarise(percent(sum(PONDERA)/sum(empleo$PONDERA), digits = 2))
 empleo
 
 ####Tasa de desocupacion####
@@ -368,7 +367,12 @@ empleados
 
 composicionempleados <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(EMPLEADOS) & PP04A==1)
 composicionempleados <- composicionempleados %>%  group_by(CH04) %>%  summarise(sum(PONDERA))
+composicionempleados <- composicionempleados %>% mutate(proporcion=`sum(PONDERA)`/sum(composicionempleados$`sum(PONDERA)`))
 composicionempleados
+####Composicion del empleo privado por sexo####
+
+composicionempleados <- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(EMPLEADOS) & PP04A==2)
+composicionempleados <- composicionempleados %>%  group_by(CH04) %>%  summarise(sum(PONDERA))
 composicionempleados <- composicionempleados %>% mutate(proporcion=`sum(PONDERA)`/sum(composicionempleados$`sum(PONDERA)`))
 composicionempleados
   
