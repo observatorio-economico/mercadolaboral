@@ -83,7 +83,7 @@ tablapeahombres <- tablapeahombres %>% group_by(PEA) %>% summarise(sum(PONDERA)/
 tablapeahombres
 
 ####Tasa de participacion laboral por edad y sexo #####
-#15-24 años
+#15-24 aÃ±os
 
 edad15a24 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15)
 
@@ -97,7 +97,7 @@ mujeres <- edad15a24 %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>%  summarise (sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
-#25-34 años
+#25-34 a?os
 edad25a34 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=34 & CH06>=25)
 
 #Hombres
@@ -136,7 +136,7 @@ mujeres <- edad45a59 %>%  filter(CH04==2)
 mujeres <- mujeres %>%  group_by(PEA) %>%  summarise (sum(PONDERA)/sum(mujeres$PONDERA))
 mujeres
 
-#Mayores o iguales a 60 años
+#Mayores o iguales a 60 a?os
 edad60 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06>=60)
 
 #Hombres
@@ -165,7 +165,7 @@ mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PON
 mujeres
 
 #Primaria completa
-primariacompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==2)
+primariacompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED %in% c(2,3))
 #Hombres:
 hombres <- primariacompleta %>%  filter(CH04==1)
 hombres <- hombres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(hombres$PONDERA))
@@ -189,7 +189,7 @@ mujeres <- mujeres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(mujeres$PON
 mujeres
 
 #Secundaria completa
-secundariacompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED==4)
+secundariacompleta <- ephtotalsd %>%  filter(AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED %in% c(4,5))
 #Hombres:
 hombres <- secundariacompleta %>%  filter(CH04==1)
 hombres <- hombres %>%  group_by(PEA) %>% summarise(sum(PONDERA)/sum(hombres$PONDERA))
@@ -226,17 +226,23 @@ mujeres
 
 ####Tasa de participacion laboral por sexo y  quintil de ingreso####
 
-install.packages("Hmisc")
+#install.packages("Hmisc")
 library(Hmisc)
 
 ephcorr <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0)
 deflactor <- read.csv("deflactor.csv", header=T, sep=";", dec=".")
-deflactor <- read.csv("C:/Users/Bianca/Documents/GitHub/mercadolaboral/deflactor.csv", header=T, sep=";", dec=".")
+#deflactor <- read.csv("C:/Users/Bianca/Documents/GitHub/mercadolaboral/deflactor.csv", header=T, sep=";", dec=".")
 
 ephcorr <- left_join(ephcorr, deflactor)
 ephcorr <- ephcorr %>%  mutate(IPCFR = IPCF/DEFLACTOR)
-ephcorr <- ephcorr %>%  mutate(cuantilp=as.numeric(cut(IPCFR, wtd.quantile(IPCFR, weights = PONDIH, probs = seq(0,1,length=6), na.rm = T), include.lowest = F)))
+ephcorr <- ephcorr %>%  mutate(cuantilp=as.numeric(cut(IPCFR, wtd.quantile(IPCFR, weights = PONDIH, probs = seq(0,1,length=6), na.rm = T), include.lowest = T)))
 table(ephcorr$cuantilp)
+(ephcorr$IPCFR)
+
+ephcorr %>% summarise(IPCFR %*%PONDIH/sum(PONDIH), mean(IPCFR), wtd.mean(IPCFR, weights = PONDIH, na.rm = T) )
+
+#wtd.quantile(ephcorr$IPCFR, weights = ephcorr$PONDIH, probs = seq(0,1,length=6), na.rm = T)
+#quantile(ephcorr$IPCFR,probs = seq(0,1,length=6), na.rm=T )
 
 #Quintil 1
 quintil1 <- ephcorr %>% filter(cuantilp==1)
@@ -304,7 +310,7 @@ mujeres
 
 ####Cantidad de horas trabajadas####
 horastrabtotales <- ephtotalsd %>% mutate(horastrabtotales= PP3E_TOT + PP3F_TOT)
-#15-24 años
+#15-24 a?os
 horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15 & !is.na(horastrabtotales))
 horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 horastrab
