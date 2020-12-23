@@ -1,6 +1,6 @@
 ##Mercado laboral hasta el segundo trimestre 2020
 setwd("~/GitHub/mercadolaboral")
-wd()
+
 library(eph)
 library(tidyverse)
 
@@ -63,13 +63,13 @@ table (ephtotalsd$ESTADO, ephtotalsd$PEA)
 #Primero se filtra la base
 tablapeapt <- ephtotalsd %>% filter (AGLOMERADO==12 & ESTADO!=0)
 #Ahora armamos la tabla (cantidad de 1 sobre cantidad de 0 y 1) y se agrupa entre 0 y 1 (PEA==1), ademas se agrega la cantidad de habitantes dentro de la PEA.
-tablapeapt <- tablapeapt %>% group_by(PEA) %>%  summarise((sum(PONDERA)/sum(tablapeapt$PONDERA)), sum(PONDERA))
+tablapeapt <- tablapeapt %>% group_by(PEA) %>%  summarise((sum(PONDERA)/sum(tablapeapt$PONDERA)), sum(PONDERA), sum(tablapeapt$PONDERA))
 tablapeapt
 
 ######Tasa de participacion laboral por sexo######
 #Primero, se filtra la base:
 tablapeasexo<- ephtotalsd %>% filter (AGLOMERADO==12 & ESTADO!=0 & PEA==1)
-tablapeasexo <- tablapeasexo %>% group_by(PEA, CH04) %>%  summarise(sum(PONDERA), sum(PONDERA)/sum(tablapeasexo$PONDERA %*% tablapeasexo$PEA))
+tablapeasexo <- tablapeasexo %>% group_by(CH04) %>%  summarise(sum(PONDERA), sum(PONDERA)/sum(tablapeasexo$PONDERA))
 tablapeasexo 
 
 #Proporcion de mujeres que conforman la PEA sobre el total de mujeres:
