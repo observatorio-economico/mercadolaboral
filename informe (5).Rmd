@@ -3,10 +3,10 @@ title: "La desigualdad de género se puede medir"
 author: "Equipo de #EcoFemiData, el equipo de datos de Economía Feminita"
 date: "Noviembre de 2020"
 output:
-  html_notebook:
-    theme: flatly
   html_document:
     df_print: paged
+  html_notebook:
+    theme: flatly
 subtitle: Datos de la Encuesta Permanente de Hogares. 2do trimestre de 2020.
 urlcolor: null
 ---

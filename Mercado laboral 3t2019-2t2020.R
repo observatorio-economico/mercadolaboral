@@ -379,7 +379,7 @@ composicionempleados
 ####Carga laboral####
 #Sector publico
 
-cargalaboralpub <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==1)
+cargalaboralpub <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrwabtotales) & PP04A==1)
 cargalaboralpub <- cargalaboralpub %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 cargalaboralpub
 
@@ -389,8 +389,11 @@ cargalaboralpriv <- cargalaboralpriv %>% summarise(horastrabtotales%*%PONDERA/su
 cargalaboralpriv
 
 ####Promedio de edad por sector####
-promedioedad <- ephtotalsd %>% filter (AGLOMERADO==12 & ESTADO!=0 & PP04A==1)
-promedioedad <- promedioedad %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+
+promedioedad<- ephtotalsd %>% filter(AGLOMERADO==12 &  OCUPADOS==1)
+promedioedad<- promedioedad %>% group_by(EMPLEADOS) %>% summarise((CH06%*%PONDERA)/sum(PONDERA), wtd.mean(CH06, weights = PONDERA))
 promedioedad
 
+####Calificación laboral####
 
+table(ephtotalsd$PP04D_COD)
