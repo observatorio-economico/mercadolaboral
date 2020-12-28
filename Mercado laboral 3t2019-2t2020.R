@@ -52,7 +52,11 @@ ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all 
                                        EMPLEADOS= case_when(PP04A==1 ~ "Empleados Publicos",
                                                             PP04A==2 ~ "Empleados privados",
                                                             PP04A==3 ~ "Otros",
-                                                            TRUE ~ NA_character_))
+                                                            TRUE ~ NA_character_),
+                                       SECTOR=case_when(nchar(PP04B_COD)==4~PP04B_COD,
+                                                       nchar(PP04B_COD)==1~ paste0("0",PP04B_COD,"00"),
+                                                       nchar(PP04B_COD)==2~ paste0(PP04B_COD,"00"),
+                                                       nchar(PP04B_COD)==3~ paste0("0",PP04B_COD)))
                                 
 
 
@@ -394,6 +398,11 @@ promedioedad<- ephtotalsd %>% filter(AGLOMERADO==12 &  OCUPADOS==1)
 promedioedad<- promedioedad %>% group_by(EMPLEADOS) %>% summarise((CH06%*%PONDERA)/sum(PONDERA), wtd.mean(CH06, weights = PONDERA))
 promedioedad
 
-####Calificación laboral####
+####Sectores de actividad####
 
-table(ephtotalsd$PP04D_COD)
+#class(ephtotalsd$PP04B_COD)
+#caract<- ephtotalsd %>% filter (nchar(PP04B_COD)<4 & OCUPADOS==1 )
+#comprobacion<- caract %>% group_by(PP04B_COD) %>% count()
+#table(ephtotalsd$calif)
+caract<- ephtotalsd %>% group_by(calif) %>% filter(OCUPADOS==1) %>% count()
+
