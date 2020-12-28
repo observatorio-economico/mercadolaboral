@@ -53,10 +53,12 @@ ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all 
                                                             PP04A==2 ~ "Empleados privados",
                                                             PP04A==3 ~ "Otros",
                                                             TRUE ~ NA_character_),
-                                       SECTOR=case_when(nchar(PP04B_COD)==4~PP04B_COD,
+                                       PP04B_COD=as.character(PP04B_COD),
+                                       PP04B_COD=case_when(nchar(PP04B_COD)==4~PP04B_COD,
                                                        nchar(PP04B_COD)==1~ paste0("0",PP04B_COD,"00"),
                                                        nchar(PP04B_COD)==2~ paste0(PP04B_COD,"00"),
-                                                       nchar(PP04B_COD)==3~ paste0("0",PP04B_COD)))
+                                                       nchar(PP04B_COD)==3~ paste0("0",PP04B_COD)),
+                                       SECTOR= substr(PP04B_COD,1,2))
                                 
 
 
@@ -404,5 +406,6 @@ promedioedad
 #caract<- ephtotalsd %>% filter (nchar(PP04B_COD)<4 & OCUPADOS==1 )
 #comprobacion<- caract %>% group_by(PP04B_COD) %>% count()
 #table(ephtotalsd$calif)
-caract<- ephtotalsd %>% group_by(calif) %>% filter(OCUPADOS==1) %>% count()
-
+caract<- ephtotalsd %>% group_by(SECTOR) %>% filter(OCUPADOS==1) %>% count()
+caes<- read.csv("MACROSECTORES.csv", sep = ";", colClasses = "character")
+sectores<- left_join(ephtotalsd,caes)
