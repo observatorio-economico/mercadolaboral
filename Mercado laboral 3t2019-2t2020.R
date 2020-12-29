@@ -58,7 +58,9 @@ ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all 
                                                        nchar(PP04B_COD)==1~ paste0("0",PP04B_COD,"00"),
                                                        nchar(PP04B_COD)==2~ paste0(PP04B_COD,"00"),
                                                        nchar(PP04B_COD)==3~ paste0("0",PP04B_COD)),
-                                       SECTOR= substr(PP04B_COD,1,2))
+                                       SECTOR= substr(PP04B_COD,1,2),
+                                       INFORMALES=case_when( CAT_OCUP==3 & PP07H==2 ~ 1,
+                                                             CAT_OCUP==3 & PP07H==1 ~ 0))
                                 
 
 
@@ -400,12 +402,30 @@ promedioedad<- ephtotalsd %>% filter(AGLOMERADO==12 &  OCUPADOS==1)
 promedioedad<- promedioedad %>% group_by(EMPLEADOS) %>% summarise((CH06%*%PONDERA)/sum(PONDERA), wtd.mean(CH06, weights = PONDERA))
 promedioedad
 
-####Sectores de actividad####
+####Composición por sectores del sector público####
 
 #class(ephtotalsd$PP04B_COD)
 #caract<- ephtotalsd %>% filter (nchar(PP04B_COD)<4 & OCUPADOS==1 )
 #comprobacion<- caract %>% group_by(PP04B_COD) %>% count()
 #table(ephtotalsd$calif)
 caract<- ephtotalsd %>% group_by(SECTOR) %>% filter(OCUPADOS==1) %>% count()
-caes<- read.csv("MACROSECTORES.csv", sep = ";", colClasses = "character")
+caes<- read.csv("SECTORESCAES.csv", sep = ";", colClasses = "character")
 sectores<- left_join(ephtotalsd,caes)
+
+corro<- sectores %>% select(SECTOR_ACT,SECTOR, PP04B_COD, CH11, ESTADO, OCUPADOS, PONDERA)
+table(sectores$CH11, sectores$ESTADO)
+
+spublico<- sectores %>% filter(AGLOMERADO==12 & PP04A==1)
+spublico <- spublico %>% group_by(SECTOR_ACT) %>% summarise(formattable::percent(sum(PONDERA)/sum(spublico$PONDERA)), sum(PONDERA))
+
+####informalidad####
+#por sexo y edad
+
+informalidad<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(INFORMALES))
+informales<- informalidad %>% filter(INFORMALES==1)
+informales<- informales %>% group_by(CH04) %>% summarise(sum(PONDERA)/sum(informales$PONDERA))
+informales
+
+formales<- informalidad %>% filter(INFORMALES==0)
+formales<- formales %>% group_by(CH04) %>% summarise(sum(PONDERA)/(sum(formales$PONDERA)))
+formales
