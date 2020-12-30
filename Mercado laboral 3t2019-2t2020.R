@@ -60,9 +60,24 @@ ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all 
                                                        nchar(PP04B_COD)==3~ paste0("0",PP04B_COD)),
                                        SECTOR= substr(PP04B_COD,1,2),
                                        INFORMALES=case_when( CAT_OCUP==3 & PP07H==2 ~ 1,
-                                                             CAT_OCUP==3 & PP07H==1 ~ 0))
+                                                             CAT_OCUP==3 & PP07H==1 ~ 0),
+                                       PP04D_COD = as.character(PP04D_COD),
+                                       PP04D_COD = case_when(nchar(PP04D_COD) == 5 ~ PP04D_COD,
+                                                             nchar(PP04D_COD) == 4 ~ paste0("0", PP04D_COD),
+                                                             nchar(PP04D_COD) == 3 ~ paste0("00", PP04D_COD),
+                                                             nchar(PP04D_COD) == 2 ~ paste0("000", PP04D_COD),
+                                                             nchar(PP04D_COD) == 1 ~ paste0("0000", PP04D_COD)),
+                                       CALIFICACION = substr(PP04D_COD, 5, 5),
+                                       CALIFICACION = case_when(CALIFICACION=="1" ~ "Profesionales",
+                                                                CALIFICACION=="2" ~ "Técnicos",
+                                                                CALIFICACION=="3" ~ "Operativos",
+                                                                CALIFICACION=="4" ~ "No Calificados",
+                                                                TRUE ~ "0"),
+                                       CALIFICACION = factor(CALIFICACION, c("No Calificados", "Operativos", "Técnicos", "Profesionales")),
+                                       TIPOCALIFICACION= case_when(CALIFICACION=="Profesionales" | CALIFICACION== "Técnicos" ~ "Calificado",
+                                                                          CALIFICACION=="No Calificados" | CALIFICACION=="Operativos" ~ "No calificado"))
                                 
-
+table(ephtotalsd$CALIFICACION, ephtotalsd$TIPOCALIFICACION)
 
 #Para comprobar: 
 table (ephtotalsd$ESTADO, ephtotalsd$PEA)
@@ -516,4 +531,8 @@ inforporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
 inforporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
 inforporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
 inforporsector("ACTIVIDADES INMOBILIARIAS" )
+
+
+
+#### Calificación por sector ####
 
