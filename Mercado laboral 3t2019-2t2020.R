@@ -419,13 +419,62 @@ spublico<- sectores %>% filter(AGLOMERADO==12 & PP04A==1)
 spublico <- spublico %>% group_by(SECTOR_ACT) %>% summarise(formattable::percent(sum(PONDERA)/sum(spublico$PONDERA)), sum(PONDERA))
 
 ####informalidad####
-#por sexo y edad
+#por sexo y edad no se usa
 
 informalidad<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(INFORMALES))
 informales<- informalidad %>% filter(INFORMALES==1)
-informales<- informales %>% group_by(CH04) %>% summarise(sum(PONDERA)/sum(informales$PONDERA))
-informales
+informales1<- informales %>% group_by(CH04) %>% summarise(sum(PONDERA)/sum(informales$PONDERA))
+informales1
 
 formales<- informalidad %>% filter(INFORMALES==0)
 formales<- formales %>% group_by(CH04) %>% summarise(sum(PONDERA)/(sum(formales$PONDERA)))
 formales
+
+#Por sexo y edad
+
+##15 a 24
+informalesh15_24<- ephtotalsd %>% filter(CH06>=15 & CH06<=24 & AGLOMERADO==12 & CH04==1 & !is.na(INFORMALES))  
+informalesh15_24 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesh15_24$PONDERA))
+
+informalesm15_24<-  ephtotalsd %>% filter(CH06>=15 & CH06<=24 & AGLOMERADO==12 & CH04==2 & !is.na(INFORMALES))  
+informalesm15_24 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesm15_24$PONDERA))
+
+#25-34
+informalesh25_34<- ephtotalsd %>% filter(CH06>=25 & CH06<=34 & AGLOMERADO==12 & CH04==1 & !is.na(INFORMALES))  
+informalesh25_34 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesh25_34$PONDERA))
+
+informalesm25_34<-  ephtotalsd %>% filter(CH06>=25 & CH06<=34 & AGLOMERADO==12 & CH04==2 & !is.na(INFORMALES))  
+informalesm25_34 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesm25_34$PONDERA))
+
+#35-44
+informalesh35_44<- ephtotalsd %>% filter(CH06>=35 & CH06<=44 & AGLOMERADO==12 & CH04==1 & !is.na(INFORMALES))  
+informalesh35_44 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesh35_44$PONDERA))
+
+informalesm35_44<-  ephtotalsd %>% filter(CH06>=35 & CH06<=44 & AGLOMERADO==12 & CH04==2 & !is.na(INFORMALES))  
+informalesm35_44 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesm35_44$PONDERA))
+
+#45-59
+informalesh45_59<- ephtotalsd %>% filter(CH06>=45 & CH06<=59 & AGLOMERADO==12 & CH04==1 & !is.na(INFORMALES))  
+informalesh45_59 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesh45_59$PONDERA))
+
+informalesm45_59<-  ephtotalsd %>% filter(CH06>=45 & CH06<=59 & AGLOMERADO==12 & CH04==2 & !is.na(INFORMALES))  
+informalesm45_59 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesm45_59$PONDERA))
+
+#60 0 +
+informalesh60<- ephtotalsd %>% filter(CH06>=60  & AGLOMERADO==12 & CH04==1 & !is.na(INFORMALES))  
+informalesh60 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesh60$PONDERA))
+
+informalesm60<-  ephtotalsd %>% filter(CH06>=60  & AGLOMERADO==12 & CH04==2 & !is.na(INFORMALES))  
+informalesm60 %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalesm60$PONDERA))
+
+#Total
+informalestot<- ephtotalsd %>% filter( AGLOMERADO==12  & !is.na(INFORMALES))  
+informalestot %>% group_by(INFORMALES) %>%  summarise(sum(PONDERA)/sum(informalestot$PONDERA))
+
+#por sexo
+informalestoth<- ephtotalsd %>% filter( AGLOMERADO==12  & !is.na(INFORMALES) & CH04==1)
+informalestoth %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informalestoth$PONDERA))
+
+informalestotm<- ephtotalsd %>% filter( AGLOMERADO==12  & !is.na(INFORMALES) & CH04==2)
+informalestotm %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informalestotm$PONDERA))
+
