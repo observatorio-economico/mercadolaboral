@@ -387,7 +387,7 @@ composicionempleados
 ####Carga laboral####
 #Sector publico
 
-cargalaboralpub <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrwabtotales) & PP04A==1)
+cargalaboralpub <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==1)
 cargalaboralpub <- cargalaboralpub %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 cargalaboralpub
 
@@ -478,3 +478,8 @@ informalestoth %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informale
 informalestotm<- ephtotalsd %>% filter( AGLOMERADO==12  & !is.na(INFORMALES) & CH04==2)
 informalestotm %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informalestotm$PONDERA))
 
+#### Tasa de informalidad laboral desagregada por sector de actividad ####
+
+inforporsector<- function(i) {
+  infor <- ephtotalsd %>% filter(AGLOMERADO==12  & !is.na(INFORMALES) & SECTOR)
+}
