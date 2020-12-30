@@ -481,5 +481,39 @@ informalestotm %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informale
 #### Tasa de informalidad laboral desagregada por sector de actividad ####
 
 inforporsector<- function(i) {
-  infor <- ephtotalsd %>% filter(AGLOMERADO==12  & !is.na(INFORMALES) & SECTOR)
+  infor <- sectores %>% filter(AGLOMERADO==12  & !is.na(INFORMALES) & SECTOR_ACT==i)
+  infor <- infor %>% group_by(INFORMALES) %>%  summarise(formattable::percent(sum(PONDERA)/sum(infor$PONDERA), digits=2))
+  return(infor)
 }
+  
+nombres<-(unique(sectores$SECTOR_ACT))
+nombres
+
+
+sectores %>% filter(SECTOR_ACT=="EXPLOTACIÓN DE MINAS Y CANTERAS" & AGLOMERADO==12  & !is.na(INFORMALES)) %>% group_by(INFORMALES) %>% summarise(n())
+
+
+infoyco<-inforporsector("INFORMACIÓN Y COMUNICACIÓN")
+enseñanza<-inforporsector("ENSEÑANZA")
+construccion<-inforporsector("CONSTRUCCIÓN")
+adminpub<-inforporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
+cientifi<-inforporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
+salud<-inforporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
+financiera<-inforporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
+inforporsector("COMERCIO AL POR MAYOR Y AL POR MENOR; REPARACIÓN DE VEHÍCULOS AUTOMOTORES Y MOTOCICLETAS")
+inforporsector("INDUSTRIA MANUFACTURERA")
+inforporsector("TRANSPORTE Y ALMACENAMIENTO" )
+inforporsector("ARTES, ENTRETENIMIENTO Y RECREACIÓN")
+inforporsector("AGRICULTURA, GANADERÍA, CAZA, SILVICULTURA Y PESCA")
+inforporsector("ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE\nPERSONAL DOMÉSTICO" )
+inforporsector("OTRAS ACTIVIDADES DE SERVICIOS")
+inforporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
+inforporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO" )
+inforporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
+inforporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO")
+inforporsector("ALOJAMIENTO Y SERVICIOS DE COMIDAS")
+inforporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
+inforporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
+inforporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
+inforporsector("ACTIVIDADES INMOBILIARIAS" )
+
