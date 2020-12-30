@@ -536,3 +536,37 @@ inforporsector("ACTIVIDADES INMOBILIARIAS" )
 
 #### Calificación por sector ####
 
+califporsector<- function(i) {
+  calif <- sectores %>% filter(AGLOMERADO==12  & !is.na(TIPOCALIFICACION) & SECTOR_ACT==i)
+  calif <- calif %>% group_by(TIPOCALIFICACION) %>%  summarise(formattable::percent(sum(PONDERA)/sum(calif$PONDERA), digits=2))
+  return(calif)
+}
+
+#Para comprobar
+#nombres<-(unique(sectores$SECTOR_ACT))
+#nombres
+#sectores %>% filter(SECTOR_ACT=="EXPLOTACIÓN DE MINAS Y CANTERAS" & AGLOMERADO==12  & !is.na(TIPOCALIFICACION)) %>% group_by(TIPOCALIFICACION) %>% summarise(n())
+
+infoyco<-califporsector("INFORMACIÓN Y COMUNICACIÓN")
+enseñanza<-califporsector("ENSEÑANZA")
+construccion<-califporsector("CONSTRUCCIÓN")
+adminpub<-califporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
+cientifi<-califporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
+salud<-califporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
+financiera<-califporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
+califporsector("COMERCIO AL POR MAYOR Y AL POR MENOR; REPARACIÓN DE VEHÍCULOS AUTOMOTORES Y MOTOCICLETAS")
+califporsector("INDUSTRIA MANUFACTURERA")
+califporsector("TRANSPORTE Y ALMACENAMIENTO" )
+califporsector("ARTES, ENTRETENIMIENTO Y RECREACIÓN")
+califporsector("AGRICULTURA, GANADERÍA, CAZA, SILVICULTURA Y PESCA")
+califporsector("ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE\nPERSONAL DOMÉSTICO" )
+califporsector("OTRAS ACTIVIDADES DE SERVICIOS")
+califporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
+califporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO" )
+califporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
+califporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO")
+califporsector("ALOJAMIENTO Y SERVICIOS DE COMIDAS")
+califporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
+califporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
+califporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
+califporsector("ACTIVIDADES INMOBILIARIAS" )
