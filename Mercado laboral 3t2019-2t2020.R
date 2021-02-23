@@ -4,11 +4,22 @@ setwd("~/GitHub/mercadolaboral")
 library(eph)
 library(tidyverse)
 
-#Segundo trimestre 2020
-ephi<- get_microdata(year=2020, trimester = 2, type = "individual")
-ephh<- get_microdata(year=2020, trimester = 2, type = "hogar")
+#Tercer trimestre 2020
+eph3ti<- get_microdata(year=2020, trimester=3, type="individual")
+eph3tih <- get_microdata(year=2020, trimester=3, type="hogar")
 
-eph2t<- left_join(ephi, ephh)
+#Segundo trimestre 2020 
+eph2ti<- get_microdata(year=2020, trimester=2, type="individual")
+eph2tih <- get_microdata(year=2020, trimester=2, type="hogar")
+
+#Arreglos en la base del tercer trimestre 2020
+eph3t <- left_join(eph3ti, eph3tih)
+eph3t$PP04B_COD <- as.character(eph3t$PP04B_COD)
+eph3t$PP11B_COD <- as.character(eph3t$PP11B_COD)
+eph3t$PP11D_COD <- as.character(eph3t$PP11D_COD)
+eph2t <- left_join(eph2ti, eph2tih)
+
+#Y listo
 
 #Primer trimestre 2020 
 ephi<- get_microdata(year=2020, trimester = 1, type = "individual")
@@ -23,33 +34,8 @@ ephh<- get_microdata(year=2019, trimester = 4, type = "hogar")
 
 eph4t2019<- left_join(ephi, ephh)
 
-#Tercero 2019
-ephi<- get_microdata(year=2019, trimester = 3, type = "individual")
-ephh<- get_microdata(year=2019, trimester = 3, type = "hogar")
 
-#Arreglos en la base del tercer trimestre 2020
-#3t
-eph3ti<- get_microdata(year=2020, trimester=3, type="individual")
-eph3tih <- get_microdata(year=2020, trimester=3, type="hogar")
-
-#2t 
-eph2ti<- get_microdata(year=2020, trimester=2, type="individual")
-eph2tih <- get_microdata(year=2020, trimester=2, type="hogar")
-
-eph3t <- left_join(eph3ti, eph3tih)
-eph3t$PP04B_COD <- as.character(eph3t$PP04B_COD)
-eph3t$PP11B_COD <- as.character(eph3t$PP11B_COD)
-eph3t$PP11D_COD <- as.character(eph3t$PP11D_COD)
-eph2t <- left_join(eph2ti, eph2tih)
-
-ephtotal <- bind_rows(eph3t, eph2t)
-
-#Y listo
-
-eph3t2019<- left_join(ephi, ephh)
-
-
-ephtotal <- bind_rows(eph2t, eph1t, eph4t2019, eph3t2019)
+ephtotal <- bind_rows(eph3t, eph2t, eph1t, eph4t2019)
 
 #Quitar duplicados:
 ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all = T) 
