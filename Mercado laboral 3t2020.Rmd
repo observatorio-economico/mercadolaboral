@@ -1,0 +1,69 @@
+---
+title: "Mercado laboral 3er Trim 2020"
+author: "Observatorio"
+date: "24/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(eph)
+library(tidyverse)
+library(formattable)
+
+#Tercer trimestre 2020
+eph3ti<- get_microdata(year=2020, trimester=3, type="individual")
+eph3tih <- get_microdata(year=2020, trimester=3, type="hogar")
+
+eph3t$PP04B_COD <- as.character(eph3t$PP04B_COD)
+eph3t$PP11B_COD <- as.character(eph3t$PP11B_COD)
+eph3t$PP11D_COD <- as.character(eph3t$PP11D_COD)
+
+eph <- left_join(eph3ti, eph3tih)
+
+```
+
+```{r}
+ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
+                                                      ESTADO==4 ~ 0,
+                                                      ESTADO==1 ~ 1,
+                                                      ESTADO==2 ~ 1),
+                                       OCUPADOS= case_when(ESTADO==1 ~ 1,
+                                                           ESTADO==2 ~ 0,
+                                                           ESTADO==3 ~ 0,
+                                                           ESTADO==4 ~ 0),
+                                       DESOCUPADOS= case_when(ESTADO==1 ~ 0,
+                                                              ESTADO==2 ~ 1),
+                                       EMPLEADOS= case_when(PP04A==1 ~ "Empleados Publicos",
+                                                            PP04A==2 ~ "Empleados privados",
+                                                            PP04A==3 ~ "Otros",
+                                                            TRUE ~ NA_character_),
+                                       PP04B_COD=as.character(PP04B_COD),
+                                       PP04B_COD=case_when(nchar(PP04B_COD)==4~PP04B_COD,
+                                                       nchar(PP04B_COD)==1~ paste0("0",PP04B_COD,"00"),
+                                                       nchar(PP04B_COD)==2~ paste0(PP04B_COD,"00"),
+                                                       nchar(PP04B_COD)==3~ paste0("0",PP04B_COD)),
+                                       SECTOR= substr(PP04B_COD,1,2),
+                                       INFORMALES=case_when( CAT_OCUP==3 & PP07H==2 ~ 1,
+                                                             CAT_OCUP==3 & PP07H==1 ~ 0),
+                                       PP04D_COD = as.character(PP04D_COD),
+                                       PP04D_COD = case_when(nchar(PP04D_COD) == 5 ~ PP04D_COD,
+                                                             nchar(PP04D_COD) == 4 ~ paste0("0", PP04D_COD),
+                                                             nchar(PP04D_COD) == 3 ~ paste0("00", PP04D_COD),
+                                                             nchar(PP04D_COD) == 2 ~ paste0("000", PP04D_COD),
+                                                             nchar(PP04D_COD) == 1 ~ paste0("0000", PP04D_COD)),
+                                       CALIFICACION = substr(PP04D_COD, 5, 5),
+                                       CALIFICACION = case_when(CALIFICACION=="1" ~ "Profesionales",
+                                                                CALIFICACION=="2" ~ "Técnicos",
+                                                                CALIFICACION=="3" ~ "Operativos",
+                                                                CALIFICACION=="4" ~ "No Calificados"),
+                                       CALIFICACION = factor(CALIFICACION, c("No Calificados", "Operativos", "Técnicos", "Profesionales")),
+                                       TIPOCALIFICACION= case_when(CALIFICACION=="Profesionales" | CALIFICACION== "Técnicos" ~ "Calificado",
+                                                                          CALIFICACION=="No Calificados" | CALIFICACION=="Operativos" ~ "No calificado"))
+                                
+
+```
+

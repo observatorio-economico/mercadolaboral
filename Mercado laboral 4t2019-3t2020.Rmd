@@ -83,8 +83,7 @@ ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
                                        CALIFICACION = case_when(CALIFICACION=="1" ~ "Profesionales",
                                                                 CALIFICACION=="2" ~ "Técnicos",
                                                                 CALIFICACION=="3" ~ "Operativos",
-                                                                CALIFICACION=="4" ~ "No Calificados",
-                                                                TRUE ~ "0"),
+                                                                CALIFICACION=="4" ~ "No Calificados"),
                                        CALIFICACION = factor(CALIFICACION, c("No Calificados", "Operativos", "Técnicos", "Profesionales")),
                                        TIPOCALIFICACION= case_when(CALIFICACION=="Profesionales" | CALIFICACION== "Técnicos" ~ "Calificado",
                                                                           CALIFICACION=="No Calificados" | CALIFICACION=="Operativos" ~ "No calificado"))
@@ -424,12 +423,29 @@ composicionempleados
 
 ```
 
+##Calificacion 
+###Sector privado
+```{r}
+clasificacionepr<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION) & PP04A==2)
+clasificacionepr<- clasificacionepr %>% group_by(TIPOCALIFICACION) %>% summarise(percent(sum(PONDERA)/sum(clasificacionepr$PONDERA)),  sum(PONDERA), sum(clasificacionepr$PONDERA))
+clasificacionepr
+
+```
+##Sector público 
+```{r}
+clasificacionepub<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION) & PP04A==1) 
+clasificacionepub<- clasificacionepub %>% group_by(TIPOCALIFICACION) %>% summarise(percent(sum(PONDERA)/sum(clasificacionepub$PONDERA)), sum(PONDERA), sum(clasificacionepub$PONDERA))
+clasificacionepub 
+```
+
+
 ##Carga laboral
 ###Sector público
 ```{r}
 cargalaboralpub <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==1)
 cargalaboralpub <- cargalaboralpub %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 cargalaboralpub
+
 ```
 
 ###Sector privado
@@ -437,6 +453,7 @@ cargalaboralpub
 cargalaboralpriv <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==2)
 cargalaboralpriv <- cargalaboralpriv %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 cargalaboralpriv
+
 ```
 
 ##Promedio de edad por sector
@@ -465,14 +482,83 @@ spublico
 ##Informalidad
 ###Por sexo y edad 
 ```{r}
+#Esto no se usa (probe igual con los datos del informe anterior pero da distinto a lo que tienen)
 informalidad<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(INFORMALES))
 informales<- informalidad %>% filter(INFORMALES==1)
-informales1<- informales %>% group_by(CH04) %>% summarise(sum(PONDERA)/sum(informales$PONDERA))
+informales1<- informales %>% group_by(CH04) %>% summarise(sum(PONDERA)/sum(informales$PONDERA), sum(PONDERA))
 informales1
 
 formales<- informalidad %>% filter(INFORMALES==0)
 formales<- formales %>% group_by(CH04) %>% summarise(sum(PONDERA)/(sum(formales$PONDERA)))
 formales
+```
+
+```{r}
+#15-24 años
+
+edad15a24 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15 & !is.na(INFORMALES))
+
+#Hombres
+hombres <- edad15a24 %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(INFORMALES) %>% summarise(percent(sum(PONDERA)/sum(hombres$PONDERA)))
+hombres
+
+#Mujeres
+mujeres <- edad15a24 %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(INFORMALES) %>%  summarise (percent(sum(PONDERA)/sum(mujeres$PONDERA)))
+mujeres
+
+#25-34 años
+edad25a34 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=34 & CH06>=25 & !is.na(INFORMALES))
+
+#Hombres
+hombres <- edad25a34 %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(INFORMALES) %>% summarise(percent(sum(PONDERA)/sum(hombres$PONDERA))) 
+hombres
+
+#Mujeres
+mujeres <- edad25a34 %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(INFORMALES) %>%  summarise (percent(sum(PONDERA)/sum(mujeres$PONDERA)))
+mujeres
+
+#35-44
+edad35a44 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=44 & CH06>=35 & !is.na(INFORMALES))
+
+#Hombres
+hombres <- edad35a44 %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(INFORMALES) %>% summarise(percent(sum(PONDERA)/sum(hombres$PONDERA)))
+hombres
+
+#Mujeres
+mujeres <- edad35a44 %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(INFORMALES) %>%  summarise (percent(sum(PONDERA)/sum(mujeres$PONDERA)))
+mujeres
+
+#45-59
+edad45a59 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06<=59 & CH06>=45 & !is.na(INFORMALES))
+
+#Hombres
+hombres <- edad45a59 %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(INFORMALES) %>% summarise(percent(sum(PONDERA)/sum(hombres$PONDERA)))
+hombres
+
+#Mujeres
+mujeres <- edad45a59 %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(INFORMALES) %>%  summarise (percent(sum(PONDERA)/sum(mujeres$PONDERA)))
+mujeres
+
+#Mayores o iguales a 60 años
+edad60 <- ephtotalsd %>% filter(AGLOMERADO==12 & ESTADO!=0 & CH06>=60 & !is.na(INFORMALES))
+
+#Hombres
+hombres <- edad60 %>%  filter(CH04==1)
+hombres <- hombres %>%  group_by(INFORMALES) %>% summarise(percent(sum(PONDERA)/sum(hombres$PONDERA)))
+hombres
+
+#Mujeres
+mujeres <- edad60 %>%  filter(CH04==2)
+mujeres <- mujeres %>%  group_by(INFORMALES) %>%  summarise (percent(sum(PONDERA)/sum(mujeres$PONDERA))) 
+mujeres 
 ```
 
 ###Tasa de informalidad laboral desagregada por sector de actividad
@@ -490,13 +576,13 @@ nombres
 sectores %>% filter(SECTOR_ACT=="EXPLOTACIÓN DE MINAS Y CANTERAS" & AGLOMERADO==12  & !is.na(INFORMALES)) %>% group_by(INFORMALES) %>% summarise(n())
 
 
-infoyco<-inforporsector("INFORMACIÓN Y COMUNICACIÓN")
-enseñanza<-inforporsector("ENSEÑANZA")
-construccion<-inforporsector("CONSTRUCCIÓN")
-adminpub<-inforporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
-cientifi<-inforporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
-salud<-inforporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
-financiera<-inforporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
+inforporsector("INFORMACIÓN Y COMUNICACIÓN")
+inforporsector("ENSEÑANZA")
+inforporsector("CONSTRUCCIÓN")
+inforporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
+inforporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
+inforporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
+inforporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
 inforporsector("COMERCIO AL POR MAYOR Y AL POR MENOR; REPARACIÓN DE VEHÍCULOS AUTOMOTORES Y MOTOCICLETAS")
 inforporsector("INDUSTRIA MANUFACTURERA")
 inforporsector("TRANSPORTE Y ALMACENAMIENTO" )
@@ -506,13 +592,12 @@ inforporsector("ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE\nPERSONAL DOMÉST
 inforporsector("OTRAS ACTIVIDADES DE SERVICIOS")
 inforporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
 inforporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO" )
-inforporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
-inforporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO")
 inforporsector("ALOJAMIENTO Y SERVICIOS DE COMIDAS")
 inforporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
 inforporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
 inforporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
 inforporsector("ACTIVIDADES INMOBILIARIAS" )
+
 
 ```
 
@@ -524,13 +609,13 @@ califporsector<- function(i) {
   return(calif)
 }
 
-infoyco<-califporsector("INFORMACIÓN Y COMUNICACIÓN")
-enseñanza<-califporsector("ENSEÑANZA")
-construccion<-califporsector("CONSTRUCCIÓN")
-adminpub<-califporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
-cientifi<-califporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
-salud<-califporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
-financiera<-califporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
+califporsector("INFORMACIÓN Y COMUNICACIÓN")
+califporsector("ENSEÑANZA")
+califporsector("CONSTRUCCIÓN")
+califporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
+califporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
+califporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
+califporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
 califporsector("COMERCIO AL POR MAYOR Y AL POR MENOR; REPARACIÓN DE VEHÍCULOS AUTOMOTORES Y MOTOCICLETAS")
 califporsector("INDUSTRIA MANUFACTURERA")
 califporsector("TRANSPORTE Y ALMACENAMIENTO" )
@@ -540,13 +625,14 @@ califporsector("ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE\nPERSONAL DOMÉST
 califporsector("OTRAS ACTIVIDADES DE SERVICIOS")
 califporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
 califporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO" )
-califporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
-califporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO")
 califporsector("ALOJAMIENTO Y SERVICIOS DE COMIDAS")
 califporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
 califporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
 califporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
 califporsector("ACTIVIDADES INMOBILIARIAS" )
+
+
+table(sectores$SECTOR_ACT)
 
 ```
 
