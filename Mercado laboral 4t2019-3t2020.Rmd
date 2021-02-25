@@ -347,7 +347,7 @@ mujeres
 horastrabtotales <- ephtotalsd %>% mutate(horastrabtotales= PP3E_TOT + PP3F_TOT)
 #15-24 a?os
 horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15 & !is.na(horastrabtotales))
-horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA), wtd.mean(horastrabtotales,weights = PONDERA))
+horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 horastrab
 
 #25-34
@@ -424,6 +424,14 @@ composicionempleados
 ```
 
 ##Calificacion 
+###Calificación total población
+```{r}
+pobcalificada<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION))
+pobcalificada<- pobcalificada %>% group_by(TIPOCALIFICACION) %>% summarise(percent(sum(PONDERA)/sum(pobcalificada$PONDERA)),  sum(PONDERA), sum(pobcalificada$PONDERA))
+pobcalificada
+
+```
+
 ###Sector privado
 ```{r}
 clasificacionepr<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION) & PP04A==2)
@@ -431,14 +439,28 @@ clasificacionepr<- clasificacionepr %>% group_by(TIPOCALIFICACION) %>% summarise
 clasificacionepr
 
 ```
-##Sector público 
+###Sector público 
 ```{r}
 clasificacionepub<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION) & PP04A==1) 
 clasificacionepub<- clasificacionepub %>% group_by(TIPOCALIFICACION) %>% summarise(percent(sum(PONDERA)/sum(clasificacionepub$PONDERA)), sum(PONDERA), sum(clasificacionepub$PONDERA))
 clasificacionepub 
 ```
 
+###Calificación Hombres
+```{r}
+calificacionhombres<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION) & CH04==1) 
+calificacionhombres<- calificacionhombres %>% group_by(TIPOCALIFICACION) %>% summarise(percent(sum(PONDERA)/sum(calificacionhombres$PONDERA)), sum(PONDERA), sum(calificacionhombres$PONDERA))
+calificacionhombres 
 
+```
+
+###Calificación Mujeres
+```{r}
+calificacionmujeres<- ephtotalsd %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION) & CH04==2) 
+calificacionmujeres<- calificacionmujeres %>% group_by(TIPOCALIFICACION) %>% summarise(percent(sum(PONDERA)/sum(calificacionmujeres$PONDERA)), sum(PONDERA), sum(calificacionhombres$PONDERA))
+calificacionmujeres 
+
+```
 ##Carga laboral
 ###Sector público
 ```{r}
