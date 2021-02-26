@@ -402,17 +402,21 @@ spublico
 ```
 
 ##Informalidad
-###Por sexo y edad 
+###Por sexo
 ```{r}
-#Esto no se usa (probe igual con los datos del informe anterior pero da distinto a lo que tienen)
+#Mujeres
 informalidad<- eph3t %>% filter(AGLOMERADO==12 & !is.na(INFORMALES))
-informales<- informalidad %>% filter(INFORMALES==1)
-informales1<- informales %>% group_by(CH04) %>% summarise(sum(PONDERA)/sum(informales$PONDERA), sum(PONDERA))
+informales<- informalidad %>% filter(CH04==2)
+informales1<- informales %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informales$PONDERA))
 informales1
 
-formales<- informalidad %>% filter(INFORMALES==0)
-formales<- formales %>% group_by(CH04) %>% summarise(sum(PONDERA)/(sum(formales$PONDERA)))
-formales
+#Hombres
+informalidad<- eph3t %>% filter(AGLOMERADO==12 & !is.na(INFORMALES))
+informales<- informalidad %>% filter(CH04==1)
+informales1<- informales %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informales$PONDERA))
+informales1
+
+
 ```
 
 ```{r}
