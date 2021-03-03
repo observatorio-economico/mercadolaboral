@@ -402,12 +402,19 @@ spublico
 ```
 
 ##Informalidad
+###Total
+```{r}
+informalidadtot<- eph3t %>% filter(AGLOMERADO==12 & !is.na(INFORMALES))
+informalidadtot<- informalidadtot %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informalidadtot$PONDERA), sum(PONDERA))
+informalidadtot
+```
+
 ###Por sexo
 ```{r}
 #Mujeres
 informalidad<- eph3t %>% filter(AGLOMERADO==12 & !is.na(INFORMALES))
 informales<- informalidad %>% filter(CH04==2)
-informales1<- informales %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informales$PONDERA))
+informales1<- informales %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informales$PONDERA), sum(PONDERA))
 informales1
 
 #Hombres
@@ -487,6 +494,61 @@ mujeres <- mujeres %>%  group_by(INFORMALES) %>%  summarise (percent(sum(PONDERA
 mujeres 
 ```
 
+
+##SECTORES
+```{r}
+#Segundo trimestre 2020
+ephi<- get_microdata(year=2020, trimester=2, type="individual")
+ephh <- get_microdata(year=2020, trimester=2, type="hogar")
+eph2t <- left_join(ephi, ephh)
+ephtotal <- bind_rows(eph3t, eph2t)
+ephtotalsd <- ephtotal %>% distinct(., CODUSU, NRO_HOGAR, COMPONENTE, .keep_all = T) 
+
+ephtotalsd <- ephtotalsd %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
+                                                      ESTADO==4 ~ 0,
+                                                      ESTADO==1 ~ 1,
+                                                      ESTADO==2 ~ 1),
+                                       OCUPADOS= case_when(ESTADO==1 ~ 1,
+                                                           ESTADO==2 ~ 0,
+                                                           ESTADO==3 ~ 0,
+                                                           ESTADO==4 ~ 0),
+                                       DESOCUPADOS= case_when(ESTADO==1 ~ 0,
+                                                              ESTADO==2 ~ 1),
+                                       EMPLEADOS= case_when(PP04A==1 ~ "Empleados Publicos",
+                                                            PP04A==2 ~ "Empleados privados",
+                                                            PP04A==3 ~ "Otros",
+                                                            TRUE ~ NA_character_),
+                                       PP04B_COD=as.character(PP04B_COD),
+                                       PP04B_COD=case_when(nchar(PP04B_COD)==4~PP04B_COD,
+                                                       nchar(PP04B_COD)==1~ paste0("0",PP04B_COD,"00"),
+                                                       nchar(PP04B_COD)==2~ paste0(PP04B_COD,"00"),
+                                                       nchar(PP04B_COD)==3~ paste0("0",PP04B_COD)),
+                                       SECTOR= substr(PP04B_COD,1,2),
+                                       INFORMALES=case_when( CAT_OCUP==3 & PP07H==2 ~ 1,
+                                                             CAT_OCUP==3 & PP07H==1 ~ 0),
+                                       PP04D_COD = as.character(PP04D_COD),
+                                       PP04D_COD = case_when(nchar(PP04D_COD) == 5 ~ PP04D_COD,
+                                                             nchar(PP04D_COD) == 4 ~ paste0("0", PP04D_COD),
+                                                             nchar(PP04D_COD) == 3 ~ paste0("00", PP04D_COD),
+                                                             nchar(PP04D_COD) == 2 ~ paste0("000", PP04D_COD),
+                                                             nchar(PP04D_COD) == 1 ~ paste0("0000", PP04D_COD)),
+                                       CALIFICACION = substr(PP04D_COD, 5, 5),
+                                       CALIFICACION = case_when(CALIFICACION=="1" ~ "Profesionales",
+                                                                CALIFICACION=="2" ~ "Técnicos",
+                                                                CALIFICACION=="3" ~ "Operativos",
+                                                                CALIFICACION=="4" ~ "No Calificados"),
+                                       CALIFICACION = factor(CALIFICACION, c("No Calificados", "Operativos", "Técnicos", "Profesionales")),
+                                       TIPOCALIFICACION= case_when(CALIFICACION=="Profesionales" | CALIFICACION== "Técnicos" ~ "Calificado",
+                                                                          CALIFICACION=="No Calificados" | CALIFICACION=="Operativos" ~ "No calificado"))
+                                
+
+caract<- ephtotalsd %>% group_by(SECTOR) %>% filter(OCUPADOS==1) %>% count()
+caes<- read.csv("SECTORESCAES.csv", sep = ";", colClasses = "character")
+sectores<- left_join(ephtotalsd,caes)
+table(sectores$SECTOR_ACT)
+
+```
+
 ###Tasa de informalidad laboral desagregada por sector de actividad
 ```{r}
 inforporsector<- function(i) {
@@ -494,7 +556,6 @@ inforporsector<- function(i) {
   infor <- infor %>% group_by(INFORMALES) %>%  summarise(formattable::percent(sum(PONDERA)/sum(infor$PONDERA), digits=2))
   return(infor)
 }
-  
 nombres<-(unique(sectores$SECTOR_ACT))
 nombres
 
@@ -525,7 +586,6 @@ inforporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
 inforporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
 inforporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
 inforporsector("ACTIVIDADES INMOBILIARIAS" )
-
 
 ```
 
