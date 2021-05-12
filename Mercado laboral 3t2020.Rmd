@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(eph)
 library(tidyverse)
 library(formattable)
-#hola soy Maxi
+
 #Tercer trimestre 2020
 eph3ti<- get_microdata(year=2020, trimester=3, type="individual")
 eph3tih <- get_microdata(year=2020, trimester=3, type="hogar")
