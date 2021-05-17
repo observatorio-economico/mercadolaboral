@@ -20,11 +20,6 @@ eph3tih <- get_microdata(year=2020, trimester=3, type="hogar")
 
 eph3t <- left_join(eph3ti, eph3tih)
 
-eph3t$PP04B_COD <- as.character(eph3t$PP04B_COD)
-eph3t$PP11B_COD <- as.character(eph3t$PP11B_COD)
-eph3t$PP11D_COD <- as.character(eph3t$PP11D_COD)
-
-
 ```
 
 ```{r}
@@ -298,10 +293,20 @@ desocupacion
 ```{r}
 empleados <- eph3t %>% filter(AGLOMERADO==12 & !is.na(EMPLEADOS) & OCUPADOS==1)
 table(empleados$EMPLEADOS)
-empleados <- empleados %>%  group_by(EMPLEADOS) %>%  summarise(sum(PONDERA))
-empleados
-empleados <- empleados %>% mutate(proporcion=`sum(PONDERA)`/sum(empleados$`sum(PONDERA)`))
-empleados
+
+empleados1 <- empleados %>%  group_by(EMPLEADOS) %>%  summarise(sum(PONDERA))
+empleados1
+empleados1 <- empleados1 %>% mutate(proporcion=`sum(PONDERA)`/sum(empleados1$`sum(PONDERA)`))
+empleados1
+
+#empleados2 <- empleados %>%  group_by(EMPLEADOS) %>%  summarise(CANTIDAD=sum(PONDERA), PROPORCION=sum(PONDERA)/sum(empleados$PONDERA))
+#empleados2
+
+#empleados3 <- empleados %>%  group_by(EMPLEADOS) %>%  summarise(CANTIDAD=sum(PONDERA))
+#empleados3
+#empleados3 <- empleados3 %>% mutate(PROPORCION=CANTIDAD/sum(empleados3$CANTIDAD))
+#empleados3
+
 ```
 
 ####Composición del empleo público por sexo
@@ -553,49 +558,53 @@ table(sectores$SECTOR_ACT)
 ```{r}
 inforporsector<- function(i) {
   infor <- sectores %>% filter(AGLOMERADO==12  & !is.na(INFORMALES) & SECTOR_ACT==i)
-  infor <- infor %>% group_by(INFORMALES) %>%  summarise(formattable::percent(sum(PONDERA)/sum(infor$PONDERA), digits=2))
+  infor <- infor %>% group_by(INFORMALES) %>%  summarise(SECTOR=i, porcentaje=formattable::percent(sum(PONDERA)/sum(infor$PONDERA), digits=2)) 
   return(infor)
 }
 nombres<-(unique(sectores$SECTOR_ACT))
 nombres
 
 
-sectores %>% filter(SECTOR_ACT=="EXPLOTACIÓN DE MINAS Y CANTERAS" & AGLOMERADO==12  & !is.na(INFORMALES)) %>% group_by(INFORMALES) %>% summarise(n())
+c((lapply(nombres, inforporsector))) #lapply aplica una función a cada elemento de una lista o vector
 
 
-table(sectores$SECTOR_ACT)
-
-inforporsector("INFORMACIÓN Y COMUNICACIÓN")
-inforporsector("ENSEÑANZA")
-inforporsector("CONSTRUCCIÓN")
-inforporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
-inforporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
-inforporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
-inforporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
-inforporsector("COMERCIO AL POR MAYOR Y AL POR MENOR; REPARACIÓN DE VEHÍCULOS AUTOMOTORES Y MOTOCICLETAS")
-inforporsector("INDUSTRIA MANUFACTURERA")
-inforporsector("TRANSPORTE Y ALMACENAMIENTO" )
-inforporsector("ARTES, ENTRETENIMIENTO Y RECREACIÓN")
-inforporsector("AGRICULTURA, GANADERÍA, CAZA, SILVICULTURA Y PESCA")
-inforporsector("ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE\nPERSONAL DOMÉSTICO" )
-inforporsector("OTRAS ACTIVIDADES DE SERVICIOS")
-inforporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
-inforporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO" )
-inforporsector("ALOJAMIENTO Y SERVICIOS DE COMIDAS")
-inforporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
-inforporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
-inforporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
-inforporsector("ACTIVIDADES INMOBILIARIAS" )
+#inforporsector("INFORMACIÓN Y COMUNICACIÓN")
+#inforporsector("ENSEÑANZA")
+#inforporsector("CONSTRUCCIÓN")
+#inforporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
+#inforporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
+#inforporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
+#inforporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
+#inforporsector("COMERCIO AL POR MAYOR Y AL POR MENOR; REPARACIÓN DE VEHÍCULOS AUTOMOTORES Y MOTOCICLETAS")
+#inforporsector("INDUSTRIA MANUFACTURERA")
+#inforporsector("TRANSPORTE Y ALMACENAMIENTO" )
+#inforporsector("ARTES, ENTRETENIMIENTO Y RECREACIÓN")
+#inforporsector("AGRICULTURA, GANADERÍA, CAZA, SILVICULTURA Y PESCA")
+#inforporsector("ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE\nPERSONAL DOMÉSTICO" )
+#inforporsector("OTRAS ACTIVIDADES DE SERVICIOS")
+#inforporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
+#inforporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO" )
+#inforporsector("ALOJAMIENTO Y SERVICIOS DE COMIDAS")
+#inforporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
+#inforporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
+#inforporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
+#inforporsector("ACTIVIDADES INMOBILIARIAS" )
 
 ```
 
 ##Calificación por sector
 ```{r}
-califporsector<- function(i) {
-  calif <- sectores %>% filter(AGLOMERADO==12  & !is.na(TIPOCALIFICACION) & SECTOR_ACT==i)
-  calif <- calif %>% group_by(TIPOCALIFICACION) %>%  summarise(formattable::percent(sum(PONDERA)/sum(calif$PONDERA), digits=2))
-  return(calif)
+inforporsector<- function(i) {
+  infor <- sectores %>% filter(AGLOMERADO==12  & !is.na(INFORMALES) & SECTOR_ACT==i)
+  infor <- infor %>% group_by(INFORMALES) %>%  summarise(SECTOR=i, porcentaje=formattable::percent(sum(PONDERA)/sum(infor$PONDERA), digits=2)) 
+  return(infor)
 }
+nombres<-(unique(sectores$SECTOR_ACT))
+nombres
+
+
+c((lapply(nombres, inforporsector))) #lapply aplica una función a cada elemento de una lista o vector
+
 
 califporsector("INFORMACIÓN Y COMUNICACIÓN")
 califporsector("ENSEÑANZA")
