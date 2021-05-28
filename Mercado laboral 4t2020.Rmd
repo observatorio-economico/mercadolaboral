@@ -523,7 +523,7 @@ composicionempleados <- bind_rows(composicionempleadospr, composicionempleadospu
 #EMPLEO PRIVADO
 composicionempleadospr$ymax <- cumsum(composicionempleadospr$porcentaje)
 
-#Bottom of each rectangle
+
 composicionempleadospr$ymin <- formattable::percent(c(0, head(composicionempleadospr$ymax, n=-1)))
 
 #Label position
@@ -537,7 +537,7 @@ composicionempleadospr$label <- paste0(composicionempleadospr$SEXO, "\n ", compo
 #torta
 torta1 <- ggplot(composicionempleadospr, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=SEXO)) +
   geom_rect() +
-  geom_text( x=1.75, aes(y=labelPosition, label=label, color=SEXO), size=4.7) +
+  geom_text( x=1.55, aes(y=labelPosition, label=label, color=SEXO), size=4.7) +
   scale_fill_manual(values = c("#f4a018", "#e22172")) +
   scale_colour_manual(values=c("#f4a018", "#e22172")) +
   coord_polar(theta="y") +
@@ -552,7 +552,7 @@ ggsave("grafico6.1.svg")
 #EMPLEO PUBLICO
 composicionempleadospu$ymax <- cumsum(composicionempleadospu$porcentaje)
 
-# Compute the bottom of each rectangle
+
 composicionempleadospu$ymin <- formattable::percent(c(0, head(composicionempleadospu$ymax, n=-1)))
 
 # Compute label position
@@ -564,12 +564,12 @@ composicionempleadospu$label <- paste0(composicionempleadospu$SEXO, "\n ", compo
 #torta
 torta2 <- ggplot(composicionempleadospu, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=SEXO)) +
   geom_rect() +
-  geom_text( x=1.75, aes(y=labelPosition, label=label, color=SEXO), size=4.7) +
+  geom_text( x=1.55, aes(y=labelPosition, label=label, color=SEXO), size=4.7) +
   scale_fill_manual(values = c("#29aee4","#0c8136")) +
   scale_colour_manual(values=c("#29aee4","#0c8136")) +
   coord_polar(theta="y") +
   xlim(c(-1, 4)) +
-  labs(title = "Composición del empleo publico", subtitle = "Cuarto Trimestre 2020") +
+  labs(title = "Composición del empleo público", subtitle = "Cuarto Trimestre 2020") +
   theme_void() +
   theme(legend.position = "none", text = element_text(family = "Open Sans"), plot.title =element_text(size = 14), plot.subtitle = element_text(size = 8), legend.text = element_text(size = 8)) 
 torta2 
