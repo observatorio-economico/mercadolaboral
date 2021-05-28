@@ -569,7 +569,7 @@ torta2 <- ggplot(composicionempleadospu, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=
   scale_colour_manual(values=c("#29aee4","#0c8136")) +
   coord_polar(theta="y") +
   xlim(c(-1, 4)) +
-  labs(title = "Composición del empleo publico", subtitle = "Diciembre 2020") +
+  labs(title = "Composición del empleo publico", subtitle = "Cuarto Trimestre 2020") +
   theme_void() +
   theme(legend.position = "none", text = element_text(family = "Open Sans"), plot.title =element_text(size = 14), plot.subtitle = element_text(size = 8), legend.text = element_text(size = 8)) 
 torta2 
@@ -581,12 +581,6 @@ figure <- ggarrange(torta1, torta2,
 figure
 
 ggsave("tortascombinadas.svg")
-
-
-  
-  
-grafico5 <- composicionempleados %>%  ggplot(mapping = aes(x=Cartera, y=porcentaje, fill=SITUACIÓN.PRESTAMO))+scale_fill_manual(values = colores)+geom_col(position = "fill", width = 0.5)+ scale_y_continuous(labels = percent) + geom_text(aes(x=Cartera, y=porcentaje, label=porcentaje), position = position_stack(vjust = 0.5), family="Open Sans", color="WHITE")  +  labs(y = "", title ="Prestamos en situación irregular", subtitle ="Diciembre 2020") + theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size=14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), legend.title = element_blank(), legend.position = "bottom", aspect.ratio = (0.55)) 
-graficoirr
 ```
 
 
