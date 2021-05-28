@@ -427,7 +427,7 @@ horastrabajadas_mujeres %>% ggplot(aes(area = horas , label =paste(Edad,": " ,ho
   geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Carga laboral semanal para mujeres", subtitle = "Cuarto trimestre 2020", caption = "", fill="") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank()) 
 ggsave("grafico3.2.svg")
 
-#Barras comparativo
+#Opción colum comparativo
 grafico3 <- horastrabajadasgr %>%  ggplot(mapping = aes(x=Edad, y=horas, fill=as.character(CH04))) + geom_chicklet(position = position_dodge(), show.legend = F) + scale_fill_manual(values = colores, labels=c("Hombre", "Mujer") )  + labs(y="Horas trabajadas semanales", title = "Carga laboral semanal por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span>", subtitle = "Cuarto trimestre 2020", fill="", x="")  +  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank()) 
 grafico3
 ggsave("grafico3.svg")
@@ -463,7 +463,8 @@ Tasas$empleo <- as.numeric(Tasas$empleo)
 Tasas$desocupacion <- as.numeric(Tasas$desocupacion)
 #geom_point(color="#e22172", size=1.7)
 
-grafico4 <- Tasas %>%  ggplot() +  geom_col(aes(x=periodo, y=empleo, fill=empleo), size=1, show.legend = F) + geom_line(aes(x=periodo, y=desocupacion, group = 1), color="#0c8136", size=1.2)   + scale_y_continuous(limits = c(0,0.45)) +  labs(y = "", title ="Evolución de Tasas 2016-2020", subtitle ="<span style = 'color:  #1ba2d8 ;'>**Empleo**</span> y <span style='color: #0c8136;'>**Desocupación**</span>", x="") + theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size=14), plot.title.position = "plot", plot.subtitle = element_markdown(size = 8), axis.title = element_text(size=8), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), legend.title = element_blank(), legend.position = "bottom", aspect.ratio = (0.5), axis.text.x=element_text(angle=60, hjust=1)) + scale_color_manual(values = colores) 
+
+grafico4 <- Tasas %>%  ggplot(aes(x=periodo, y=empleo, fill=empleo)) +  geom_col(size=1, show.legend = F) + geom_line(aes(x=periodo, y=desocupacion, group = 1), color="#0c8136", size=1.2)   + scale_y_continuous(limits = c(0,0.45)) +  labs(y = "", title ="Evolución de Tasas 2016-2020", subtitle ="<span style = 'color:  #1ba2d8 ;'>**Empleo**</span> y <span style='color: #0c8136;'>**Desocupación**</span>", x="") + theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size=14), plot.title.position = "plot", plot.subtitle = element_markdown(size = 8), axis.title = element_text(size=8), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), legend.title = element_blank(), legend.position = "bottom", aspect.ratio = (0.5), axis.text.x=element_text(angle=60, hjust=1)) + scale_color_manual(values = colores) 
 grafico4 
 
 ggsave("grafico4.svg")
@@ -618,7 +619,7 @@ calificacionhombres
 ###Calificación Mujeres
 ```{r}
 calificacionmujeres<- eph4t %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION) & CH04==2) 
-calificacionmujeres<- calificacionmujeres %>% group_by(TIPOCALIFICACION) %>% summarise(percent(sum(PONDERA)/sum(calificacionmujeres$PONDERA)), sum(PONDERA), sum(calificacionhombres$PONDERA))
+calificacionmujeres<- calificacionmujeres %>% group_by(TIPOCALIFICACION) %>% summarise(percent(sum(PONDERA)/sum(calificacionmujeres$PONDERA)), sum(PONDERA), sum(calificacionmujeres$PONDERA))
 calificacionmujeres 
 
 ```
@@ -660,10 +661,32 @@ corro<- sectores %>% select(SECTOR_ACT,SECTOR, PP04B_COD, CH11, ESTADO, OCUPADOS
 corro
 
 spublico<- sectores %>% filter(AGLOMERADO==12 & PP04A==1)
-spublico <- spublico %>% group_by(SECTOR_ACT) %>% summarise(porcentaje=formattable::percent(sum(PONDERA)/sum(spublico$PONDERA)), sum(PONDERA))
+spublico <- spublico %>% group_by(SECTOR_ACT) %>% summarise(proporcion=(sum(PONDERA)/sum(spublico$PONDERA)), cantidad=sum(PONDERA)) %>% arrange(-proporcion) 
 spublico
 
 ```
+#Gráfico composición secto público
+```{r}
+
+grafspublico <- spublico %>% mutate(principal=case_when(proporcion<0.10 ~"Otros",
+                                                            T ~ as.character(SECTOR_ACT)))
+
+grafspublico <- grafspublico %>% group_by(principal) %>% summarise(porcentaje=formattable::percent(sum(proporcion))) %>% arrange(-porcentaje) 
+grafspublico
+
+
+grafspublico$principal[grafspublico$principal %in% "ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO"] <- "ADMIN. PÚBLICA Y DEFENSA;  \nPLANES DE SEGURO SOCIAL OBLIGATORIO"
+
+grafspublico$principal[grafspublico$principal %in% "SALUD HUMANA Y SERVICIOS SOCIALES"] <- "SALUD HUMANA Y \nSERVICIOS SOCIALES"
+
+grafico7 <- grafspublico %>% ggplot(aes(area = porcentaje , label =paste(principal, porcentaje,sep = "|"), fill=principal)) +
+  geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Composición del sector público", subtitle = "Cuarto Trimestre 2020", caption = "", fill="") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank()) 
+grafico7
+
+ggsave("grafico7.svg")
+
+```
+
 
 ##Informalidad
 ###Total
@@ -818,37 +841,60 @@ table(sectores$SECTOR_ACT)
 ```{r}
 inforporsector<- function(i) {
   infor <- sectores %>% filter(AGLOMERADO==12  & !is.na(INFORMALES) & SECTOR_ACT==i)
-  infor <- infor %>% group_by(INFORMALES) %>%  summarise(SECTOR=i, porcentaje=formattable::percent(sum(PONDERA)/sum(infor$PONDERA), digits=2)) 
+  infor <- infor %>% group_by(INFORMALES) %>%  summarise(SECTOR=i, porcentaje=sum(PONDERA)/sum(infor$PONDERA)) 
   return(infor)
 }
-nombres<-(unique(sectores$SECTOR_ACT))
-nombres
+#nombres<-(unique(sectores$SECTOR_ACT))
+#nombres
 
 
 c((lapply(nombres, inforporsector))) #lapply aplica una función a cada elemento de una lista o vector
 
+                                         
 
-#inforporsector("INFORMACIÓN Y COMUNICACIÓN")
-#inforporsector("ENSEÑANZA")
-#inforporsector("CONSTRUCCIÓN")
-#inforporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
-#inforporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
-#inforporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
-#inforporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
-#inforporsector("COMERCIO AL POR MAYOR Y AL POR MENOR; REPARACIÓN DE VEHÍCULOS AUTOMOTORES Y MOTOCICLETAS")
-#inforporsector("INDUSTRIA MANUFACTURERA")
-#inforporsector("TRANSPORTE Y ALMACENAMIENTO" )
-#inforporsector("ARTES, ENTRETENIMIENTO Y RECREACIÓN")
-#inforporsector("AGRICULTURA, GANADERÍA, CAZA, SILVICULTURA Y PESCA")
-#inforporsector("ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE\nPERSONAL DOMÉSTICO" )
-#inforporsector("OTRAS ACTIVIDADES DE SERVICIOS")
-#inforporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
-#inforporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO" )
-#inforporsector("ALOJAMIENTO Y SERVICIOS DE COMIDAS")
-#inforporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
-#inforporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
-#inforporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
-#inforporsector("ACTIVIDADES INMOBILIARIAS" )
+
+
+```
+
+#Gráfico sectores con mayor informalidad
+```{r}
+informalidad_sectores <- bind_rows(lapply(nombres, inforporsector)) 
+informalidad_sectores <- informalidad_sectores %>% filter(INFORMALES==1) %>% arrange(-porcentaje) #%>% mutate(SECTOR=fct_reorder(SECTOR, porcentaje))
+informalidad_sectores <-informalidad_sectores[1:5,]
+informalidad_sectores <- informalidad_sectores %>% mutate(SECTOR= case_when(SECTOR=="ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE
+PERSONAL DOMÉSTICO" ~ "PERSONAL DOMESTICO",
+                                                                            SECTOR=="ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS" ~ "ACTIVIDADES \nCIENTÍFICAS Y TÉCNICAS",
+                                                                            SECTOR=="ARTES, ENTRETENIMIENTO Y RECREACIÓN" ~ "ARTES, ENTRETENIMIENTO \nY RECREACIÓN",
+                                                                            T ~ as.character(SECTOR)))  %>% mutate(SECTOR= fct_reorder(SECTOR, porcentaje))
+
+
+grafico8 <- informalidad_sectores %>% ggplot(mapping = aes(x=SECTOR, y=porcentaje))+ geom_segment(aes(x=SECTOR, xend=SECTOR, y=0, yend=porcentaje), color= colores[2], size=1.05) + geom_point(size=3.5, color=colores[1]) + coord_flip() + labs(x="", y="", title = "Sectores con mayor informalidad", subtitle = "Cuarto Trimestre 2020") + scale_y_continuous(labels = percent, limits = c(0,1)) + theme(text = element_text(family = "Open Sans"), plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), plot.title.position = "plot", panel.background = element_blank(), axis.text = element_text(size = 8), axis.title.x = element_text(size = 8))
+grafico8
+ggsave("grafico8.svg")
+
+```
+
+#Gráfico sectores con menor informalidad
+```{r}
+menor_informalidad <- bind_rows(lapply(nombres, inforporsector)) 
+menor_informalidad <- menor_informalidad %>% filter(INFORMALES==1) %>% arrange(porcentaje) #%>% mutate(SECTOR=fct_reorder(SECTOR, porcentaje))
+menor_informalidad <-menor_informalidad[1:5,]
+menor_informalidad <- menor_informalidad %>% mutate(SECTOR= case_when(SECTOR=="ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" ~ "ADMINISTRACIÓN PÚBLICA Y  \nDEFENSA;",
+                                                                            SECTOR=="ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS" ~ "ACTIVIDADES \nCIENTÍFICAS Y TÉCNICAS",
+                                                                            SECTOR=="SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO" ~ "SUMINISTRO DE AGUA \nENTRE OTROS",
+
+SECTOR=="ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS
+EXTRATERRITORIALES" ~ "ACT. ORGANISMOS \nEXTRATERRITORIALES",
+
+SECTOR=="INFORMACIÓN Y COMUNICACIÓN" ~ "INFORMACIÓN Y \nCOMUNICACIÓN",
+                                                                            T ~ as.character(SECTOR)))  %>% mutate(SECTOR= fct_reorder(SECTOR, -porcentaje))
+                 
+
+grafico9 <- menor_informalidad %>%  ggplot(mapping = aes(x=SECTOR, y=porcentaje))+ geom_segment(aes(x=SECTOR, xend=SECTOR, y=0, yend=porcentaje), color= colores[2], size=1.05) + geom_point(size=3.5, color=colores[1]) + coord_flip() + labs(x="", y="", title = "Sectores con menor informalidad", subtitle = "Cuarto Trimestre 2020") + scale_y_continuous(labels = percent, limits = c(0,0.25)) + theme(text = element_text(family = "Open Sans"), plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), plot.title.position = "plot", panel.background = element_blank(), axis.text = element_text(size = 8), axis.title.x = element_text(size = 8))
+grafico9
+
+ggsave("grafico9.svg")
+
 ```
 
 ##Calificación por sector
@@ -859,30 +905,29 @@ califporsector<- function(i) {
   return(calif)
 }
 
-califporsector("INFORMACIÓN Y COMUNICACIÓN")
-califporsector("ENSEÑANZA")
-califporsector("CONSTRUCCIÓN")
-califporsector("ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO" )
-califporsector("ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS")
-califporsector("SALUD HUMANA Y SERVICIOS SOCIALES")
-califporsector("ACTIVIDADES FINANCIERAS Y DE SEGUROS" )
-califporsector("COMERCIO AL POR MAYOR Y AL POR MENOR; REPARACIÓN DE VEHÍCULOS AUTOMOTORES Y MOTOCICLETAS")
-califporsector("INDUSTRIA MANUFACTURERA")
-califporsector("TRANSPORTE Y ALMACENAMIENTO" )
-califporsector("ARTES, ENTRETENIMIENTO Y RECREACIÓN")
-califporsector("AGRICULTURA, GANADERÍA, CAZA, SILVICULTURA Y PESCA")
-califporsector("ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE\nPERSONAL DOMÉSTICO" )
-califporsector("OTRAS ACTIVIDADES DE SERVICIOS")
-califporsector("ACTIVIDADES DE ORGANIZACIONES Y ORGANISMOS\nEXTRATERRITORIALES")
-califporsector("ACTIVIDADES ADMINISTRATIVAS Y SERVICIOS DE APOYO" )
-califporsector("ALOJAMIENTO Y SERVICIOS DE COMIDAS")
-califporsector("EXPLOTACIÓN DE MINAS Y CANTERAS")
-califporsector("SUMINISTRO DE ELECTRICIDAD, GAS, VAPOR Y AIRE\nACONDICIONADO")
-califporsector("SUMINISTRO DE AGUA; ALCANTARILLADO, GESTIÓN DE DESECHOS Y ACTIVIDADES DE SANEAMIENTO")
-califporsector("ACTIVIDADES INMOBILIARIAS" )
+
+calificacion_sectores <- bind_rows(lapply(nombres, califporsector)) 
+calificacion_sectores <- calificacion_sectores %>% filter(TIPOCALIFICACION=="Calificado") %>% arrange(-porcentaje) 
+calificacion_sectores <-calificacion_sectores[1:5,]
+calificacion_sectores <- calificacion_sectores %>% mutate(SECTOR= case_when(                 SECTOR=="ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS" ~ "ACTIVIDADES \nCIENTÍFICAS Y TÉCNICAS",
+SECTOR=="ARTES, ENTRETENIMIENTO Y RECREACIÓN" ~ "ARTE, ENTRETENIMIENTO \nY RECREACIÓN",
+
+SECTOR=="SALUD HUMANA Y SERVICIOS SOCIALES" ~ "SALUD HUMANA Y \nSERVICIOS SOCIALES",
+
+SECTOR=="INFORMACIÓN Y COMUNICACIÓN" ~ "INFORMACIÓN Y \nCOMUNICACIÓN",
+                                                                            T ~ as.character(SECTOR)))  %>% mutate(SECTOR= fct_reorder(SECTOR, -porcentaje))
 
 
-table(sectores$SECTOR_ACT)
+
+
+calificacion_sectores %>% ggplot(aes(area = porcentaje , label =paste(SECTOR, porcentaje,sep = "  "), fill=SECTOR)) +
+  geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Sectores con mayor calificación", subtitle = "Cuarto Trimestre 2020", caption = "", fill="") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank()) 
+
+
+ggsave("grafico10.svg")
+
+
+
 
 ```
 
