@@ -328,7 +328,7 @@ nivelgraf
 ```
 
 ```{r}
-grafico2 <- nivelalcanzado %>% ggplot() + geom_chicklet(aes(x=Nivel, y=porcentaje, fill=Sexo), position = position_dodge(), width = 0.5, show.legend = F) + geom_point(aes(x=Nivel, y=Brecha), shape=15) +  geom_line(aes(x=Nivel, y=Brecha, group = 1)) + scale_y_continuous(labels = percent, limits = c(0,1)) + scale_fill_manual(values=colores) + labs(title ="Participación laboral según nivel educativo para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span> ", subtitle = "Cuarto trimestre 2020", x = "Nivel alcanzado", y="Tasa de participación laboral") + theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_text(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank())  
+grafico2 <- nivelalcanzado %>% ggplot() + geom_chicklet(aes(x=Nivel, y=porcentaje, fill=Sexo), position = position_dodge(), width = 0.7, show.legend = F) + geom_point(aes(x=Nivel, y=Brecha), shape=15, color="#e7930b") +  geom_line(aes(x=Nivel, y=Brecha, group = 1), color="#f4a018", size=1.) + scale_y_continuous(labels = percent, limits = c(0,1)) + scale_fill_manual(values=colores) + labs(title ="Participación laboral según nivel educativo para <span style = 'color: #29aee4;'>**hombres**</span>, <span style='color: #0c8136;'>**mujeres**</span> y <span style = 'color: #f4a018;'>**brecha**</span>", subtitle = "Cuarto trimestre 2020", x = "Nivel alcanzado", y="Tasa de participación laboral") + theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_text(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank())    
 grafico2
 
 
@@ -341,7 +341,7 @@ ggsave("grafico2.svg")
 horastrabtotales <- eph4t %>% mutate(horastrabtotales= PP3E_TOT + PP3F_TOT)
 #15-24 años
 horastrab15 <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15 & !is.na(horastrabtotales))
-horastrab15 <- horastrab15 %>%  group_by(CH04) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad= "15-24 años")
+horastrab15 <- horastrab15 %>%  group_by(SEXO) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad= "15-24 años")
 horastrab15 <- horastrab15 %>% arrange(horas) %>% mutate(Brecha=horas- lag(horas, default = first(horas)))
 brecha15= round(as.numeric(horastrab15[2, "Brecha"]),2)
 horastrab15 <- horastrab15 %>% mutate(Brecha= brecha15)
@@ -352,7 +352,7 @@ horastrab15
 ```{r}
 #25-34
 horastrab25 <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=34 & CH06>=25 & !is.na(horastrabtotales))
-horastrab25 <- horastrab25 %>%  group_by(CH04) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad="25-34 años")
+horastrab25 <- horastrab25 %>%  group_by(SEXO) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad="25-34 años")
 horastrab25 <- horastrab25 %>% arrange(horas) %>% mutate(Brecha=horas- lag(horas, default = first(horas))) 
 brecha25= round(as.numeric(horastrab25[2, "Brecha"]),2)
 horastrab25 <- horastrab25 %>% mutate(Brecha= brecha25)
@@ -364,7 +364,7 @@ horastrab25
 ```{r}
 #35 a 44
 horastrab35 <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=44 & CH06>=35 & !is.na(horastrabtotales))
-horastrab35 <- horastrab35 %>%  group_by(CH04) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad="35-44 años")
+horastrab35 <- horastrab35 %>%  group_by(SEXO) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad="35-44 años")
 horastrab35 <- horastrab35 %>% arrange(horas) %>% mutate(Brecha=horas- lag(horas, default = first(horas))) 
 brecha35= round(as.numeric(horastrab35[2, "Brecha"]),2)
 horastrab35 <- horastrab35 %>% mutate(Brecha= brecha35)
@@ -375,7 +375,7 @@ horastrab35
 ```{r}
 #45 a 59
 horastrab45 <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=59 & CH06>=45 & !is.na(horastrabtotales))
-horastrab45 <- horastrab45 %>%  group_by(CH04) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad="45-59 años")
+horastrab45 <- horastrab45 %>%  group_by(SEXO) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad="45-59 años")
 horastrab45 <- horastrab45 %>% arrange(horas) %>% mutate(Brecha=horas- lag(horas, default = first(horas))) 
 brecha45= round(as.numeric(horastrab45[2, "Brecha"]),2)
 horastrab45 <- horastrab45 %>% mutate(Brecha= brecha45)
@@ -386,7 +386,7 @@ horastrab45
 ```{r}
 #mayores de 60
 horastrab60 <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & CH06>=60 & !is.na(horastrabtotales))
-horastrab60 <- horastrab60 %>%  group_by(CH04) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad="Igual o mayor a 60 años")
+horastrab60 <- horastrab60 %>%  group_by(SEXO) %>% summarise(horas=horastrabtotales%*%PONDERA/sum(PONDERA), Edad="Igual o mayor a 60 años")
 horastrab60 <- horastrab60 %>% arrange(horas) %>% mutate(Brecha=horas- lag(horas, default = first(horas))) 
 brecha60= round(as.numeric(horastrab60[2, "Brecha"]),2)
 horastrab60 <- horastrab60 %>% mutate(Brecha= brecha60)
@@ -397,7 +397,7 @@ horastrab60
 ```{r}
 #Total mujeres y hombres
 horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales))
-horastrab <- horastrab %>%  group_by(CH04) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
+horastrab <- horastrab %>%  group_by(SEXO) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 horastrab
 
 #Total de la poblacion
@@ -408,34 +408,35 @@ horastrab
 horastrabajadas <- bind_rows(horastrab15, horastrab25, horastrab35, horastrab45, horastrab60)
 
 horastrabajadasgr <- horastrabajadas %>% mutate(brecha= paste0(Brecha, " horas"))
-#horastrabajadas %>% pivot_wider(names_from = as.character("CH04"), values_from = horas)
+horastrabajadasgr
+horastrabajadasgr2 <- horastrabajadas %>% mutate(horas=round(horas))
+horastrabajadasgr2 <- horastrabajadasgr2 %>% pivot_wider(names_from = SEXO, values_from = horas)
 
 
-horastrabajadas_hombres <- horastrabajadas %>% filter(CH04==1) %>% mutate(horas=round(horas))
-horastrabajadas_mujeres <- horastrabajadas %>% filter(CH04==2)  %>% mutate(horas=round(horas))
+horastrabajadas_hombres <- horastrabajadas %>% filter(SEXO=="Hombres") %>% mutate(horas=round(horas))
+horastrabajadas_mujeres <- horastrabajadas %>% filter(SEXO=="Mujeres")  %>% mutate(horas=round(horas))
 
 
 ```
 ##Graficos
 ```{r}
-#Opción treemaps
-horastrabajadas_hombres %>% ggplot(aes(area = horas , label =paste(Edad,": " ,horas," horas", sep = ""), fill=Edad)) +
-  geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Carga laboral semanal para hombres", subtitle = "Cuarto trimestre 2020", caption = "", fill="") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank()) 
-ggsave("grafico3.1.svg")
-
-horastrabajadas_mujeres %>% ggplot(aes(area = horas , label =paste(Edad,": " ,horas," horas", sep = ""), fill=Edad)) +
-  geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Carga laboral semanal para mujeres", subtitle = "Cuarto trimestre 2020", caption = "", fill="") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank()) 
-ggsave("grafico3.2.svg")
-
-#Opción colum comparativo
-grafico3 <- horastrabajadasgr %>%  ggplot(mapping = aes(x=Edad, y=horas, fill=as.character(CH04))) + geom_chicklet(position = position_dodge(), show.legend = F) + scale_fill_manual(values = colores, labels=c("Hombre", "Mujer") )  + labs(y="Horas trabajadas semanales", title = "Carga laboral semanal por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span>", subtitle = "Cuarto trimestre 2020", fill="", x="")  +  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank()) 
+##Grafico 3
+grafico3<- horastrabajadasgr2 %>% ggplot() + geom_dumbbell(aes(y=Edad, x=Mujeres, xend=Hombres),
+size=1.2, color="#b2b2b2", size_x=3, size_xend = 3, colour_x =colores[2], colour_xend =colores[1])  + geom_text(aes(x=Mujeres, y=Edad, label=Mujeres),
+          color="BLACK", size=2.75, vjust=2.5, family="Open Sans") + geom_text(aes(x=Hombres, y=Edad, label=Hombres),
+          color="BLACK", size=2.75, vjust=2.5, family="Open Sans") + labs(fill="", title = "Carga laboral semanal por edad de <span style='color: #29aee4;'>**Hombres**</span> y <span style='color: #0c8136;'>**Mujeres**</span>", subtitle = "Cuarto trimestre 2020", caption = "", x="Horas trabajadas")+ ylab("")  + theme(axis.title = element_text(), aspect.ratio=0.5, axis.text = element_text(color = "BLACK"), legend.position = "right", title = element_text(), panel.grid.major = element_blank(), legend.text = element_text(), panel.background = element_blank())  + scale_fill_manual(values = colores, aesthetics = "color")  + labs(color="") + theme(legend.key = element_blank(), panel.grid.major.y =  element_line(colour = "BLACK", linetype = "dotted"), axis.text.y = element_text(hjust = 0), plot.title.position = "plot", plot.title = element_markdown(), text = element_text(family = "Open Sans" ))
 grafico3
 ggsave("grafico3.svg")
 
 
-##same pero mostrando brecha
-#grafico3 <- horastrabajadasgr %>%  ggplot(mapping = aes(x=Edad, y=horas, fill=as.character(CH04))) + geom_chicklet(position = position_dodge(), show.legend = F) + geom_text(aes(x=Edad, y=42, label=brecha), position = position_dodge(preserve = "single", width = 0.1), family="Open Sans", color="grey12", size=3) + scale_fill_manual(values = colores, labels=c("Hombre", "Mujer") )  + labs(y="Horas trabajadas semanales", title = "Carga laboral semanal por edad y sexo", subtitle = "Tercer trimestre 2020", fill="", x="")  +  theme(text = element_text(family = "Open Sans"), plot.title = element_text(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank()) 
-#grafico3
+#Opción treemaps
+#horastrabajadas_hombres %>% ggplot(aes(area = horas , label =paste(Edad,": " ,horas," horas", sep = ""), fill=Edad)) + geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Carga laboral semanal para hombres", subtitle = "Cuarto trimestre 2020", caption = "", fill="") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank()) 
+#ggsave("grafico3.1.svg")
+
+#horastrabajadas_mujeres %>% ggplot(aes(area = horas , label =paste(Edad,": " ,horas," horas", sep = ""), fill=Edad)) + geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Carga laboral semanal para mujeres", subtitle = "Cuarto trimestre 2020", caption = "", fill="") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank()) 
+#ggsave("grafico3.2.svg")
+
+
 
 ```
 
