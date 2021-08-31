@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' width='504.00pt' height='504.00pt' viewBox='0 0 504.00 504.00'>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' width='525.00pt' height='324.00pt' viewBox='0 0 525.00 324.00'>
 <defs>
   <style type='text/css'><![CDATA[
     .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
@@ -13,41 +13,41 @@
 </defs>
 <rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
 <defs>
-  <clipPath id='cpMC4wMHw1MDQuMDB8MC4wMHw1MDQuMDA='>
-    <rect x='0.00' y='0.00' width='504.00' height='504.00' />
+  <clipPath id='cpMC4wMHw1MjUuMDB8MC4wMHwzMjQuMDA='>
+    <rect x='0.00' y='0.00' width='525.00' height='324.00' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpMC4wMHw1MDQuMDB8MC4wMHw1MDQuMDA=)'>
+<g clip-path='url(#cpMC4wMHw1MjUuMDB8MC4wMHwzMjQuMDA=)'>
 </g>
 <defs>
-  <clipPath id='cpMC4wMHw1MDQuMDB8NTEuMDV8NDUyLjk1'>
-    <rect x='0.00' y='51.05' width='504.00' height='401.91' />
+  <clipPath id='cpNjYuMTV8NDU4Ljg1fDAuMDB8MzI0LjAw'>
+    <rect x='66.15' y='0.00' width='392.70' height='324.00' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpMC4wMHw1MDQuMDB8NTEuMDV8NDUyLjk1)'>
+<g clip-path='url(#cpNjYuMTV8NDU4Ljg1fDAuMDB8MzI0LjAw)'>
 </g>
-<g clip-path='url(#cpMC4wMHw1MDQuMDB8MC4wMHw1MDQuMDA=)'>
+<g clip-path='url(#cpMC4wMHw1MjUuMDB8MC4wMHwzMjQuMDA=)'>
 </g>
 <defs>
-  <clipPath id='cpNS40OHw0OTguNTJ8ODguNDd8NDMzLjYw'>
-    <rect x='5.48' y='88.47' width='493.04' height='345.13' />
+  <clipPath id='cpNzEuNjN8NDUzLjM3fDM3LjQzfDMwNC42NQ=='>
+    <rect x='71.63' y='37.43' width='381.74' height='267.22' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpNS40OHw0OTguNTJ8ODguNDd8NDMzLjYw)'>
-<rect x='5.48' y='88.47' width='493.04' height='345.13' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
-<polygon points='5.48,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,88.47 5.48,433.60 5.48,433.60 5.48,433.60 5.48,433.60 5.48,433.60 5.48,433.60 5.48,433.60 5.48,433.60 5.48,433.60 5.48,433.60 5.48,433.60 5.48,433.60 ' style='stroke-width: 0.38; stroke: #BEBEBE; fill: #29AEE4;' />
-<polygon points='274.72,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,433.60 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 274.72,433.60 ' style='stroke-width: 0.38; stroke: #BEBEBE; fill: #0C8136;' />
-<polygon points='274.72,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,88.47 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 274.72,233.17 ' style='stroke-width: 0.38; stroke: #BEBEBE; fill: #F4A018;' />
-<polygon points='416.22,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,233.17 498.52,88.47 498.52,88.47 498.52,88.47 498.52,88.47 498.52,88.47 498.52,88.47 498.52,88.47 498.52,88.47 498.52,88.47 498.52,88.47 498.52,88.47 498.52,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,88.47 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 416.22,233.17 ' style='stroke-width: 0.38; stroke: #BEBEBE; fill: #E22172;' />
-<text x='140.10' y='257.67' text-anchor='middle' style='font-size: 11.07px; fill: #FFFFFF; font-family: Open Sans;' textLength='155.06px' lengthAdjust='spacingAndGlyphs'>ADMIN. PÚBLICA Y DEFENSA;  </text>
-<text x='140.10' y='269.63' text-anchor='middle' style='font-size: 11.07px; fill: #FFFFFF; font-family: Open Sans;' textLength='263.24px' lengthAdjust='spacingAndGlyphs'>PLANES DE SEGURO SOCIAL OBLIGATORIO|54.61%</text>
-<text x='386.62' y='338.70' text-anchor='middle' style='font-size: 22.52px; fill: #FFFFFF; font-family: Open Sans;' textLength='218.07px' lengthAdjust='spacingAndGlyphs'>ENSEÑANZA|26.36%</text>
-<text x='345.47' y='157.76' text-anchor='middle' style='font-size: 10.05px; fill: #FFFFFF; font-family: Open Sans;' textLength='89.24px' lengthAdjust='spacingAndGlyphs'>SALUD HUMANA Y </text>
-<text x='345.47' y='168.62' text-anchor='middle' style='font-size: 10.05px; fill: #FFFFFF; font-family: Open Sans;' textLength='135.76px' lengthAdjust='spacingAndGlyphs'>SERVICIOS SOCIALES|12.03%</text>
-<text x='457.37' y='163.85' text-anchor='middle' style='font-size: 12.82px; fill: #FFFFFF; font-family: Open Sans;' textLength='76.59px' lengthAdjust='spacingAndGlyphs'>Otros|7.00%</text>
+<g clip-path='url(#cpNzEuNjN8NDUzLjM3fDM3LjQzfDMwNC42NQ==)'>
+<rect x='71.63' y='37.43' width='381.74' height='267.22' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
+<polygon points='71.63,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,304.65 71.63,304.65 71.63,304.65 71.63,304.65 71.63,304.65 71.63,304.65 71.63,304.65 71.63,304.65 71.63,304.65 71.63,304.65 71.63,304.65 71.63,304.65 ' style='stroke-width: 0.38; stroke: #BEBEBE; fill: #29AEE4;' />
+<polygon points='71.63,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,146.46 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,37.43 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 71.63,146.46 ' style='stroke-width: 0.38; stroke: #BEBEBE; fill: #0C8136;' />
+<polygon points='358.83,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,304.65 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 358.83,304.65 ' style='stroke-width: 0.38; stroke: #BEBEBE; fill: #F4A018;' />
+<polygon points='358.83,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,142.00 453.37,37.43 453.37,37.43 453.37,37.43 453.37,37.43 453.37,37.43 453.37,37.43 453.37,37.43 453.37,37.43 453.37,37.43 453.37,37.43 453.37,37.43 453.37,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,37.43 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 358.83,142.00 ' style='stroke-width: 0.38; stroke: #BEBEBE; fill: #E22172;' />
+<text x='215.23' y='221.95' text-anchor='middle' style='font-size: 11.83px; fill: #FFFFFF; font-family: Open Sans;' textLength='165.66px' lengthAdjust='spacingAndGlyphs'>ADMIN. PÚBLICA Y DEFENSA;  </text>
+<text x='215.23' y='234.73' text-anchor='middle' style='font-size: 11.83px; fill: #FFFFFF; font-family: Open Sans;' textLength='281.26px' lengthAdjust='spacingAndGlyphs'>PLANES DE SEGURO SOCIAL OBLIGATORIO|44.54%</text>
+<text x='215.23' y='98.80' text-anchor='middle' style='font-size: 29.07px; fill: #FFFFFF; font-family: Open Sans;' textLength='281.51px' lengthAdjust='spacingAndGlyphs'>ENSEÑANZA|30.70%</text>
+<text x='406.10' y='221.32' text-anchor='middle' style='font-size: 6.58px; fill: #FFFFFF; font-family: Open Sans;' textLength='58.29px' lengthAdjust='spacingAndGlyphs'>SALUD HUMANA Y </text>
+<text x='406.10' y='228.42' text-anchor='middle' style='font-size: 6.58px; fill: #FFFFFF; font-family: Open Sans;' textLength='88.68px' lengthAdjust='spacingAndGlyphs'>SERVICIOS SOCIALES|15.07%</text>
+<text x='406.10' y='93.22' text-anchor='middle' style='font-size: 14.87px; fill: #FFFFFF; font-family: Open Sans;' textLength='88.82px' lengthAdjust='spacingAndGlyphs'>Otros|9.69%</text>
 </g>
-<g clip-path='url(#cpMC4wMHw1MDQuMDB8MC4wMHw1MDQuMDA=)'>
-<text x='5.48' y='81.07' style='font-size: 8.00px; font-family: Open Sans;' textLength='83.82px' lengthAdjust='spacingAndGlyphs'>Cuarto Trimestre 2020</text>
-<text x='5.48' y='66.52' style='font-size: 14.00px; font-family: Open Sans;' textLength='203.90px' lengthAdjust='spacingAndGlyphs'>Composición del sector público</text>
+<g clip-path='url(#cpMC4wMHw1MjUuMDB8MC4wMHwzMjQuMDA=)'>
+<text x='71.63' y='30.02' style='font-size: 8.00px; font-family: Open Sans;' textLength='82.18px' lengthAdjust='spacingAndGlyphs'>Primer trimestre 2021</text>
+<text x='71.63' y='15.47' style='font-size: 14.00px; font-family: Open Sans;' textLength='203.90px' lengthAdjust='spacingAndGlyphs'>Composición del sector público</text>
 </g>
 </svg>
