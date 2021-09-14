@@ -2,19 +2,60 @@
 title: "Informe del mercado laboral de Corrientes"
 author: "Observatorio Económico de la Ciudad de Corrientes"
 date: "Primer trimestre 2021"
-output: html_document
+header-includes:
+   - \usepackage{pdfpages}
+   - \usepackage[default]{open sans}
+   - \usepackage[T1]{fontenc}
+   - \usepackage{graphicx}
+   - \usepackage{fancyhdr}
+   - \usepackage{hyperref}
+   - \usepackage{xcolor}
+   - \usepackage{sidecap}
+   - \usepackage[spanish]{babel}
+   - \pagestyle{fancy}
+   - \renewcommand{\headrulewidth}{0pt}
+   - \fancyhead{}
+   - \setlength{\headheight}{23pt}
+   - \lhead{\includegraphics[width=7cm,height=140cm]{"./logos/logo_oecc.pdf"}}
+   - \fancyfoot{}
+   - \lfoot{\includegraphics[width=5.0cm,height=140cm]{"./logos/muni.jpg"}}
+   - \rfoot{\thepage}
+   - \definecolor{graycustom}{HTML}{7b7b7e}
+   - \usepackage{floatrow}
+   - \floatsetup[figure]{capposition=top}
+   - \renewcommand{\arraystretch}{1.5}
+   - \usepackage{svg}
+   - \usepackage{amsmath}
+mainfont: Open Sans
+output: 
+  pdf_document: default
+includes:
+fig_caption: yes
+html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, dev = "cairo_pdf")
 ```
 
-# Preparación de los datos
 
-Primero se cargan las librerías, fuentes y gama de colores que se utilizaran para el informe
+# Consideraciones metodológicas para el primer trimestre 2021
+
+El Observatorio Económico de la Municipalidad de Corrientes lleva a cabo diversos informes sociodemográficos, utilizando como fuente principal la base de microdatos de la Encuesta Permanente de Hogares elaborada por el Instituto Nacional de Estadísticas y Censos (INDEC) y presentada con una periodicidad trimestral. La misma se realiza a través de cuestionarios presenciales que luego son volcados a bases de datos para ser utilizados por el público en general.
+
+A raíz del decreto N.º 297/2020 que establece el aislamiento social, preventivo y obligatorio por la pandemia causada por el virus SARS-COV2, y con el objetivo de no interrumpir el operativo continuo, el INDEC pasó de la modalidad presencial a la telefónica para contactar y realizar la entrevista a los hogares.
+
+Esto implica que, a partir del segundo trimestre del 2020, el relevamiento habitual de la EPH se ha visto afectado no solo por el cambio de modalidad de entrevista, sino también por la cobertura de la muestra, ya que la misma se redujo a las viviendas que tenían un número de teléfono conocido o cuyo número se pudo obtener mediante estrategias que no implicaban contacto personal. Ambos aspectos impactan en la cantidad de hogares sin respuesta y ocasionan sesgos en las estimaciones.
+
+Gracias a los esfuerzos del INDEC para asegurar la difusión de las estadísticas y aminorar los posibles sesgos producidos en los datos del trimestre, el Observatorio Económico pudo llevar a cabo este informe. Sin embargo, creemos oportuno realizar las aclaraciones metodológicas antes descritas.
+
+Por último, este trabajo se ha hecho considerando a los datos del primer trimestre de 2021, con excepción de los apartados de informalidad por sectores y calificación laboral por sectores, que se hicieron trabajando en conjunto con las bases del cuarto trimestre del 2020.
+
 
 ```{r}
-#Librerías
+#Primero se cargan las librerías, fuentes y gama de colores que se utilizaran para el informe
+#Librerias
 library(ggtext)
 library(eph)
 library(tidyverse)
@@ -37,22 +78,21 @@ library(forcats)
 library(svglite)
 library(ggchicklet)
 library(ggpubr)
-
-
+library(kableExtra)
+ 
 
 #Fuente
 font_import(paths = "./Open_Sans", prompt = F)
 loadfonts(device = "win", quiet=T)
 
 #Colores
-colores<- c("#e22172","#0c8136","#e22172","#f4a018","#428cb4","#c85687","#dbac2f","#5da14a","#ff9a00")
+colores<- c("#29aee4","#0c8136","#e22172","#f4a018","#428cb4","#c85687","#dbac2f","#5da14a","#ff9a00")
 gradiente<- c("#ed3068","#ef4275","#f3789d","#f69cb7","#fbd2de")
 
 ```
 
-Se cargan las bases de datos
-
 ```{r}
+#Se cargan las bases de datos
 #Primer trimestre 2021
 eph1ti<- get_microdata(year=2021, trimester=1, type="individual")
 eph1tih <- get_microdata(year=2021, trimester=1, type="hogar")
@@ -76,9 +116,8 @@ caes<- read.csv("SECTORESCAES.csv", sep = ";", colClasses = "character")
 
 ```
 
-Modificaciones a la EPH
-
 ```{r}
+#Modificaciones a la EPH
 #Primer trimestre 2021
 eph1t <- eph1t %>%  mutate(PEA= case_when(ESTADO==3 ~ 0,
                                                       ESTADO==4 ~ 0,
@@ -165,17 +204,94 @@ sectores_ephtotal<- left_join(ephtotalsd,caes)
 
 ```
 
-# Análisis de los datos de mercado laboral
+\newpage 
 
-Indicadores de participación laboral
+# Mercado de trabajo:
 
-## Tasa de participación laboral
+Tasas e indicadores socioeconómicos (EPH) Según las proyecciones de INDEC basadas en el último Censo de población, la cantidad de habitantes total de la ciudad en el año 2021 es de 414927 personas. De ese total el 48.83% son hombres y el restante 51.17%, mujeres.
 
-### Tasa de participación laboral total de la poblacion
+De acuerdo con los datos publicados por el INDEC, basados también en el último Censo Nacional de Población, Hogares y Viviendas (2010), la población por edades se compone de la siguiente manera:
+
+```{r include=FALSE}
+#\begin{figure}[h!]
+#\includegraphics[width=0.7\columnwidth]{piramide}
+#\end{figure}
+
+```
+
+
 
 ```{r}
-#Primero se filtra la base
-tablapeapt <- eph1t %>% filter (AGLOMERADO==12 & ESTADO!=0)
+Edad <- c("0-14", "15-24", "25-34", "35-44", "45-59", "Mayor o igual a 60")
+Hombres <- c(0.28, 0.21, 0.16, 0.11, 0.15, 0.09)
+Mujeres <- c(0.25, 0.20, 0.16, 0.12, 0.15, 0.12)
+poblacion <- data.frame(Edad, Hombres, Mujeres)
+```
+
+
+```{r include=FALSE}
+#Tabla
+tabla_1<- poblacion %>% 
+  mutate(Hombres=formattable::percent(Hombres), Mujeres=formattable::percent(Mujeres)) %>% 
+  kbl(booktabs = T) %>% 
+  kable_styling(latex_options = c("striped", "hover", "condensed"), font_size = 18, position = "center") %>% 
+  row_spec(0, color = "white", bold = TRUE, background="#29aee4", font_size = 22) %>% 
+  row_spec(seq(1,nrow(poblacion),2), background="#F0FFFF") %>% 
+  column_spec(1, width = "18em") %>% 
+  column_spec(2, width = "14em") %>%  
+  column_spec(3, width = "14em") 
+
+#kableExtra::save_kable(tabla_1,"./graficos_md/tabla_1.jpg")
+
+
+#svg(filename = 'tabla_1.pdf')
+
+```
+\begin{figure}[htbp!]
+\centering
+\includegraphics{./graficos_md/tabla_1.jpg}
+\end{figure}
+
+hola 
+
+```{r}
+#Piramide 
+piramide <- poblacion %>% mutate(Hombres=-Hombres) %>% 
+  pivot_longer(!Edad, names_to = "Sexo", values_to = "Porcentaje") 
+
+piramide_gr <- piramide %>% ggplot(aes(x = Edad, y = Porcentaje, fill = Sexo)) +
+  geom_col(position = "stack", width = 0.3) + 
+  coord_flip() +
+  scale_fill_manual(values=colores) + 
+  scale_y_continuous(labels = abs, limits = c(-0.30,0.30)) + 
+  labs(y = "", title ="Piramide poblacional de Corrientes", x = "") + 
+  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_markdown(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank()) 
+piramide_gr
+ggsave("piramide.svg")
+```
+
+\newpage 
+
+# Indicadores de participación laboral
+
+Los resultados para primer trimestre de 2021 para la Ciudad de Corrientes muestran que la tasa de actividad es del 43.99%.
+
+Del total de la PEA, el 53.81% son hombres y el 46.19% mujeres. Por otro lado, se observa que del total de mujeres el 38.99% forman parte de la PEA, mientras que en el caso de los hombres el porcentaje que forma parte de la PEA alcanza el 49.44%.
+
+La población económicamente activa (PEA), a su vez, está compuesta por los ocupados y desocupados. Este último grupo presiona activamente sobre el mercado laboral en búsqueda de una ocupación.
+
+La definición vista de PEA, no incluye al trabajo no remunerado (doméstico, voluntario y de subsistencia). Esto implica que, en la medición de la actividad de la EPH, no se considera activa a la población que realiza producción o tratamiento de bienes exclusivamente para autoconsumo. Esto trae inconvenientes en cuanto a la subestimación de la participación femenina en la actividad económica. Por la importancia que tiene este tópico en las brechas de género, el tema es tratado especialmente en el "Informe de Género" realizado por el Observatorio Económico de la Ciudad de Corrientes.
+
+A continuación, se aprecian los porcentajes, tanto de hombres como de mujeres, que forman parte de la PEA, desagregados por rangos de edad.
+
+
+
+
+```{r include=FALSE}
+## Tasa de participación laboral
+### Tasa de participación laboral total de la población
+
+tablapeapt <- eph1t %>% filter (AGLOMERADO==12 & ESTADO!=0) #Primero se filtra la base
 
 #Ahora armamos la tabla (cantidad de 1 sobre cantidad de 0 y 1) y se agrupa entre 0 y 1 (PEA==1), ademas se agrega la cantidad de habitantes dentro de la PEA.
 tablapeapt <- tablapeapt %>% group_by(PEA) %>%  summarise((formattable::percent(sum(PONDERA)/sum(tablapeapt$PONDERA))), sum(PONDERA), sum(tablapeapt$PONDERA))
@@ -183,15 +299,14 @@ tablapeapt
 
 ```
 
+```{r include=FALSE}
 ### Tasa de participación laboral por sexo
-
-```{r }
 tablapeasexo<- eph1t %>% filter (AGLOMERADO==12 & ESTADO!=0 & PEA==1)
 tablapeasexo <- tablapeasexo %>% group_by(CH04) %>%  summarise(sum(PONDERA), formattable::percent(sum(PONDERA)/sum(tablapeasexo$PONDERA)))
 tablapeasexo
 ```
 
-```{r }
+```{r include=FALSE}
 #Proporcion de mujeres que conforman la PEA sobre el total de mujeres:
 tablapeamujeres <- eph1t %>%  filter(AGLOMERADO==12 & ESTADO!=0 & CH04==2)
 tablapeamujeres <- tablapeamujeres %>% group_by(PEA) %>%  summarise(sum(PONDERA)/sum(tablapeamujeres$PONDERA), sum(PONDERA))
@@ -203,9 +318,8 @@ tablapeahombres <- tablapeahombres %>% group_by(PEA) %>% summarise(sum(PONDERA)/
 tablapeahombres
 ```
 
-### Tasa de participación laboral por edad y sexo
-
 ```{r}
+### Tasa de participación laboral por edad y sexo
 #15 a 24 años
 #Hombres
 hombresact15 <- eph1t %>%  filter(CH04==1 & AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15) 
@@ -283,9 +397,43 @@ mujeresact60 <- mujeresact60 %>%
 act60 <- bind_rows(hombresact60, mujeresact60)
 
 tabla_actividad <- bind_rows(act15a24, act25a34, act35a44, act45a59, act60)
-tabla_actividad
+tablakg_2 <- tabla_actividad %>% pivot_wider(names_from = Sexo, values_from = porcentaje)
+```
+
+
+```{r}
+#Tabla
+tablakg_2<- tablakg_2 %>% 
+  kbl(caption="Participación laboral por sexo y edad", booktabs = T) %>% 
+  kable_styling(latex_options = c("striped", "hover", "condensed"), font_size = 9, position = "center") %>% 
+  row_spec(0, color = "white", bold = TRUE, background="#29aee4", font_size = 12) %>% 
+  row_spec(seq(1,nrow(tablakg_2),2), background="#F0FFFF") %>% 
+  column_spec(1, width = "18em") %>% 
+  column_spec(2, width = "14em") %>%  
+  column_spec(3, width = "14em")
+
+ 
+ # %>%  save_kable(file = "tablakg_2.svg")
+
+#svg("tablakg_2.svg")
+
+# Código del gráfico
+#tablakg_1
+# Cerramos el dispositivo
+#dev.off() 
+
 
 ```
+
+```{r include=FALSE}
+#\begin{figure}[hb!]
+#\caption{veremos}
+#\includegraphics{tablakg_1}
+#\end{figure}
+#- \renewcommand{\arraystretch}{1.5}
+#- \usepackage{float}
+```
+
 
 ```{r}
 #Grafico
@@ -298,9 +446,14 @@ grafico1
 ggsave("grafico1.svg") #ver despues q paso aca con el color
 ```
 
-### Tasa de participación laboral por sexo y nivel educativo
+Se puede observar que, con excepción al rango etario de 15 a 24 años, existe una brecha en la tasa de actividad que muestra que hay menos mujeres participando en el mercado laboral, en comparación a los hombres.
 
-```{r}
+A modo de observación, para ambos sexos, el porcentaje máximo de participación se encuentra entre los 35 a 44 años.
+
+Tanto en la tabla como en el Gráfico 3 se exponen los porcentajes tanto de hombres como de mujeres pertenecientes a la PEA, desagregados por el nivel de educación alcanzado, junto con las respectivas brechas. Se entiende como brecha a la diferencia entre el porcentaje de hombres y mujeres que conforman la PEA para cada nivel educativo.
+
+```{r include=FALSE}
+### Tasa de participación laboral por sexo y nivel educativo
 #Primaria completa
 #Hombres:
 hombresprim <- eph1t %>%  filter(CH04==1 & AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED %in% c(2,3))
@@ -340,9 +493,28 @@ superiorcomp <- bind_rows(hombressup, mujeressup) %>% mutate("Brecha"=formattabl
 
 
 nivelalcanzado <- bind_rows(primariacomp, secundariacomp, superiorcomp)
-nivelalcanzado
 
 ```
+
+
+```{r}
+tablakg_3 <- nivelalcanzado %>% pivot_wider(names_from = Sexo, values_from = porcentaje)
+col_order <- c("Nivel", "Hombres", "Mujeres", "Brecha")
+tablakg_3 <- tablakg_3[, col_order]
+
+tablakg_3 %>% 
+  kbl(caption="Participación laboral por sexo y nivel educativo", booktabs = T) %>% 
+  kable_styling(latex_options = c("striped", "hover", "condensed"), font_size = 9, position = "center") %>% 
+  row_spec(0, color = "white", bold = TRUE, background="#29aee4", font_size = 12) %>% 
+  row_spec(seq(1,nrow(tablakg_3),2), background="#F0FFFF")  %>% 
+  column_spec(1, width = "12em") %>% 
+  column_spec(2, width = "10em") %>%  
+  column_spec(3, width = "10em") %>% 
+  column_spec(4, width = "10em")
+
+
+```
+
 
 ```{r}
 grafico2 <- nivelalcanzado %>% ggplot() + geom_chicklet(aes(x=Nivel, y=porcentaje, fill=Sexo), position = position_dodge(), width = 0.7, show.legend = F) + 
@@ -356,11 +528,16 @@ grafico2
 ggsave("grafico2.svg")
 ```
 
+
+
+
+La mayor brecha de participación entre sexos se encuentra en el nivel primario.
+
+Los valores que se presentan y grafican a continuación corresponden al promedio de horas semanales que trabajan tanto hombres como mujeres, desagregados por edad.
+
+```{r include=FALSE}
 ## Cantidad de horas trabajadas
-
 ### Cantidad de horas trabajadas por edad y sexo
-
-```{r}
 #15-24 años
 horastrab15 <- eph1t %>% 
   filter (AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15 & !is.na(horastrabtotales))
@@ -412,20 +589,37 @@ horastrabajadas <- bind_rows(horastrab15, horastrab25, horastrab35, horastrab45,
 horastrabajadas
 ```
 
+```{r include=FALSE}
 #### Totales
-
-```{r}
 #Total mujeres y hombres
-horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales))
+horastrab <- eph1t %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales))
 horastrab <- horastrab %>%  group_by(SEXO) %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 horastrab
 
 #Total de la poblacion
-horastrab <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales))
+horastrab <- eph1t %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales))
 horastrab <- horastrab %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 horastrab
 
 ```
+
+
+```{r}
+tablakg_4 <- horastrabajadas  %>%  pivot_wider(names_from = SEXO, values_from = horas) %>% mutate(Hombres=round(Hombres, 2), Mujeres=round(Mujeres, 2))  
+col_order <- c("Edad", "Hombres", "Mujeres", "Brecha")
+tablakg_4 <- tablakg_4[, col_order] 
+
+tablakg_4 %>% 
+  kbl(caption="Carga laboral semanal por sexo y edad", booktabs = T) %>% 
+  kable_styling(latex_options = c("striped"), font_size = 9, position = "center") %>% 
+  row_spec(0, color = "white", bold = TRUE, background="#29aee4", font_size = 12) %>% 
+  row_spec(seq(1,nrow(tablakg_4),2), background="#F0FFFF") %>% 
+  column_spec(1, width = "12em") %>% 
+  column_spec(2, width = "10em") %>%  
+  column_spec(3, width = "10em") %>% 
+  column_spec(4, width = "10em")
+```
+
 
 ```{r}
 #Grafico 3
@@ -451,19 +645,20 @@ grafico3
 ggsave("grafico3.svg")
 ```
 
+Se observa que para todos los rangos etarios los hombres tienen una carga laboral superior a las mujeres, dándose las brechas más grandes para el primer caso, de 13.33 horas en promedio y para los mayores a 60 años de 12.52 horas.
+
+Por último, la tasa de empleo en la Ciudad de Corrientes para el trimestre en cuestión asciende 39.63%, esta tasa se calcula como el cociente entre el total de ocupados y la población total de referencia. Por su parte, la tasa de desocupación, que se calcula como el cociente entre desocupados y la Población Económicamente Activa (PEA), es del 9.93%.
+
+```{r include= FALSE}
 ## Tasas
-
 ### Tasa de empleo
-
-```{r}
 empleo <- eph1t %>% filter(AGLOMERADO==12 & !is.na(OCUPADOS))
 empleo <- empleo %>%  group_by(OCUPADOS) %>%  summarise(formattable::percent(sum(PONDERA)/sum(empleo$PONDERA)))
 empleo
 ```
 
+```{r include=FALSE}
 ### Tasa de desocupación
-
-```{r}
 desocupacion <- eph1t %>% filter(AGLOMERADO==12 & !is.na(DESOCUPADOS))
 desocupacion <- desocupacion %>%  group_by(DESOCUPADOS) %>%  summarise(formattable::percent(sum(PONDERA)/sum(desocupacion$PONDERA)))
 desocupacion
@@ -492,9 +687,10 @@ ggsave("grafico4.svg")
 
 ## Empleo público y privado
 
-### Cantidad de empleados
+Del total de empleados de la ciudad, el porcentaje de empleados públicos es de 24.95% siendo 74.19% trabajadores pertenecientes al sector privado, quedando el ínfimo porcentaje restante sin especificar.
 
-```{r}
+```{r include=FALSE}
+### Cantidad de empleados
 empleados <- eph1t %>% filter(AGLOMERADO==12 & !is.na(EMPLEADOS) & OCUPADOS==1)
 table(empleados$EMPLEADOS) #Se filtra al tipo "otros"
 empleados <- empleados %>% filter(EMPLEADOS!="Otros") %>%
@@ -511,7 +707,7 @@ empleados
 #remotes::install_github("hrbrmstr/waffle")
 
 grafico5 <- empleados %>% ggplot(mapping = aes(fill=EMPLEADOS, values=numeros)) +  
-  geom_waffle(n_rows=9, size=1.1, show.legend = F, colour = "white") + 
+  geom_waffle(n_rows=10, size=1.1, show.legend = F, colour = "white") + 
   theme_void() +
   scale_fill_manual(values = colores) +  
   labs(title="Composición del empleo por sectores <span style = 'color: #29aee4;'>**privado**</span> y <span style='color: #0c8136;'>**público**</span> ", subtitle = "Primer trimestre 2021") + 
@@ -521,31 +717,35 @@ grafico5
 ggsave("grafico5.svg")
 ```
 
-### Promedio de edad
+En el sector público, el promedio de edad de los trabajadores es de 45 años, mientras que en el sector privado es de 38, trabajando 28 y 36 horas semanales en promedio en el sector público y privado, respectivamente. A su vez, el Estado cuenta con una calificación laboral del 53.67%, mientras que el sector privado, tan solo del 23.81%.
 
-```{r}
+Por otro lado, el sector público se compone de una participación de 50.62% hombres y 49.38% mujeres. Mientras que, en el sector privado, el porcentaje de hombres llega al 55.12%.
+
+
+```{r include=FALSE}
+### Promedio de edad
 promedioedad<- eph1t %>% filter(AGLOMERADO==12 &  OCUPADOS==1)
 promedioedad<- promedioedad %>% group_by(EMPLEADOS) %>% summarise((CH06%*%PONDERA)/sum(PONDERA))
 promedioedad
 ```
 
-### Carga laboral
 
-```{r}
+```{r include=FALSE}
+### Carga laboral
 #Sector público
-cargalaboralpub <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==1)
+cargalaboralpub <- eph1t %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==1)
 cargalaboralpub <- cargalaboralpub %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 cargalaboralpub
 
 #Sector privado
-cargalaboralpriv <- horastrabtotales %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==2)
+cargalaboralpriv <- eph1t %>% filter (AGLOMERADO==12 & ESTADO!=0 & !is.na(horastrabtotales) & PP04A==2)
 cargalaboralpriv <- cargalaboralpriv %>% summarise(horastrabtotales%*%PONDERA/sum(PONDERA))
 cargalaboralpriv
 ```
 
-### Calificación
 
-```{r}
+```{r include=FALSE}
+### Calificación
 #Sector público
 clasificacionepub<- eph1t %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION) & PP04A==1) 
 clasificacionepub<- clasificacionepub %>% group_by(TIPOCALIFICACION) %>% summarise(porcentaje=formattable::percent(sum(PONDERA)/sum(clasificacionepub$PONDERA)), sum(PONDERA), sum(clasificacionepub$PONDERA))
@@ -558,9 +758,9 @@ clasificacionepr
 
 ```
 
-### Composición por sexo
 
-```{r}
+```{r include=FALSE}
+### Composición por sexo
 #Sector público
 composicionempleadospu <- eph1t %>% filter(AGLOMERADO==12 & !is.na(EMPLEADOS) & PP04A==1)
 composicionempleadospu <- composicionempleadospu %>%  group_by(SEXO) %>%  summarise(sum(PONDERA))
@@ -626,9 +826,10 @@ ggsave("grafico6.2.svg")
 
 ```
 
-### Composición por sectores de actividad del sector público
+En términos de la composición por sectores en el empleo público (Gráfico 9), la "Administración Pública" cuenta con la mayor participación laboral, ocupando un 44.54% del total de empleos públicos, seguida por la "Enseñanza" en todos sus niveles, con un 30.70% del total de empleos y en tercer lugar el rubro de la "Salud", con un 15.07% de la participación.
 
-```{r}
+```{r include=FALSE}
+### Composición por sectores de actividad del sector público
 caract<- eph1t %>% group_by(SECTOR) %>% filter(OCUPADOS==1) %>% count() 
 
 table(sectores_eph1t$SECTOR_ACT)
@@ -643,7 +844,7 @@ spublico
 grafspublico <- spublico %>% mutate(principal=case_when(proporcion<0.10 ~"Otros",
                                                             T ~ as.character(SECTOR_ACT)))
 grafspublico <- grafspublico %>% group_by(principal) %>% summarise(porcentaje=formattable::percent(sum(proporcion))) %>% arrange(-porcentaje) 
-grafspublico
+
 
 
 grafspublico$principal[grafspublico$principal %in% "ADMINISTRACIÓN PÚBLICA Y DEFENSA; PLANES DE SEGURO SOCIAL OBLIGATORIO"] <- "ADMIN. PÚBLICA Y DEFENSA;  \nPLANES DE SEGURO SOCIAL OBLIGATORIO"
@@ -658,19 +859,19 @@ ggsave("grafico7.svg")
 
 ```
 
-## Informalidad
+## Tasas de informalidad laboral
 
+Para el análisis del trabajo no registrado, se construye una tasa de informalidad que relaciona la cantidad de personas que poseen un empleo en relación de dependencia, pero no perciben aportes jubilatorios por el mismo. En la tabla y el gráfico siguiente se presenta información relacionada a la población que trabaja de manera informal desagregada tanto por edad como por sexo:
+
+```{r include=FALSE}
 ### Total
-
-```{r}
 informalidadtot<- eph1t %>% filter(AGLOMERADO==12 & !is.na(INFORMALES))
 informalidadtot<- informalidadtot %>% group_by(INFORMALES) %>% summarise(sum(PONDERA)/sum(informalidadtot$PONDERA), sum(PONDERA))
 informalidadtot
 ```
 
+```{r include=FALSE}
 ### Por sexo
-
-```{r}
 #Mujeres
 informalidad<- eph1t %>% filter(AGLOMERADO==12 & !is.na(INFORMALES))
 informales<- informalidad %>% filter(CH04==2)
@@ -686,9 +887,8 @@ informales1
 
 ```
 
+```{r include=FALSE}
 ### Informalidad por edad y sexo
-
-```{r}
 #15-24 años
 #Hombres
 hombres <- eph1t %>%  filter(CH04==1 & AGLOMERADO==12 & ESTADO!=0 & CH06<=24 & CH06>=15 & !is.na(INFORMALES))
@@ -720,7 +920,7 @@ hombres <- eph1t %>%  filter(CH04==1 & AGLOMERADO==12 & ESTADO!=0 & CH06<=44 & C
 hombres <- hombres %>%  group_by(INFORMALES) %>% summarise(porcentaje=formattable::percent(sum(PONDERA)/sum(hombres$PONDERA)), Sexo="Hombres", Edad="35-44 años")%>% filter(INFORMALES==1)
 
 #Mujeres
-mujeres <- edad35a44 %>%  filter(CH04==2 & AGLOMERADO==12 & ESTADO!=0 & CH06<=44 & CH06>=35 & !is.na(INFORMALES))
+mujeres <- eph1t %>%  filter(CH04==2 & AGLOMERADO==12 & ESTADO!=0 & CH06<=44 & CH06>=35 & !is.na(INFORMALES))
 mujeres <- mujeres %>%  group_by(INFORMALES) %>%  summarise (porcentaje=formattable::percent(sum(PONDERA)/sum(mujeres$PONDERA)), Sexo="Mujeres", Edad="35-44 años")%>% filter(INFORMALES==1)
 
 inf35 <- bind_rows(hombres, mujeres) 
@@ -757,7 +957,23 @@ infgraf
 ```
 
 ```{r}
-#grafico
+#Tabla
+tablakg_5 <- infgraf %>% select(-INFORMALES) %>%  pivot_wider(names_from = Sexo, values_from = porcentaje)
+
+tablakg_5 %>% 
+  kbl(caption="Informalidad laboral por sexo y edad", booktabs = T) %>% 
+  kable_styling(latex_options = c("striped", "hover", "condensed"), font_size = 9, position = "center") %>% 
+  row_spec(0, color = "white", bold = TRUE, background="#29aee4", font_size = 12) %>% 
+  row_spec(seq(1,nrow(tablakg_5),2), background="#F0FFFF")  %>% 
+  column_spec(1, width = "18em") %>% 
+  column_spec(2, width = "14em") %>%  
+  column_spec(3, width = "14em") %>% 
+  sub("\\\\toprule", "", .) %>%  #saca las lineas negras de los bordes 
+  sub("\\\\bottomrule", "", .)
+```
+
+```{r}
+#Grafico
 graficoinf <- infgraf %>% ggplot(mapping = aes(x=Edad, y=porcentaje, fill=Sexo)) + 
   geom_chicklet(position = position_dodge(width = 0.75), width=0.7, show.legend = F) +
   scale_fill_manual(values=colores) + scale_y_continuous(labels = percent, limits = c(0,1)) + 
@@ -768,9 +984,10 @@ graficoinf
 ggsave("graficoinf.svg")
 ```
 
-### Tasa de informalidad laboral desagregada por sector de actividad
+Al analizar la informalidad laboral por sector de actividad, los menores valores se encuentran en el sector de enseñanza (4.68%); el sector de administración pública y defensa, planes de seguro social obligatorio (8.81%); actividades financieras y de seguro(10.48%) el sector de información y comunicación (14.86%); suministro de Agua, alcantarillado, gestión de desechos y actividades de saneamiento (19.12%) y Actividades de Organizaciones y Organismos Extraterritoriales (23.79%). Por otro lado, los valores más altos están en el sector de servicio doméstico y actividades para consumo propio (82.49%); actividades científicas y técnicas (80.61%); actividades inmobiliarias (72.51%); el de construcción (71.02%) e industria manufacturera (63.87%).
 
-```{r}
+```{r include=FALSE}
+### Tasa de informalidad laboral desagregada por sector de actividad
 caract<- ephtotalsd %>% group_by(SECTOR) %>% filter(OCUPADOS==1) %>% count()
 table(sectores_ephtotal$SECTOR_ACT)
 
@@ -779,7 +996,7 @@ inforporsector<- function(i) {
   infor <- infor %>% group_by(INFORMALES) %>%  summarise(SECTOR=i, porcentaje=sum(PONDERA)/sum(infor$PONDERA)) 
   return(infor)
 }
-nombres<-(unique(sectores$SECTOR_ACT))
+nombres<-(unique(sectores_ephtotal$SECTOR_ACT))
 
 #c((lapply(nombres, inforporsector))) -> aplica una función a cada elemento de una lista o vector
 
@@ -838,11 +1055,15 @@ grafico9
 ggsave("grafico9.svg")
 ```
 
-## Calificación
+## Tasas de calificación laboral
 
-### Total de la población
+En la EPH se clasifica a los empleados en cuatro categorías: profesionales, técnicos, operarios y trabajadores no calificados. A efectos de este análisis se consideran calificados a los profesionales o técnicos, mientras que a los no calificados se le suman los operarios para determinar la categoría final de no calificados.
 
-```{r}
+Del total de la población de la ciudad, solo el 31.43% son calificados, mientras que el 68.57% restante son no calificados. Del total de los hombres, el 29.92% son calificados, mientras que del total de las mujeres el porcentaje de calificación es del 33%.
+
+Al analizar la calificación laboral por sector de actividad los valores más altos están en los rubros de profesionales, científicos y técnicos (88.54%); enseñanza (85.08%); información y comunicación (80.77%); arte, entretenimiento y recreación (69.31%); y salud humana y servicios sociales (60.41%).
+
+```{r include=FALSE}
 #Total de la población
 pobcalificada<- eph1t %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION))
 pobcalificada<- pobcalificada %>% group_by(TIPOCALIFICACION) %>% summarise(porcentaje=formattable::percent(sum(PONDERA)/sum(pobcalificada$PONDERA)),  sum(PONDERA), sum(pobcalificada$PONDERA))
@@ -850,9 +1071,8 @@ pobcalificada
 
 ```
 
+```{r include=FALSE}
 ### Por sexo
-
-```{r}
 #Hombres
 calificacionhombres<- eph1t %>% filter(AGLOMERADO==12 & !is.na(CALIFICACION) & CH04==1) 
 calificacionhombres<- calificacionhombres %>% group_by(TIPOCALIFICACION) %>% summarise(formattable::percent(sum(PONDERA)/sum(calificacionhombres$PONDERA)), sum(PONDERA), sum(calificacionhombres$PONDERA))
@@ -865,11 +1085,10 @@ calificacionmujeres
 
 ```
 
+```{r include=FALSE}
 ### Calificación desagregada por sectores de actividad económica
-
-```{r}
 califporsector<- function(i) {
-  calif <- sectores %>% filter(AGLOMERADO==12  & !is.na(TIPOCALIFICACION) & SECTOR_ACT==i)
+  calif <- sectores_ephtotal %>% filter(AGLOMERADO==12  & !is.na(TIPOCALIFICACION) & SECTOR_ACT==i)
   calif <- calif %>% group_by(TIPOCALIFICACION) %>%  summarise(SECTOR=i, porcentaje=formattable::percent(sum(PONDERA)/sum(calif$PONDERA), digits=2))
   return(calif)
 }
