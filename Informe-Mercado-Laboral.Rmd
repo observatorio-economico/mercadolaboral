@@ -29,8 +29,10 @@ header-includes:
 mainfont: Open Sans
 output: 
   pdf_document: default
+  keep_tex: true
 includes:
 fig_caption: yes
+
 html_document:
     df_print: paged
 ---
@@ -229,13 +231,13 @@ poblacion <- data.frame(Edad, Hombres, Mujeres)
 ```
 
 
-```{r include=FALSE}
+```{r }
 #Tabla
 tabla_1<- poblacion %>% 
   mutate(Hombres=formattable::percent(Hombres), Mujeres=formattable::percent(Mujeres)) %>% 
   kbl(booktabs = T) %>% 
-  kable_styling(latex_options = c("striped", "hover", "condensed"), font_size = 18, position = "center") %>% 
-  row_spec(0, color = "white", bold = TRUE, background="#29aee4", font_size = 22) %>% 
+  kable_styling(latex_options = c("striped", "hover", "condensed"), font_size = 9, position = "center") %>% 
+  row_spec(0, color = "white", bold = TRUE, background="#29aee4", font_size = 12) %>% 
   row_spec(seq(1,nrow(poblacion),2), background="#F0FFFF") %>% 
   column_spec(1, width = "18em") %>% 
   column_spec(2, width = "14em") %>%  
@@ -243,16 +245,11 @@ tabla_1<- poblacion %>%
 
 #kableExtra::save_kable(tabla_1,"./graficos_md/tabla_1.jpg")
 
-
+tabla_1
 #svg(filename = 'tabla_1.pdf')
 
 ```
-\begin{figure}[htbp!]
-\centering
-\includegraphics{./graficos_md/tabla_1.jpg}
-\end{figure}
 
-hola 
 
 ```{r}
 #Piramide 
@@ -425,14 +422,6 @@ tablakg_2<- tablakg_2 %>%
 
 ```
 
-```{r include=FALSE}
-#\begin{figure}[hb!]
-#\caption{veremos}
-#\includegraphics{tablakg_1}
-#\end{figure}
-#- \renewcommand{\arraystretch}{1.5}
-#- \usepackage{float}
-```
 
 
 ```{r}
