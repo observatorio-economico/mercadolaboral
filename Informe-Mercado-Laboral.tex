@@ -2,12 +2,11 @@
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 %
-\documentclass[
-]{article}
+\documentclass{article}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -37,8 +36,6 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Informe del mercado laboral de Corrientes},
-  pdfauthor={Observatorio Económico de la Ciudad de Corrientes},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -63,7 +60,7 @@
 \usepackage{pdfpages}
 \usepackage[default]{open sans}
 \usepackage[T1]{fontenc}
-\usepackage{graphicx}
+\usepackage{graphicx} %ya estba este package x eso no compilaba cuando traté de poner
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 \usepackage{xcolor}
@@ -79,7 +76,7 @@
 \rfoot{\thepage}
 \definecolor{graycustom}{HTML}{7b7b7e}
 \usepackage{floatrow}
-\floatsetup[figure]{capposition=top}
+\floatsetup[figure]{capposition=bottom} %ahí solucioné lo de la pos esto estaba en top 
 \renewcommand{\arraystretch}{1.5}
 \usepackage{svg}
 \usepackage{amsmath}
@@ -97,20 +94,24 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
+\ifluatex
+\usepackage{selnolig}  % disable illegal ligatures
 \fi
+\setlength{\parindent}{14pt} %sangría
 
-\title{Informe del mercado laboral de Corrientes}
-\author{Observatorio Económico de la Ciudad de Corrientes}
-\date{Primer trimestre 2021}
+\author{}
+\date{}
+
+\usepackage[labelsep=endash]{caption} 
+
+\AtBeginDocument{%
+\renewcommand{\figurename}{Gráfico}
+} %El comando \renewcommand{\figurename} no funciona solo porque se usa babel, usando \AtBeginDocument permite usar el comando 
 
 \begin{document}
-\maketitle
 
-\hypertarget{consideraciones-metodoluxf3gicas-para-el-primer-trimestre-2021}{%
-\section{Consideraciones metodológicas para el primer trimestre
-2021}\label{consideraciones-metodoluxf3gicas-para-el-primer-trimestre-2021}}
+
+\textcolor{graycustom}{\Large Consideraciones metodológicas} \newline
 
 El Observatorio Económico de la Municipalidad de Corrientes lleva a cabo
 diversos informes sociodemográficos, utilizando como fuente principal la
@@ -148,21 +149,23 @@ en conjunto con las bases del cuarto trimestre del 2020.
 
 \newpage
 
-\hypertarget{mercado-de-trabajo}{%
-\section{Mercado de trabajo:}\label{mercado-de-trabajo}}
+\textcolor{graycustom}{\Large Mercado de trabajo: 
+Tasas e indicadores socioeconómicos (EPH)} \newline
 
-Tasas e indicadores socioeconómicos (EPH) Según las proyecciones de
-INDEC basadas en el último Censo de población, la cantidad de habitantes
-total de la ciudad en el año 2021 es de 414927 personas. De ese total el
-48.83\% son hombres y el restante 51.17\%, mujeres.
+Según las proyecciones de INDEC basadas en el último Censo de población,
+la cantidad de habitantes total de la ciudad en el año 2021 es de 414927
+personas. De ese total el 48.83\% son hombres y el restante 51.17\%,
+mujeres.
 
 De acuerdo con los datos publicados por el INDEC, basados también en el
 último Censo Nacional de Población, Hogares y Viviendas (2010), la
 población por edades se compone de la siguiente manera:
 
-\begin{table}[htbp!]
-\centering\begingroup\fontsize{9}{11}\selectfont
+\begin{table}[htp!]
 
+\caption{\label{tab:unnamed-chunk-6}Composición de la población}
+\centering
+\fontsize{9}{11}\selectfont
 \begin{tabular}[t]{>{\raggedright\arraybackslash}p{18em}>{\raggedleft\arraybackslash}p{14em}>{\raggedleft\arraybackslash}p{14em}}
 \toprule
 \begingroup\fontsize{12}{14}\selectfont \cellcolor[HTML]{29aee4}{\textcolor{white}{\textbf{Edad}}}\endgroup & \begingroup\fontsize{12}{14}\selectfont \cellcolor[HTML]{29aee4}{\textcolor{white}{\textbf{Hombres}}}\endgroup & \begingroup\fontsize{12}{14}\selectfont \cellcolor[HTML]{29aee4}{\textcolor{white}{\textbf{Mujeres}}}\endgroup\\
@@ -176,16 +179,18 @@ población por edades se compone de la siguiente manera:
 Mayor o igual a 60 & 9.00\% & 12.00\%\\
 \bottomrule
 \end{tabular}
-\endgroup{}
 \end{table}
 
+
+\begin{figure}
 \includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-7-1.pdf}
+\caption{} %el asterisco es para q no diga figura 1
+\end{figure}
 
 \newpage
 
-\hypertarget{indicadores-de-participaciuxf3n-laboral}{%
-\section{Indicadores de participación
-laboral}\label{indicadores-de-participaciuxf3n-laboral}}
+
+\textcolor{graycustom}{\Large Indicadores de participación laboral} \newline
 
 Los resultados para primer trimestre de 2021 para la Ciudad de
 Corrientes muestran que la tasa de actividad es del 43.99\%.
@@ -212,7 +217,31 @@ Observatorio Económico de la Ciudad de Corrientes.
 A continuación, se aprecian los porcentajes, tanto de hombres como de
 mujeres, que forman parte de la PEA, desagregados por rangos de edad.
 
+
+\begin{table}[hbp!]
+
+\caption{\label{tab:unnamed-chunk-5}Participación laboral por sexo y edad}
+\centering
+\fontsize{9}{11}\selectfont
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{18em}>{\raggedleft\arraybackslash}p{14em}>{\raggedleft\arraybackslash}p{14em}}
+\toprule
+\begingroup\fontsize{12}{14}\selectfont \cellcolor[HTML]{29aee4}{\textcolor{white}{\textbf{Edad}}}\endgroup & \begingroup\fontsize{12}{14}\selectfont \cellcolor[HTML]{29aee4}{\textcolor{white}{\textbf{Hombres}}}\endgroup & \begingroup\fontsize{12}{14}\selectfont \cellcolor[HTML]{29aee4}{\textcolor{white}{\textbf{Mujeres}}}\endgroup\\
+\midrule
+\cellcolor[HTML]{F0FFFF}{\cellcolor{gray!6}{15-24 años}} & \cellcolor[HTML]{F0FFFF}{\cellcolor{gray!6}{29.18\%}} & \cellcolor[HTML]{F0FFFF}{\cellcolor{gray!6}{33.35\%}}\\
+25-34 años & 86.27\% & 62.57\%\\
+\cellcolor[HTML]{F0FFFF}{\cellcolor{gray!6}{35-44 años}} & \cellcolor[HTML]{F0FFFF}{\cellcolor{gray!6}{93.29\%}} & \cellcolor[HTML]{F0FFFF}{\cellcolor{gray!6}{73.99\%}}\\
+45-59 años & 92.66\% & 70.07\%\\
+\cellcolor[HTML]{F0FFFF}{\cellcolor{gray!6}{Igual o mayor a 60 años}} & \cellcolor[HTML]{F0FFFF}{\cellcolor{gray!6}{34.58\%}} & \cellcolor[HTML]{F0FFFF}{\cellcolor{gray!6}{11.32\%}}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+\begin{figure}
 \includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-13-1.pdf}
+\caption{} 
+\end{figure}
+
 
 Se puede observar que, con excepción al rango etario de 15 a 24 años,
 existe una brecha en la tasa de actividad que muestra que hay menos
@@ -228,7 +257,7 @@ nivel de educación alcanzado, junto con las respectivas brechas. Se
 entiende como brecha a la diferencia entre el porcentaje de hombres y
 mujeres que conforman la PEA para cada nivel educativo.
 
-\begin{table}
+\begin{table}[htbp!]
 
 \caption{\label{tab:unnamed-chunk-15}Participación laboral por sexo y nivel educativo}
 \centering
@@ -244,7 +273,12 @@ Secundaria Completa & 65.82\% & 56.18\% & 9.64\%\\
 \end{tabular}
 \end{table}
 
+
+\newpage
+\begin{figure}
 \includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-16-1.pdf}
+\caption{}
+\end{figure}
 
 La mayor brecha de participación entre sexos se encuentra en el nivel
 primario.
@@ -253,7 +287,7 @@ Los valores que se presentan y grafican a continuación corresponden al
 promedio de horas semanales que trabajan tanto hombres como mujeres,
 desagregados por edad.
 
-\begin{table}
+\begin{table}[hp!]
 
 \caption{\label{tab:unnamed-chunk-19}Carga laboral semanal por sexo y edad}
 \centering
@@ -271,31 +305,48 @@ desagregados por edad.
 \end{tabular}
 \end{table}
 
-\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-20-1.pdf}
 
+\begin{figure}
+\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-20-1.pdf}
+\caption{} 
+\end{figure}
+
+\newpage
 Se observa que para todos los rangos etarios los hombres tienen una
 carga laboral superior a las mujeres, dándose las brechas más grandes
 para el primer caso, de 13.33 horas en promedio y para los mayores a 60
 años de 12.52 horas.
 
-Por último, la tasa de empleo en la Ciudad de Corrientes para el
+\newpage
+
+\textcolor{graycustom}{\Large Tasas de empleo y desocupación} \newline
+\begin{figure}
+\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-23-1.pdf}
+\caption{} 
+\end{figure}
+
+
+La tasa de empleo en la Ciudad de Corrientes para el
 trimestre en cuestión asciende 39.63\%, esta tasa se calcula como el
 cociente entre el total de ocupados y la población total de referencia.
 Por su parte, la tasa de desocupación, que se calcula como el cociente
 entre desocupados y la Población Económicamente Activa (PEA), es del
 9.93\%.
 
-\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-23-1.pdf}
+\newpage
 
-\hypertarget{empleo-puxfablico-y-privado}{%
-\subsection{Empleo público y
-privado}\label{empleo-puxfablico-y-privado}}
+\textcolor{graycustom}{\Large Empleo público y privado} \newline
 
 Del total de empleados de la ciudad, el porcentaje de empleados públicos
 es de 24.95\% siendo 74.19\% trabajadores pertenecientes al sector
 privado, quedando el ínfimo porcentaje restante sin especificar.
 
+
+\begin{figure}[hbp!]
 \includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-25-1.pdf}
+\caption{}
+\end{figure}
+
 
 En el sector público, el promedio de edad de los trabajadores es de 45
 años, mientras que en el sector privado es de 38, trabajando 28 y 36
@@ -307,8 +358,11 @@ Por otro lado, el sector público se compone de una participación de
 50.62\% hombres y 49.38\% mujeres. Mientras que, en el sector privado,
 el porcentaje de hombres llega al 55.12\%.
 
-\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-30-1.pdf}
-\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-30-2.pdf}
+
+\newpage
+\begin{figure}
+\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-31-1.pdf}\caption{} 
+\end{figure}
 
 En términos de la composición por sectores en el empleo público (Gráfico
 9), la ``Administración Pública'' cuenta con la mayor participación
@@ -317,22 +371,27 @@ la ``Enseñanza'' en todos sus niveles, con un 30.70\% del total de
 empleos y en tercer lugar el rubro de la ``Salud'', con un 15.07\% de la
 participación.
 
-\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-32-1.pdf}
+\begin{figure}
+\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-33-1.pdf}
+\caption{} 
+\end{figure}
 
-\hypertarget{tasas-de-informalidad-laboral}{%
-\subsection{Tasas de informalidad
-laboral}\label{tasas-de-informalidad-laboral}}
+\newpage
+
+\textcolor{graycustom}{\Large Tasas de informalidad laboral} \newline
 
 Para el análisis del trabajo no registrado, se construye una tasa de
 informalidad que relaciona la cantidad de personas que poseen un empleo
 en relación de dependencia, pero no perciben aportes jubilatorios por el
-mismo. En la tabla y el gráfico siguiente se presenta información
+mismo. 
+
+En la tabla y el gráfico siguiente se presenta información
 relacionada a la población que trabaja de manera informal desagregada
 tanto por edad como por sexo:
 
-\begin{table}
+\begin{table}[hbp!]
 
-\caption{\label{tab:unnamed-chunk-36}Informalidad laboral por sexo y edad}
+\caption{\label{tab:unnamed-chunk-37}Informalidad laboral por sexo y edad}
 \centering
 \fontsize{9}{11}\selectfont
 \begin{tabular}[t]{>{\raggedright\arraybackslash}p{18em}>{\raggedleft\arraybackslash}p{14em}>{\raggedleft\arraybackslash}p{14em}}
@@ -348,8 +407,12 @@ tanto por edad como por sexo:
 \end{tabular}
 \end{table}
 
-\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-37-1.pdf}
+\begin{figure}
+\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-38-1.pdf}
+\caption{} 
+\end{figure}
 
+\newpage
 Al analizar la informalidad laboral por sector de actividad, los menores
 valores se encuentran en el sector de enseñanza (4.68\%); el sector de
 administración pública y defensa, planes de seguro social obligatorio
@@ -363,13 +426,19 @@ en el sector de servicio doméstico y actividades para consumo propio
 inmobiliarias (72.51\%); el de construcción (71.02\%) e industria
 manufacturera (63.87\%).
 
-\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-39-1.pdf}
 
+\begin{figure}
 \includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-40-1.pdf}
+\caption{} 
+\end{figure}
+\begin{figure}
+\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-41-1.pdf}
+\caption{} 
+\end{figure}
 
-\hypertarget{tasas-de-calificaciuxf3n-laboral}{%
-\subsection{Tasas de calificación
-laboral}\label{tasas-de-calificaciuxf3n-laboral}}
+
+\newpage
+\textcolor{graycustom}{\Large Tasas de calificación laboral} \newline
 
 En la EPH se clasifica a los empleados en cuatro categorías:
 profesionales, técnicos, operarios y trabajadores no calificados. A
@@ -387,7 +456,8 @@ más altos están en los rubros de profesionales, científicos y técnicos
 (88.54\%); enseñanza (85.08\%); información y comunicación (80.77\%);
 arte, entretenimiento y recreación (69.31\%); y salud humana y servicios
 sociales (60.41\%).
-
-\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-44-1.pdf}
-
+\begin{figure}
+\includegraphics{Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-45-1.pdf}
+\caption{} 
+\end{figure}
 \end{document}

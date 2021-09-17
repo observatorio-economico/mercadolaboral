@@ -1,7 +1,4 @@
 ---
-title: "Informe del mercado laboral de Corrientes"
-author: "Observatorio Económico de la Ciudad de Corrientes"
-date: "Primer trimestre 2021"
 header-includes:
    - \usepackage{pdfpages}
    - \usepackage[default]{open sans}
@@ -26,6 +23,7 @@ header-includes:
    - \renewcommand{\arraystretch}{1.5}
    - \usepackage{svg}
    - \usepackage{amsmath}
+
 mainfont: Open Sans
 output: 
   pdf_document: default
@@ -40,7 +38,10 @@ html_document:
 
 
 
-# Consideraciones metodológicas para el primer trimestre 2021
+\newline
+
+\textcolor{graycustom}{\Large Consideraciones metodológicas}
+\newline
 
 El Observatorio Económico de la Municipalidad de Corrientes lleva a cabo diversos informes sociodemográficos, utilizando como fuente principal la base de microdatos de la Encuesta Permanente de Hogares elaborada por el Instituto Nacional de Estadísticas y Censos (INDEC) y presentada con una periodicidad trimestral. La misma se realiza a través de cuestionarios presenciales que luego son volcados a bases de datos para ser utilizados por el público en general.
 
@@ -60,10 +61,11 @@ Por último, este trabajo se ha hecho considerando a los datos del primer trimes
 
 
 \newpage 
+\textcolor{graycustom}{\Large Mercado de trabajo: 
+Tasas e indicadores socioeconómicos (EPH)}
+\newline
 
-# Mercado de trabajo:
-
-Tasas e indicadores socioeconómicos (EPH) Según las proyecciones de INDEC basadas en el último Censo de población, la cantidad de habitantes total de la ciudad en el año 2021 es de 414927 personas. De ese total el 48.83% son hombres y el restante 51.17%, mujeres.
+Según las proyecciones de INDEC basadas en el último Censo de población, la cantidad de habitantes total de la ciudad en el año 2021 es de 414927 personas. De ese total el 48.83% son hombres y el restante 51.17%, mujeres.
 
 De acuerdo con los datos publicados por el INDEC, basados también en el último Censo Nacional de Población, Hogares y Viviendas (2010), la población por edades se compone de la siguiente manera:
 
@@ -73,10 +75,11 @@ De acuerdo con los datos publicados por el INDEC, basados también en el último
 
 
 
-
 \begin{table}
-\centering\begingroup\fontsize{9}{11}\selectfont
 
+\caption{\label{tab:unnamed-chunk-6}Composición de la población}
+\centering
+\fontsize{9}{11}\selectfont
 \begin{tabular}[t]{>{\raggedright\arraybackslash}p{18em}>{\raggedleft\arraybackslash}p{14em}>{\raggedleft\arraybackslash}p{14em}}
 \toprule
 \begingroup\fontsize{12}{14}\selectfont \cellcolor[HTML]{29aee4}{\textcolor{white}{\textbf{Edad}}}\endgroup & \begingroup\fontsize{12}{14}\selectfont \cellcolor[HTML]{29aee4}{\textcolor{white}{\textbf{Hombres}}}\endgroup & \begingroup\fontsize{12}{14}\selectfont \cellcolor[HTML]{29aee4}{\textcolor{white}{\textbf{Mujeres}}}\endgroup\\
@@ -90,15 +93,17 @@ De acuerdo con los datos publicados por el INDEC, basados también en el último
 Mayor o igual a 60 & 9.00\% & 12.00\%\\
 \bottomrule
 \end{tabular}
-\endgroup{}
 \end{table}
 
-
+\newline
+\newline
+**Gráfico 1**
+\newline
 ![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-7-1.pdf)<!-- --> 
 
 \newpage 
-
-# Indicadores de participación laboral
+\textcolor{graycustom}{\Large Indicadores de participación laboral}
+\newline
 
 Los resultados para primer trimestre de 2021 para la Ciudad de Corrientes muestran que la tasa de actividad es del 43.99%.
 
@@ -124,8 +129,10 @@ A continuación, se aprecian los porcentajes, tanto de hombres como de mujeres, 
 
 
 
-
-
+\newline
+\newline
+**Gráfico 2**
+\newline
 ![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-13-1.pdf)<!-- --> 
 
 Se puede observar que, con excepción al rango etario de 15 a 24 años, existe una brecha en la tasa de actividad que muestra que hay menos mujeres participando en el mercado laboral, en comparación a los hombres.
@@ -133,7 +140,6 @@ Se puede observar que, con excepción al rango etario de 15 a 24 años, existe u
 A modo de observación, para ambos sexos, el porcentaje máximo de participación se encuentra entre los 35 a 44 años.
 
 Tanto en la tabla como en el Gráfico 3 se exponen los porcentajes tanto de hombres como de mujeres pertenecientes a la PEA, desagregados por el nivel de educación alcanzado, junto con las respectivas brechas. Se entiende como brecha a la diferencia entre el porcentaje de hombres y mujeres que conforman la PEA para cada nivel educativo.
-
 
 
 
@@ -153,9 +159,11 @@ Secundaria Completa & 65.82\% & 56.18\% & 9.64\%\\
 \end{tabular}
 \end{table}
 
-
+\newline
+\newline
+**Gráfico 3**
+\newline
 ![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-16-1.pdf)<!-- --> 
-
 
 
 
@@ -186,7 +194,10 @@ Los valores que se presentan y grafican a continuación corresponden al promedio
 \end{tabular}
 \end{table}
 
-
+\newline
+\newline
+**Gráfico 4**
+\newline
 ![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-20-1.pdf)<!-- --> 
 
 Se observa que para todos los rangos etarios los hombres tienen una carga laboral superior a las mujeres, dándose las brechas más grandes para el primer caso, de 13.33 horas en promedio y para los mayores a 60 años de 12.52 horas.
@@ -196,15 +207,24 @@ Por último, la tasa de empleo en la Ciudad de Corrientes para el trimestre en c
 
 
 
-
+\newline
+\newline
+**Gráfico 5**
+\newline
 ![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-23-1.pdf)<!-- --> 
 
-## Empleo público y privado
+\newpage
+\textcolor{graycustom}{\Large Empleo público y privado}
+\newline
 
 Del total de empleados de la ciudad, el porcentaje de empleados públicos es de 24.95% siendo 74.19% trabajadores pertenecientes al sector privado, quedando el ínfimo porcentaje restante sin especificar.
 
 
 
+\newline
+\newline
+**Gráfico 6**
+\newline
 ![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-25-1.pdf)<!-- --> 
 
 En el sector público, el promedio de edad de los trabajadores es de 45 años, mientras que en el sector privado es de 38, trabajando 28 y 36 horas semanales en promedio en el sector público y privado, respectivamente. A su vez, el Estado cuenta con una calificación laboral del 53.67%, mientras que el sector privado, tan solo del 23.81%.
@@ -223,15 +243,26 @@ Por otro lado, el sector público se compone de una participación de 50.62% hom
 
 
 
-![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-30-1.pdf)<!-- --> ![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-30-2.pdf)<!-- --> 
+
+
+\newline
+\newline
+**Gráfico 7**
+\newline
+![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-31-1.pdf)<!-- --> 
 
 En términos de la composición por sectores en el empleo público (Gráfico 9), la "Administración Pública" cuenta con la mayor participación laboral, ocupando un 44.54% del total de empleos públicos, seguida por la "Enseñanza" en todos sus niveles, con un 30.70% del total de empleos y en tercer lugar el rubro de la "Salud", con un 15.07% de la participación.
 
 
 
-![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-32-1.pdf)<!-- --> 
-
-## Tasas de informalidad laboral
+\newline
+\newline
+**Gráfico 8**
+\newline
+![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-33-1.pdf)<!-- --> 
+\newpage
+\textcolor{graycustom}{\Large Tasas de informalidad laboral}
+\newline
 
 Para el análisis del trabajo no registrado, se construye una tasa de informalidad que relaciona la cantidad de personas que poseen un empleo en relación de dependencia, pero no perciben aportes jubilatorios por el mismo. En la tabla y el gráfico siguiente se presenta información relacionada a la población que trabaja de manera informal desagregada tanto por edad como por sexo:
 
@@ -241,9 +272,10 @@ Para el análisis del trabajo no registrado, se construye una tasa de informalid
 
 
 
+
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-36}Informalidad laboral por sexo y edad}
+\caption{\label{tab:unnamed-chunk-37}Informalidad laboral por sexo y edad}
 \centering
 \fontsize{9}{11}\selectfont
 \begin{tabular}[t]{>{\raggedright\arraybackslash}p{18em}>{\raggedleft\arraybackslash}p{14em}>{\raggedleft\arraybackslash}p{14em}}
@@ -259,17 +291,31 @@ Para el análisis del trabajo no registrado, se construye una tasa de informalid
 \end{tabular}
 \end{table}
 
-![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-37-1.pdf)<!-- --> 
+\newline
+\newline
+**Gráfico 9**
+\newline
+![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-38-1.pdf)<!-- --> 
 
 Al analizar la informalidad laboral por sector de actividad, los menores valores se encuentran en el sector de enseñanza (4.68%); el sector de administración pública y defensa, planes de seguro social obligatorio (8.81%); actividades financieras y de seguro(10.48%) el sector de información y comunicación (14.86%); suministro de Agua, alcantarillado, gestión de desechos y actividades de saneamiento (19.12%) y Actividades de Organizaciones y Organismos Extraterritoriales (23.79%). Por otro lado, los valores más altos están en el sector de servicio doméstico y actividades para consumo propio (82.49%); actividades científicas y técnicas (80.61%); actividades inmobiliarias (72.51%); el de construcción (71.02%) e industria manufacturera (63.87%).
 
 
 
-![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-39-1.pdf)<!-- --> 
-
+\newline
+\newline
+**Gráfico 10**
+\newline
 ![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-40-1.pdf)<!-- --> 
 
-## Tasas de calificación laboral
+\newline
+\newline
+**Gráfico 11**
+\newline
+![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-41-1.pdf)<!-- --> 
+
+\newpage
+\textcolor{graycustom}{\Large Tasas de calificación laboral}
+\newline
 
 En la EPH se clasifica a los empleados en cuatro categorías: profesionales, técnicos, operarios y trabajadores no calificados. A efectos de este análisis se consideran calificados a los profesionales o técnicos, mientras que a los no calificados se le suman los operarios para determinar la categoría final de no calificados.
 
@@ -283,4 +329,9 @@ Al analizar la calificación laboral por sector de actividad los valores más al
 
 
 
-![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-44-1.pdf)<!-- --> 
+\newline
+\newline
+**Gráfico 12**
+\newline
+![](Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-45-1.pdf)<!-- --> 
+

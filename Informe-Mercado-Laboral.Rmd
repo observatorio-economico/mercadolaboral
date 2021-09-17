@@ -1,7 +1,4 @@
 ---
-title: "Informe del mercado laboral de Corrientes"
-author: "Observatorio Económico de la Ciudad de Corrientes"
-date: "Primer trimestre 2021"
 header-includes:
    - \usepackage{pdfpages}
    - \usepackage[default]{open sans}
@@ -26,6 +23,7 @@ header-includes:
    - \renewcommand{\arraystretch}{1.5}
    - \usepackage{svg}
    - \usepackage{amsmath}
+
 mainfont: Open Sans
 output: 
   pdf_document: default
@@ -42,7 +40,10 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, dev = "cai
 ```
 
 
-# Consideraciones metodológicas para el primer trimestre 2021
+\newline
+
+\textcolor{graycustom}{\Large Consideraciones metodológicas}
+\newline
 
 El Observatorio Económico de la Municipalidad de Corrientes lleva a cabo diversos informes sociodemográficos, utilizando como fuente principal la base de microdatos de la Encuesta Permanente de Hogares elaborada por el Instituto Nacional de Estadísticas y Censos (INDEC) y presentada con una periodicidad trimestral. La misma se realiza a través de cuestionarios presenciales que luego son volcados a bases de datos para ser utilizados por el público en general.
 
@@ -207,10 +208,11 @@ sectores_ephtotal<- left_join(ephtotalsd,caes)
 ```
 
 \newpage 
+\textcolor{graycustom}{\Large Mercado de trabajo: 
+Tasas e indicadores socioeconómicos (EPH)}
+\newline
 
-# Mercado de trabajo:
-
-Tasas e indicadores socioeconómicos (EPH) Según las proyecciones de INDEC basadas en el último Censo de población, la cantidad de habitantes total de la ciudad en el año 2021 es de 414927 personas. De ese total el 48.83% son hombres y el restante 51.17%, mujeres.
+Según las proyecciones de INDEC basadas en el último Censo de población, la cantidad de habitantes total de la ciudad en el año 2021 es de 414927 personas. De ese total el 48.83% son hombres y el restante 51.17%, mujeres.
 
 De acuerdo con los datos publicados por el INDEC, basados también en el último Censo Nacional de Población, Hogares y Viviendas (2010), la población por edades se compone de la siguiente manera:
 
@@ -230,12 +232,11 @@ Mujeres <- c(0.25, 0.20, 0.16, 0.12, 0.15, 0.12)
 poblacion <- data.frame(Edad, Hombres, Mujeres)
 ```
 
-
 ```{r }
 #Tabla
 tabla_1<- poblacion %>% 
   mutate(Hombres=formattable::percent(Hombres), Mujeres=formattable::percent(Mujeres)) %>% 
-  kbl(booktabs = T) %>% 
+  kbl(caption="Composición de la población", booktabs = T) %>% 
   kable_styling(latex_options = c("striped", "hover", "condensed"), font_size = 9, position = "center") %>% 
   row_spec(0, color = "white", bold = TRUE, background="#29aee4", font_size = 12) %>% 
   row_spec(seq(1,nrow(poblacion),2), background="#F0FFFF") %>% 
@@ -250,26 +251,34 @@ tabla_1
 
 ```
 
-
-```{r}
+\newline
+\newline
+**Gráfico 1**
+\newline
+```{r, fig.height=3.5}
 #Piramide 
 piramide <- poblacion %>% mutate(Hombres=-Hombres) %>% 
-  pivot_longer(!Edad, names_to = "Sexo", values_to = "Porcentaje") 
+  pivot_longer(!Edad, names_to = "Sexo", values_to = "Porcentaje")
+
 
 piramide_gr <- piramide %>% ggplot(aes(x = Edad, y = Porcentaje, fill = Sexo)) +
   geom_col(position = "stack", width = 0.3) + 
   coord_flip() +
   scale_fill_manual(values=colores) + 
-  scale_y_continuous(labels = abs, limits = c(-0.30,0.30)) + 
-  labs(y = "", title ="Piramide poblacional de Corrientes", x = "") + 
-  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_markdown(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank()) 
+  scale_y_continuous(breaks = c(-0.20,-0.10, 0, 0.10, 0.20), labels = c("20%","10%", "0%","10%", "20%"), limits = c(-0.30,0.30)) + 
+  labs(y = "", title ="Piramide poblacional de Corrientes", x = "", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
+  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_markdown(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), legend.key.size = unit(0.4, 'cm'), plot.caption = element_markdown(size = 8), plot.caption.position = "panel") 
 piramide_gr
 ggsave("piramide.svg")
+
+
+
+
 ```
 
 \newpage 
-
-# Indicadores de participación laboral
+\textcolor{graycustom}{\Large Indicadores de participación laboral}
+\newline
 
 Los resultados para primer trimestre de 2021 para la Ciudad de Corrientes muestran que la tasa de actividad es del 43.99%.
 
@@ -408,7 +417,7 @@ tablakg_2<- tablakg_2 %>%
   column_spec(1, width = "18em") %>% 
   column_spec(2, width = "14em") %>%  
   column_spec(3, width = "14em")
-
+tablakg_2
  
  # %>%  save_kable(file = "tablakg_2.svg")
 
@@ -422,15 +431,17 @@ tablakg_2<- tablakg_2 %>%
 
 ```
 
-
-
-```{r}
+\newline
+\newline
+**Gráfico 2**
+\newline
+```{r, fig.height=4}
 #Grafico
 grafico1 <- tabla_actividad %>% ggplot(mapping = aes(x=Edad, y=porcentaje, fill=Sexo)) + 
   geom_chicklet(position = position_dodge(width = 0.75), width=0.7, show.legend = F) +
   scale_fill_manual(values=colores) + scale_y_continuous(labels = percent, limits = c(0,1)) + 
-  labs(y = "Tasa de participación laboral", title ="Participación laboral por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span> ", subtitle ="Primer trimestre 2021", x = "") + 
-  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank()) 
+  labs(y = "Tasa de participación laboral", title ="Participación laboral por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span> ", subtitle ="Primer trimestre 2021", x = "", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
+  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), plot.caption = element_markdown(size=8)) 
 grafico1
 ggsave("grafico1.svg") #ver despues q paso aca con el color
 ```
@@ -485,7 +496,6 @@ nivelalcanzado <- bind_rows(primariacomp, secundariacomp, superiorcomp)
 
 ```
 
-
 ```{r}
 tablakg_3 <- nivelalcanzado %>% pivot_wider(names_from = Sexo, values_from = porcentaje)
 col_order <- c("Nivel", "Hombres", "Mujeres", "Brecha")
@@ -504,19 +514,21 @@ tablakg_3 %>%
 
 ```
 
-
-```{r}
+\newline
+\newline
+**Gráfico 3**
+\newline
+```{r, fig.height=4}
 grafico2 <- nivelalcanzado %>% ggplot() + geom_chicklet(aes(x=Nivel, y=porcentaje, fill=Sexo), position = position_dodge(), width = 0.7, show.legend = F) + 
   geom_point(aes(x=Nivel, y=Brecha), shape=15, color="#e7930b") +  
   geom_line(aes(x=Nivel, y=Brecha, group = 1), color="#f4a018", size=1.) +
   scale_y_continuous(labels = percent, limits = c(0,1)) + scale_fill_manual(values=colores) + 
-  labs(title ="Participación laboral según nivel educativo para <span style = 'color: #29aee4;'>**hombres**</span>, <span style='color: #0c8136;'>**mujeres**</span> y <span style = 'color: #f4a018;'>**brecha**</span>", subtitle = "Primer trimestre 2021", x = "Nivel alcanzado", y="Tasa de participación laboral") + 
-  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_text(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank())    
+  labs(title ="Participación laboral según nivel educativo para <br><span style = 'color: #29aee4;'>**hombres**</span>, <span style='color: #0c8136;'>**mujeres**</span> y <span style = 'color: #f4a018;'>**brecha**</span>", subtitle = "Primer trimestre 2021", x = "Nivel alcanzado", y="Tasa de participación laboral", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
+  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_text(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), plot.caption = element_markdown(size=8))    
 grafico2
 
 ggsave("grafico2.svg")
 ```
-
 
 
 
@@ -609,8 +621,11 @@ tablakg_4 %>%
   column_spec(4, width = "10em")
 ```
 
-
-```{r}
+\newline
+\newline
+**Gráfico 4**
+\newline
+```{r, fig.height=3.5}
 #Grafico 3
 #Tabla para gráfico
 horastrabajadasgr <- horastrabajadas %>% mutate(horas=round(horas))
@@ -624,12 +639,12 @@ grafico3<- horastrabajadasgr %>% ggplot() + geom_dumbbell(aes(y=Edad, x=Mujeres,
 size=1.2, color="#b2b2b2", size_x=3, size_xend = 3, colour_x =colores[2], colour_xend =colores[1])+
   geom_text(aes(x=Mujeres, y=Edad, label=Mujeres), color="BLACK", size=2.75, vjust=2.5, family="Open Sans") + 
   geom_text(aes(x=Hombres, y=Edad, label=Hombres), color="BLACK", size=2.75, vjust=2.5, family="Open Sans") + 
-  labs(fill="", title = "Carga laboral semanal por edad de <span style='color: #29aee4;'>**Hombres**</span> y <span style='color: #0c8136;'>**Mujeres**</span>", subtitle = "Primer trimestre 2021", caption = "", x="Horas trabajadas") + 
+  labs(fill="", title = "Carga laboral semanal por edad de <span style='color: #29aee4;'>**Hombres**</span> y <span style='color: #0c8136;'>**Mujeres**</span>", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ", x="Horas trabajadas") + 
   ylab("")  + 
   theme(axis.title = element_text(), aspect.ratio=0.5, axis.text = element_text(color = "BLACK"), legend.position = "right", title = element_text(), panel.grid.major = element_blank(), legend.text = element_text(), panel.background = element_blank())  + 
   scale_fill_manual(values = colores, aesthetics = "color")  + 
   labs(color="") + 
-  theme(legend.key = element_blank(), panel.grid.major.y =  element_line(colour = "BLACK", linetype = "dotted"), axis.text.y = element_text(hjust = 0), plot.title.position = "plot", plot.title = element_markdown(), text = element_text(family = "Open Sans" ))
+  theme(legend.key = element_blank(), panel.grid.major.y =  element_line(colour = "BLACK", linetype = "dotted"), axis.text.y = element_text(hjust = 0), plot.title.position = "plot", plot.title = element_markdown(), text = element_text(family = "Open Sans" ), plot.caption = element_markdown(size=8))
 grafico3
 ggsave("grafico3.svg")
 ```
@@ -652,8 +667,11 @@ desocupacion <- eph1t %>% filter(AGLOMERADO==12 & !is.na(DESOCUPADOS))
 desocupacion <- desocupacion %>%  group_by(DESOCUPADOS) %>%  summarise(formattable::percent(sum(PONDERA)/sum(desocupacion$PONDERA)))
 desocupacion
 ```
-
-```{r}
+\newline
+\newline
+**Gráfico 5**
+\newline
+```{r, fig.height=4}
 #Graficos evolución desocupación y empleo
 #Para el gráfico se importa el csv con la evolución de las tasas de empleo y desocupación 
 Tasas<-read.csv("tasas_empleo_desocupacion.csv", sep = ";", colClasses = "character")
@@ -665,8 +683,8 @@ grafico4 <- Tasas %>%  ggplot(aes(x=fecha, y=empleo)) +
   geom_col(size=1, show.legend = F, fill="#1ba2d8") + 
   geom_line(aes(x=fecha, y=desocupacion, group = 1), color="#0c8136", size=1) + 
   scale_y_continuous(limits = c(0,0.5), labels = percent_format(accuracy = 1.)) +  
-  labs(y = "", title ="Evolución de Tasas 2016-2021", subtitle ="<span style = 'color:  #1ba2d8 ;'>**Empleo**</span> y <span style='color: #0c8136;'>**Desocupación**</span>", x="") + 
-  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size=14), plot.title.position = "plot", plot.subtitle = element_markdown(size = 8), axis.title = element_text(size=8), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), legend.title = element_blank(), legend.position = "bottom", aspect.ratio = (0.5), axis.text.x=element_text(angle=60, hjust=1)) +
+  labs(y = "", title ="Evolución de Tasas 2016-2021", subtitle ="<span style = 'color:  #1ba2d8 ;'>**Empleo**</span> y <span style='color: #0c8136;'>**Desocupación**</span>", x="", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
+  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size=14), plot.title.position = "plot", plot.subtitle = element_markdown(size = 8), axis.title = element_text(size=8), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), legend.title = element_blank(), legend.position = "bottom", aspect.ratio = (0.5), axis.text.x=element_text(angle=60, hjust=1), plot.caption = element_markdown(size = 8)) +
   scale_color_manual(values = colores) + 
   scale_x_date(date_breaks = "4 month", date_labels = "%B %Y") 
 grafico4 
@@ -674,7 +692,9 @@ grafico4
 ggsave("grafico4.svg")
 ```
 
-## Empleo público y privado
+\newpage
+\textcolor{graycustom}{\Large Empleo público y privado}
+\newline
 
 Del total de empleados de la ciudad, el porcentaje de empleados públicos es de 24.95% siendo 74.19% trabajadores pertenecientes al sector privado, quedando el ínfimo porcentaje restante sin especificar.
 
@@ -691,7 +711,11 @@ empleados <- empleados  %>% mutate(porcentaje=(`sum(PONDERA)`/sum(empleados$`sum
 empleados
 ```
 
-```{r}
+\newline
+\newline
+**Gráfico 6**
+\newline
+```{r, fig.height=3.5}
 #Grafico 5
 #remotes::install_github("hrbrmstr/waffle")
 
@@ -699,8 +723,8 @@ grafico5 <- empleados %>% ggplot(mapping = aes(fill=EMPLEADOS, values=numeros)) 
   geom_waffle(n_rows=10, size=1.1, show.legend = F, colour = "white") + 
   theme_void() +
   scale_fill_manual(values = colores) +  
-  labs(title="Composición del empleo por sectores <span style = 'color: #29aee4;'>**privado**</span> y <span style='color: #0c8136;'>**público**</span> ", subtitle = "Primer trimestre 2021") + 
-  theme(plot.title = element_markdown(size=14), text = element_text(family = "Open Sans"), plot.title.position = "plot" )
+  labs(title="Composición del empleo <span style = 'color: #29aee4;'>**privado**</span> y <span style='color: #0c8136;'>**público**</span> ", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
+  theme(plot.title = element_markdown(size=14), text = element_text(family = "Open Sans"),  plot.title.position = "plot", plot.caption = element_markdown(size = 8))
 grafico5
 
 ggsave("grafico5.svg")
@@ -764,7 +788,7 @@ composicionempleados <- bind_rows(composicionempleadospr, composicionempleadospu
 composicionempleados
 ```
 
-```{r}
+```{r, fig.height=3.5, include=FALSE}
 #Graficos
 ## EMPLEO PRIVADO
 composicionempleadospr$ymax <- cumsum(composicionempleadospr$porcentaje)
@@ -777,18 +801,23 @@ composicionempleadospr$label <- paste0(composicionempleadospr$SEXO, "\n ", compo
 
 dona1 <- ggplot(composicionempleadospr, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=SEXO)) +
   geom_rect() +
-  geom_text( x=1.55, aes(y=labelPosition, label=label, color=SEXO), size=4.7) +
+  geom_text( x=1.55, aes(y=labelPosition, label=label, color=SEXO), size=4) +
   scale_fill_manual(values = c("#f4a018", "#e22172")) +
   scale_colour_manual(values=c("#f4a018", "#e22172")) +
   coord_polar(theta="y") +
   xlim(c(-1, 4)) +
-  labs(title = "Composición del empleo privado", subtitle = "Primer trimestre 2021") +
+  labs(title = "Empleo privado", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con <br> datos obtenidos de INDEC.</span> ") +
   theme_void() +
-  theme(legend.position = "none", text = element_text(family = "Open Sans"), plot.title =element_text(size = 14), plot.subtitle = element_text(size = 8), legend.text = element_text(size = 8)) 
-dona1 
-
+  theme(legend.position = "none", text = element_text(family = "Open Sans"), plot.title =element_text(size = 14), plot.subtitle = element_text(size = 8), legend.text = element_text(size = 8), plot.caption = element_markdown(size=8)) 
+dona1
 ggsave("grafico6.1.svg")
+```
 
+\newline
+\newline
+**Gráfico 7**
+\newline
+```{r, fig.height=3.5}
 #EMPLEO PUBLICO
 composicionempleadospu$ymax <- cumsum(composicionempleadospu$porcentaje)
 composicionempleadospu$ymin <- formattable::percent(c(0, head(composicionempleadospu$ymax, n=-1)))
@@ -799,20 +828,20 @@ composicionempleadospu$label <- paste0(composicionempleadospu$SEXO, "\n ", compo
 
 dona2 <- ggplot(composicionempleadospu, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=SEXO)) +
   geom_rect() +
-  geom_text( x=1.55, aes(y=labelPosition, label=label, color=SEXO), size=4.7) +
+  geom_text( x=1.55, aes(y=labelPosition, label=label, color=SEXO), size=4) +
   scale_fill_manual(values = c("#29aee4","#0c8136")) +
   scale_colour_manual(values=c("#29aee4","#0c8136")) +
   coord_polar(theta="y") +
   xlim(c(-1, 4)) +
-  labs(title = "Composición del empleo público", subtitle = "Primer trimestre 2021") +
+  labs(title = "Empleo público", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con <br> datos obtenidos de INDEC.</span> ") +
   theme_void() +
-  theme(legend.position = "none", text = element_text(family = "Open Sans"), plot.title =element_text(size = 14), plot.subtitle = element_text(size = 8), legend.text = element_text(size = 8)) 
-dona2 
+  theme(legend.position = "none", text = element_text(family = "Open Sans"), plot.title =element_text(size = 14), plot.subtitle = element_text(size = 8), legend.text = element_text(size = 8), plot.caption = element_markdown(size=8)) 
+
 
 ggsave("grafico6.2.svg")
 
-#figure <- ggarrange(dona1, dona2, ncol = 2, nrow = 1)
-
+figure <- ggarrange(dona1, dona2, ncol = 2, nrow = 1)
+figure
 ```
 
 En términos de la composición por sectores en el empleo público (Gráfico 9), la "Administración Pública" cuenta con la mayor participación laboral, ocupando un 44.54% del total de empleos públicos, seguida por la "Enseñanza" en todos sus niveles, con un 30.70% del total de empleos y en tercer lugar el rubro de la "Salud", con un 15.07% de la participación.
@@ -828,7 +857,11 @@ spublico <- spublico %>% group_by(SECTOR_ACT) %>% summarise(proporcion=(sum(POND
 spublico
 ```
 
-```{r}
+\newline
+\newline
+**Gráfico 8**
+\newline
+```{r, fig.height=4}
 #Gráfico 7
 grafspublico <- spublico %>% mutate(principal=case_when(proporcion<0.10 ~"Otros",
                                                             T ~ as.character(SECTOR_ACT)))
@@ -841,14 +874,15 @@ grafspublico$principal[grafspublico$principal %in% "ADMINISTRACIÓN PÚBLICA Y D
 grafspublico$principal[grafspublico$principal %in% "SALUD HUMANA Y SERVICIOS SOCIALES"] <- "SALUD HUMANA Y \nSERVICIOS SOCIALES"
 
 grafico7 <- grafspublico %>% ggplot(aes(area = porcentaje , label =paste(principal, porcentaje,sep = "|"), fill=principal)) +
-  geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Composición del sector público", subtitle = "Primer trimestre 2021", caption = "", fill="") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank()) 
+  geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Composición del sector público", subtitle = "Primer trimestre 2021", fill="", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank(), plot.caption = element_markdown(size=8)) 
 grafico7
 
 ggsave("grafico7.svg")
 
 ```
-
-## Tasas de informalidad laboral
+\newpage
+\textcolor{graycustom}{\Large Tasas de informalidad laboral}
+\newline
 
 Para el análisis del trabajo no registrado, se construye una tasa de informalidad que relaciona la cantidad de personas que poseen un empleo en relación de dependencia, pero no perciben aportes jubilatorios por el mismo. En la tabla y el gráfico siguiente se presenta información relacionada a la población que trabaja de manera informal desagregada tanto por edad como por sexo:
 
@@ -945,6 +979,7 @@ infgraf <- bind_rows(inf15, inf25, inf35, inf45, inf60)
 infgraf
 ```
 
+
 ```{r}
 #Tabla
 tablakg_5 <- infgraf %>% select(-INFORMALES) %>%  pivot_wider(names_from = Sexo, values_from = porcentaje)
@@ -961,13 +996,17 @@ tablakg_5 %>%
   sub("\\\\bottomrule", "", .)
 ```
 
-```{r}
+\newline
+\newline
+**Gráfico 9**
+\newline
+```{r, fig.height=4}
 #Grafico
 graficoinf <- infgraf %>% ggplot(mapping = aes(x=Edad, y=porcentaje, fill=Sexo)) + 
   geom_chicklet(position = position_dodge(width = 0.75), width=0.7, show.legend = F) +
   scale_fill_manual(values=colores) + scale_y_continuous(labels = percent, limits = c(0,1)) + 
-  labs(y = "Tasa de informalidad laboral", title ="Informalidad laboral por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span> ", subtitle ="Primer trimestre 2021", x = "") + 
-  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank()) 
+  labs(y = "Tasa de informalidad laboral", title ="Informalidad laboral por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span> ", subtitle ="Primer trimestre 2021", x = "", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") + 
+  theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), plot.caption = element_markdown(size=8)) 
 graficoinf
 
 ggsave("graficoinf.svg")
@@ -992,7 +1031,11 @@ nombres<-(unique(sectores_ephtotal$SECTOR_ACT))
 informalidad_sectores <- bind_rows(lapply(nombres, inforporsector)) 
 ```
 
-```{r}
+\newline
+\newline
+**Gráfico 10**
+\newline
+```{r, fig.height=3.5}
 #Gráfico sectores con mas informalidad
 informalidad_sectores <- informalidad_sectores %>% filter(INFORMALES==1) %>% arrange(-porcentaje) 
 informalidad_sectores <-informalidad_sectores[1:5,]
@@ -1007,15 +1050,19 @@ PERSONAL DOMÉSTICO" ~ "PERSONAL DOMESTICO",
 grafico8 <- informalidad_sectores %>% ggplot(mapping = aes(x=SECTOR, y=porcentaje)) +
   geom_segment(aes(x=SECTOR, xend=SECTOR, y=0, yend=porcentaje), color= colores[2], size=1.05) +
   geom_point(size=3.5, color=colores[1]) + coord_flip() + 
-  labs(x="", y="", title = "Sectores con mayor informalidad", subtitle = "Primer trimestre 2021") +
+  labs(x="", y="", title = "Sectores con mayor informalidad", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") +
   scale_y_continuous(labels = percent, limits = c(0,1)) + 
-  theme(text = element_text(family = "Open Sans"), plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), plot.title.position = "plot", panel.background = element_blank(), axis.text = element_text(size = 8), axis.title.x = element_text(size = 8))
+  theme(text = element_text(family = "Open Sans"), plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), plot.title.position = "plot", panel.background = element_blank(), axis.text = element_text(size = 8), axis.title.x = element_text(size = 8), plot.caption = element_markdown(size=8))
 grafico8
 
 ggsave("grafico8.svg")
 ```
 
-```{r}
+\newline
+\newline
+**Gráfico 11**
+\newline
+```{r, fig.height=3.5}
 #Gráfico sectores con menos informalidad
 menor_informalidad <- bind_rows(lapply(nombres, inforporsector)) 
 menor_informalidad <- menor_informalidad %>% filter(INFORMALES==1) %>% arrange(porcentaje) 
@@ -1036,15 +1083,17 @@ SECTOR=="INFORMACIÓN Y COMUNICACIÓN" ~ "INFORMACIÓN Y \nCOMUNICACIÓN",
 grafico9 <- menor_informalidad %>%  ggplot(mapping = aes(x=SECTOR, y=porcentaje)) +
   geom_segment(aes(x=SECTOR, xend=SECTOR, y=0, yend=porcentaje), color= colores[2], size=1.05) +
   geom_point(size=3.5, color=colores[1]) + coord_flip() + 
-  labs(x="", y="", title = "Sectores con menor informalidad", subtitle = "Primer trimestre 2021") +
+  labs(x="", y="", title = "Sectores con menor informalidad", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") +
   scale_y_continuous(labels = percent, limits = c(0,0.2)) + 
-  theme(text = element_text(family = "Open Sans"), plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), plot.title.position = "plot", panel.background = element_blank(), axis.text = element_text(size = 8), axis.title.x = element_text(size = 8))
+  theme(text = element_text(family = "Open Sans"), plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), plot.title.position = "plot", panel.background = element_blank(), axis.text = element_text(size = 8), axis.title.x = element_text(size = 8), plot.caption = element_markdown(size = 8))
 grafico9
 
 ggsave("grafico9.svg")
 ```
 
-## Tasas de calificación laboral
+\newpage
+\textcolor{graycustom}{\Large Tasas de calificación laboral}
+\newline
 
 En la EPH se clasifica a los empleados en cuatro categorías: profesionales, técnicos, operarios y trabajadores no calificados. A efectos de este análisis se consideran calificados a los profesionales o técnicos, mientras que a los no calificados se le suman los operarios para determinar la categoría final de no calificados.
 
@@ -1084,7 +1133,11 @@ califporsector<- function(i) {
 calificacion_sectores <- bind_rows(lapply(nombres, califporsector)) 
 ```
 
-```{r}
+\newline
+\newline
+**Gráfico 12**
+\newline
+```{r, fig.height=4}
 #Grafico
 calificacion_sectores <- calificacion_sectores %>% filter(TIPOCALIFICACION=="Calificado") %>% arrange(-porcentaje) 
 calificacion_sectores <-calificacion_sectores[1:5,]
@@ -1103,8 +1156,9 @@ calificacion_sectores %>% ggplot(aes(area = porcentaje , label =paste(SECTOR, po
   geom_treemap(show.legend = F) + 
   geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + 
   scale_fill_manual(values=colores) + 
-  labs(title = "Sectores con mayor calificación", subtitle = "Primer trimestre 2021", caption = "", fill="") + 
-  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank()) 
+  labs(title = "Sectores con mayor calificación", subtitle = "Primer trimestre 2021", fill="", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") + 
+  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank(), plot.caption = element_markdown(size=8)) 
 
 ggsave("grafico10.svg")
 ```
+
