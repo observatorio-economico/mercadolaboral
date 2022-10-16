@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.9.16)  16 OCT 2022 10:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.9.16)  26 JUN 2022 20:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1042,12 +1042,12 @@ pdfTeX warning: pdflatex.exe (file ./logos/logo_oecc.pdf): PDF inclusion: found
 <./logos/logo_oecc.pdf, id=7, 306.08653pt x 29.6809pt>
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 144.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 145.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 <./logos/muni.jpg, id=8, 245.91875pt x 59.22125pt>
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 144.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 145.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 Package fancyhdr Warning: \footskip is too small (30.0pt): 
@@ -1058,75 +1058,75 @@ Package fancyhdr Warning: \footskip is too small (30.0pt):
 
 {c:/Users/Lenovo/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdft
 ex.map} <./logos/logo_oecc.pdf> <./logos/muni.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 147--148
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
 
  []
 
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-51.
+52.
 (c:/Users/Lenovo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-51.
+52.
 
 (c:/Users/Lenovo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-151.
+152.
 
 (c:/Users/Lenovo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-151.
+152.
 
 (c:/Users/Lenovo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 151.
+(Font)              <10> on input line 152.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 151.
+(Font)              <7> on input line 152.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 151.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 151
+(Font)              <5> on input line 152.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 152
 .
 
 (c:/Users/Lenovo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 151
+LaTeX Font Info:    Trying to load font information for U+msb on input line 152
 .
 (c:/Users/Lenovo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 162.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 163.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 163.
-LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 165.
-LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 12.0pt on input line 165.
 <Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-6-1.pdf, id=20, 469.7
 55pt x 252.945pt>
 File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-6-1.pdf Graphic 
 file (type pdf)
 <use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-6-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-6-1.pdf  used on input line 179.
+nk-6-1.pdf  used on input line 160.
 (pdftex.def)             Requested size: 469.75386pt x 252.94438pt.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
+(Font)              scaled to size 9.0pt on input line 169.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 170.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 170.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
+(Font)              scaled to size 12.0pt on input line 172.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
+(Font)              scaled to size 12.0pt on input line 172.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 183.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 186.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 183.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 186.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 Package fancyhdr Warning: \footskip is too small (30.0pt): 
@@ -1134,17 +1134,25 @@ Package fancyhdr Warning: \footskip is too small (30.0pt):
 (fancyhdr)                \setlength{\footskip}{37.86072pt}.
 
 [2 <./Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-6-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 185--187
+Underfull \hbox (badness 10000) in paragraph at lines 189--191
 
  []
 
+<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-12-1.pdf, id=36, 469.
+755pt x 289.08pt>
+File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-12-1.pdf Graphic
+ file (type pdf)
+<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-12-1.pdf>
+Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
+nk-12-1.pdf  used on input line 236.
+(pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 231.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 247.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 231.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 247.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 Package fancyhdr Warning: \footskip is too small (30.0pt): 
@@ -1152,21 +1160,21 @@ Package fancyhdr Warning: \footskip is too small (30.0pt):
 (fancyhdr)                \setlength{\footskip}{37.86072pt}.
 
 [3]
-<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-12-1.pdf, id=41, 469.
+<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-15-1.pdf, id=42, 469.
 755pt x 289.08pt>
-File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-12-1.pdf Graphic
+File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-15-1.pdf Graphic
  file (type pdf)
-<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-12-1.pdf>
+<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-15-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-12-1.pdf  used on input line 233.
+nk-15-1.pdf  used on input line 271.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 268.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 275.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 268.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 275.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 
@@ -1175,21 +1183,21 @@ Package fancyhdr Warning: \footskip is too small (30.0pt):
 (fancyhdr)                \setlength{\footskip}{37.86072pt}.
 
 [4 <./Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-12-1.pdf>]
-<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-15-1.pdf, id=62, 469.
-755pt x 289.08pt>
-File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-15-1.pdf Graphic
+<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-19-1.pdf, id=63, 469.
+755pt x 252.945pt>
+File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-19-1.pdf Graphic
  file (type pdf)
-<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-15-1.pdf>
+<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-19-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-15-1.pdf  used on input line 270.
-(pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
+nk-19-1.pdf  used on input line 305.
+(pdftex.def)             Requested size: 469.75386pt x 252.94438pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 301.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 309.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 301.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 309.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 
@@ -1198,29 +1206,13 @@ Package fancyhdr Warning: \footskip is too small (30.0pt):
 (fancyhdr)                \setlength{\footskip}{37.86072pt}.
 
 [5 <./Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-15-1.pdf>]
-<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-19-1.pdf, id=83, 469.
-755pt x 252.945pt>
-File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-19-1.pdf Graphic
- file (type pdf)
-<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-19-1.pdf>
-Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-19-1.pdf  used on input line 303.
-(pdftex.def)             Requested size: 469.75386pt x 252.94438pt.
-<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-22-1.pdf, id=84, 469.
-755pt x 289.08pt>
-File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-22-1.pdf Graphic
- file (type pdf)
-<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-22-1.pdf>
-Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-22-1.pdf  used on input line 321.
-(pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 326.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 315.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 326.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 315.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 
@@ -1229,49 +1221,57 @@ Package fancyhdr Warning: \footskip is too small (30.0pt):
 (fancyhdr)                \setlength{\footskip}{37.86072pt}.
 
 [6 <./Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-19-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 328--329
-
- []
-
-<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-24-1.pdf, id=104, 469
-.755pt x 252.945pt>
-File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-24-1.pdf Graphic
+<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-22-1.pdf, id=103, 469
+.755pt x 289.08pt>
+File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-22-1.pdf Graphic
  file (type pdf)
-<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-24-1.pdf>
+<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-22-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-24-1.pdf  used on input line 335.
-(pdftex.def)             Requested size: 469.75386pt x 252.94438pt.
+nk-22-1.pdf  used on input line 325.
+(pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 346.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 329.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 346.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 329.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
+
 
 Package fancyhdr Warning: \footskip is too small (30.0pt): 
 (fancyhdr)                Make it at least 37.86072pt, for example:
 (fancyhdr)                \setlength{\footskip}{37.86072pt}.
 
 [7 <./Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-22-1.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 331--332
+
+ []
+
+<Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-24-1.pdf, id=124, 469
+.755pt x 252.945pt>
+File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-24-1.pdf Graphic
+ file (type pdf)
+<use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-24-1.pdf>
+Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
+nk-24-1.pdf  used on input line 338.
+(pdftex.def)             Requested size: 469.75386pt x 252.94438pt.
 <Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-30-1.pdf, id=125, 469
 .755pt x 252.945pt>
 File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-30-1.pdf Graphic
  file (type pdf)
 <use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-30-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-30-1.pdf  used on input line 353.
+nk-30-1.pdf  used on input line 354.
 (pdftex.def)             Requested size: 469.75386pt x 252.94438pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 357.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 358.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 357.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 358.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
-
 
 Package fancyhdr Warning: \footskip is too small (30.0pt): 
 (fancyhdr)                Make it at least 37.86072pt, for example:
@@ -1284,15 +1284,15 @@ File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-32-1.pdf Graphic
  file (type pdf)
 <use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-32-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-32-1.pdf  used on input line 368.
+nk-32-1.pdf  used on input line 367.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 372.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 371.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 372.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 371.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 
@@ -1307,15 +1307,15 @@ File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-37-1.pdf Graphic
  file (type pdf)
 <use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-37-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-37-1.pdf  used on input line 401.
+nk-37-1.pdf  used on input line 400.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 406.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 404.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 406.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 404.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 
@@ -1330,7 +1330,7 @@ File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-39-1.pdf Graphic
  file (type pdf)
 <use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-39-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-39-1.pdf  used on input line 420.
+nk-39-1.pdf  used on input line 417.
 (pdftex.def)             Requested size: 469.75386pt x 252.94438pt.
 <Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-40-1.pdf, id=182, 469
 .755pt x 252.945pt>
@@ -1338,15 +1338,15 @@ File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-40-1.pdf Graphic
  file (type pdf)
 <use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-40-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-40-1.pdf  used on input line 425.
+nk-40-1.pdf  used on input line 423.
 (pdftex.def)             Requested size: 469.75386pt x 252.94438pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 431.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 427.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 431.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 427.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 
@@ -1357,11 +1357,11 @@ Package fancyhdr Warning: \footskip is too small (30.0pt):
 [11 <./Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-37-1.pdf>]
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 431.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 427.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 431.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 427.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 
@@ -1376,7 +1376,7 @@ pdfTeX warning: pdflatex.exe (file ./Informe-Mercado-Laboral_files/figure-latex
 /unnamed-chunk-40-1.pdf): PDF inclusion: multiple pdfs with page group included
  in a single page
 >]
-Underfull \hbox (badness 10000) in paragraph at lines 433--434
+Underfull \hbox (badness 10000) in paragraph at lines 429--430
 
  []
 
@@ -1386,15 +1386,15 @@ File: Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-44-1.pdf Graphic
  file (type pdf)
 <use Informe-Mercado-Laboral_files/figure-latex/unnamed-chunk-44-1.pdf>
 Package pdftex.def Info: Informe-Mercado-Laboral_files/figure-latex/unnamed-chu
-nk-44-1.pdf  used on input line 454.
+nk-44-1.pdf  used on input line 449.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 File: ./logos/logo_oecc.pdf Graphic file (type pdf)
 <use ./logos/logo_oecc.pdf>
-Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 459.
+Package pdftex.def Info: ./logos/logo_oecc.pdf  used on input line 453.
 (pdftex.def)             Requested size: 199.17339pt x 19.31363pt.
 File: ./logos/muni.jpg Graphic file (type jpg)
 <use ./logos/muni.jpg>
-Package pdftex.def Info: ./logos/muni.jpg  used on input line 459.
+Package pdftex.def Info: ./logos/muni.jpg  used on input line 453.
 (pdftex.def)             Requested size: 142.26898pt x 34.26068pt.
 
 Package fancyhdr Warning: \footskip is too small (30.0pt): 
@@ -1413,7 +1413,7 @@ Package rerunfilecheck Info: File `Informe-Mercado-Laboral.out' has not changed
 Here is how much of TeX's memory you used:
  18560 strings out of 480559
  307152 string characters out of 5901696
- 653344 words of memory out of 5000000
+ 654344 words of memory out of 5000000
  35743 multiletter control sequences out of 15000+600000
  431091 words of font info for 66 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -1423,7 +1423,7 @@ a_jg4h6q.enc}{c:/Users/Lenovo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvip
 s/opensans/a_nvvucy.enc}<c:/Users/Lenovo/AppData/Roaming/TinyTeX/texmf-dist/fon
 ts/type1/ascender/opensans/OpenSans-Bold.pfb><c:/Users/Lenovo/AppData/Roaming/T
 inyTeX/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Regular.pfb>
-Output written on Informe-Mercado-Laboral.pdf (13 pages, 227493 bytes).
+Output written on Informe-Mercado-Laboral.pdf (13 pages, 226823 bytes).
 PDF statistics:
  261 PDF objects out of 1000 (max. 8388607)
  186 compressed objects within 2 object streams

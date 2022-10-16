@@ -45,15 +45,15 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, dev = "cai
 \textcolor{graycustom}{\Large Consideraciones metodológicas}
 \newline
 
-El Observatorio Económico de la Municipalidad de Corrientes lleva a cabo diversos informes socio-demográficos, utilizando como fuente principal la base de microdatos de la Encuesta Permanente de Hogares elaborada por el Instituto Nacional de Estadísticas y Censos (INDEC) y presentada con una periodicidad trimestral. La misma se realiza a través de cuestionarios presenciales que luego son volcados a bases de datos para ser utilizados por el público en general.
+El Observatorio Económico de la Municipalidad de Corrientes lleva a cabo diversos informes sociodemográficos, utilizando como fuente principal la base de microdatos de la Encuesta Permanente de Hogares elaborada por el Instituto Nacional de Estadísticas y Censos (INDEC) y presentada con una periodicidad trimestral. La misma se realiza a través de cuestionarios presenciales que luego son volcados a bases de datos para ser utilizados por el público en general.
 
 A raíz del decreto N.º 297/2020 que establece el aislamiento social, preventivo y obligatorio por la pandemia causada por el virus SARS-COV2, y con el objetivo de no interrumpir el operativo continuo, el INDEC pasó de la modalidad presencial a la telefónica para contactar y realizar la entrevista a los hogares.
 
-Esto implica que, a partir del Cuarto trimestre del 2020, el relevamiento habitual de la EPH se ha visto afectado no solo por el cambio de modalidad de entrevista, sino también por la cobertura de la muestra, ya que la misma se redujo a las viviendas que tenían un número de teléfono conocido o cuyo número se pudo obtener mediante estrategias que no implicaban contacto personal. Ambos aspectos impactan en la cantidad de hogares sin respuesta y ocasionan sesgos en las estimaciones.
+Esto implica que, a partir del segundo trimestre del 2020, el relevamiento habitual de la EPH se ha visto afectado no solo por el cambio de modalidad de entrevista, sino también por la cobertura de la muestra, ya que la misma se redujo a las viviendas que tenían un número de teléfono conocido o cuyo número se pudo obtener mediante estrategias que no implicaban contacto personal. Ambos aspectos impactan en la cantidad de hogares sin respuesta y ocasionan sesgos en las estimaciones.
 
 Gracias a los esfuerzos del INDEC para asegurar la difusión de las estadísticas y aminorar los posibles sesgos producidos en los datos del trimestre, el Observatorio Económico pudo llevar a cabo este informe. Sin embargo, creemos oportuno realizar las aclaraciones metodológicas antes descritas.
 
-Por último, este trabajo se ha hecho considerando a los datos del primer trimestre de 2022, con excepción de los apartados de informalidad por sectores y calificación laboral por sectores, que se hicieron trabajando en conjunto con las bases del tercer trimestre del 2021.
+Por último, este trabajo se ha hecho considerando a los datos del primer trimestre de 2021, con excepción de los apartados de informalidad por sectores y calificación laboral por sectores, que se hicieron trabajando en conjunto con las bases del cuarto trimestre del 2020.
 
 
 ```{r}
@@ -91,22 +91,22 @@ loadfonts(device = "win", quiet=T)
 #Colores
 colores<- c("#29aee4","#0c8136","#e22172","#f4a018","#428cb4","#c85687","#dbac2f","#5da14a","#ff9a00")
 gradiente<- c("#ed3068","#ef4275","#f3789d","#f69cb7","#fbd2de")
-capt <- "#5f6368"
+
 ```
 
 ```{r}
 #Se cargan las bases de datos
-#Primer trimestre de 2022
-eph1ti<- get_microdata(year=2022, trimester=1, type="individual")
-eph1tih <- get_microdata(year=2022, trimester=1, type="hogar")
+#Primer trimestre 2021
+eph1ti<- get_microdata(year=2021, trimester=1, type="individual")
+eph1tih <- get_microdata(year=2021, trimester=1, type="hogar")
 
 eph1t <- left_join(eph1ti, eph1tih)
 
 #Para mas adelante se necesitarán los datos del trimestre anterior, por lo que se procede a cargar la correspondiente base
 
-#primer trimestre de 2022
-ephi<- get_microdata(year=2021, trimester=4, type="individual")
-ephh <- get_microdata(year=2021, trimester=4, type="hogar")
+#Cuartro trimestre 2020
+ephi<- get_microdata(year=2020, trimester=4, type="individual")
+ephh <- get_microdata(year=2020, trimester=4, type="hogar")
 
 eph4t <- left_join(ephi, ephh)
 
@@ -212,9 +212,17 @@ sectores_ephtotal<- left_join(ephtotalsd,caes)
 Tasas e indicadores socioeconómicos (EPH)}
 \newline
 
-Según las proyecciones de INDEC basadas en el último Censo de población, la cantidad de habitantes total de la ciudad en el año 2021 es de 418880 personas. De ese total el 48.88% son hombres y el restante 51.12%, mujeres.
+Según las proyecciones de INDEC basadas en el último Censo de población, la cantidad de habitantes total de la ciudad en el año 2021 es de 414927 personas. De ese total el 48.83% son hombres y el restante 51.17%, mujeres.
 
 De acuerdo con los datos publicados por el INDEC, basados también en el último Censo Nacional de Población, Hogares y Viviendas (2010), la población por edades se compone de la siguiente manera:
+
+```{r include=FALSE}
+#\begin{figure}[h!]
+#\includegraphics[width=0.7\columnwidth]{piramide}
+#\end{figure}
+
+```
+
 
 
 ```{r}
@@ -243,7 +251,10 @@ tabla_1
 
 ```
 
-
+\newline
+\newline
+**Gráfico 1**
+\newline
 ```{r, fig.height=3.5}
 #Piramide 
 piramide <- poblacion %>% mutate(Hombres=-Hombres) %>% 
@@ -255,7 +266,7 @@ piramide_gr <- piramide %>% ggplot(aes(x = Edad, y = Porcentaje, fill = Sexo)) +
   coord_flip() +
   scale_fill_manual(values=colores) + 
   scale_y_continuous(breaks = c(-0.20,-0.10, 0, 0.10, 0.20), labels = c("20%","10%", "0%","10%", "20%"), limits = c(-0.30,0.30)) + 
-  labs(y = "", title ="Piramide poblacional de Corrientes", x = "", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span>") + 
+  labs(y = "", title ="Piramide poblacional de Corrientes", x = "", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span>") + 
   theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_markdown(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), legend.key.size = unit(0.4, 'cm'), plot.caption = element_markdown(size = 8), plot.caption.position = "panel") 
 piramide_gr
 ggsave("piramide.svg")
@@ -269,15 +280,17 @@ ggsave("piramide.svg")
 \textcolor{graycustom}{\Large Indicadores de participación laboral}
 \newline
 
-Los resultados del primer trimestre de 2022 para la Ciudad de Corrientes muestran que la tasa de actividad es del 43.14%.
+Los resultados para primer trimestre de 2021 para la Ciudad de Corrientes muestran que la tasa de actividad es del 43.99%.
 
-Del total de personas que conforman la PEA, el 57.68% son hombres y el42.32% mujeres. Por otro lado, se observa que del total de mujeres, el 34.94% forman parte de la PEA, mientras que en el caso de los hombres el porcentaje que forma parte de la PEA alcanza el 52.11%.
+Del total de la PEA, el 53.81% son hombres y el 46.19% mujeres. Por otro lado, se observa que del total de mujeres el 38.99% forman parte de la PEA, mientras que en el caso de los hombres el porcentaje que forma parte de la PEA alcanza el 49.44%.
 
 La población económicamente activa (PEA), a su vez, está compuesta por los ocupados y desocupados. Este último grupo presiona activamente sobre el mercado laboral en búsqueda de una ocupación.
 
 La definición vista de PEA, no incluye al trabajo no remunerado (doméstico, voluntario y de subsistencia). Esto implica que, en la medición de la actividad de la EPH, no se considera activa a la población que realiza producción o tratamiento de bienes exclusivamente para autoconsumo. Esto trae inconvenientes en cuanto a la subestimación de la participación femenina en la actividad económica. Por la importancia que tiene este tópico en las brechas de género, el tema es tratado especialmente en el "Informe de Género" realizado por el Observatorio Económico de la Ciudad de Corrientes.
 
 A continuación, se aprecian los porcentajes, tanto de hombres como de mujeres, que forman parte de la PEA, desagregados por rangos de edad.
+
+
 
 
 ```{r include=FALSE}
@@ -406,22 +419,34 @@ tablakg_2<- tablakg_2 %>%
   column_spec(3, width = "14em")
 tablakg_2
  
+ # %>%  save_kable(file = "tablakg_2.svg")
+
+#svg("tablakg_2.svg")
+
+# Código del gráfico
+#tablakg_1
+# Cerramos el dispositivo
+#dev.off() 
+
 
 ```
 
-
+\newline
+\newline
+**Gráfico 2**
+\newline
 ```{r, fig.height=4}
 #Grafico
 grafico1 <- tabla_actividad %>% ggplot(mapping = aes(x=Edad, y=porcentaje, fill=Sexo)) + 
   geom_chicklet(position = position_dodge(width = 0.75), width=0.7, show.legend = F) +
   scale_fill_manual(values=colores) + scale_y_continuous(labels = percent, limits = c(0,1)) + 
-  labs(y = "Tasa de participación laboral", title ="Participación laboral por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span> ", subtitle ="Primer trimestre de 2022", x = "", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
+  labs(y = "Tasa de participación laboral", title ="Participación laboral por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span> ", subtitle ="Primer trimestre 2021", x = "", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
   theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), plot.caption = element_markdown(size=8)) 
 grafico1
-ggsave("grafico1.svg")
+ggsave("grafico1.svg") #ver despues q paso aca con el color
 ```
 
-Se puede observar que, para todos los rangos etarios existe una brecha en la tasa de actividad que muestra que hay menos mujeres participando en el mercado laboral, en comparación a los hombres.
+Se puede observar que, con excepción al rango etario de 15 a 24 años, existe una brecha en la tasa de actividad que muestra que hay menos mujeres participando en el mercado laboral, en comparación a los hombres.
 
 A modo de observación, para ambos sexos, el porcentaje máximo de participación se encuentra entre los 35 a 44 años.
 
@@ -438,7 +463,7 @@ hombresprim <- hombresprim %>% group_by(PEA) %>% summarise(porcentaje=formattabl
 mujeresprim <- eph1t %>%  filter(CH04==2 & AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED %in% c(2,3))
 mujeresprim <- mujeresprim %>% group_by(PEA) %>% summarise(porcentaje=formattable::percent((sum(PONDERA)/sum(mujeresprim$PONDERA)),2), Sexo="Mujeres", Nivel="Primaria Completa") %>% filter(PEA==1) %>% select(-PEA)
 
-primariacomp <- bind_rows(hombresprim, mujeresprim) %>% mutate("Brecha"=formattable::percent((0.5308-0.2219))) #HARDOCEADO! ACORDARSE DE CAMBIAR CADA TRIM
+primariacomp <- bind_rows(hombresprim, mujeresprim) %>% mutate("Brecha"=formattable::percent((0.4848-0.2125)))
 
 
 #Secundaria completa
@@ -451,7 +476,7 @@ mujeressec <- eph1t %>%  filter(CH04==2 & AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED 
 mujeressec <- mujeressec %>% group_by(PEA) %>% summarise(porcentaje=formattable::percent((sum(PONDERA)/sum(mujeressec$PONDERA)),2), Sexo="Mujeres", Nivel="Secundaria Completa") %>% filter(PEA==1) %>% select(-PEA)
 
 
-secundariacomp <- bind_rows(hombressec, mujeressec) %>% mutate("Brecha"=formattable::percent((0.6967-0.4501))) 
+secundariacomp <- bind_rows(hombressec, mujeressec) %>% mutate("Brecha"=formattable::percent((0.6582-0.5618))) 
 
 
 #Superior completo
@@ -464,7 +489,7 @@ mujeressup <- eph1t %>%  filter(CH04==2 & AGLOMERADO==12 & ESTADO!=0 & NIVEL_ED=
 mujeressup <- mujeressup %>% group_by(PEA) %>% summarise(porcentaje=formattable::percent((sum(PONDERA)/sum(mujeressup$PONDERA)),2), Sexo="Mujeres", Nivel="Superior Completo") %>% filter(PEA==1) %>% select(-PEA)
 
 
-superiorcomp <- bind_rows(hombressup, mujeressup) %>% mutate("Brecha"=formattable::percent((0.8019-0.7403)))
+superiorcomp <- bind_rows(hombressup, mujeressup) %>% mutate("Brecha"=formattable::percent((0.8388-0.7390)))
 
 
 nivelalcanzado <- bind_rows(primariacomp, secundariacomp, superiorcomp)
@@ -489,14 +514,16 @@ tablakg_3 %>%
 
 ```
 
-
-
+\newline
+\newline
+**Gráfico 3**
+\newline
 ```{r, fig.height=4}
 grafico2 <- nivelalcanzado %>% ggplot() + geom_chicklet(aes(x=Nivel, y=porcentaje, fill=Sexo), position = position_dodge(), width = 0.7, show.legend = F) + 
   geom_point(aes(x=Nivel, y=Brecha), shape=15, color="#e7930b") +  
   geom_line(aes(x=Nivel, y=Brecha, group = 1), color="#f4a018", size=1.) +
   scale_y_continuous(labels = percent, limits = c(0,1)) + scale_fill_manual(values=colores) + 
-  labs(title ="Participación laboral según nivel educativo para <br><span style = 'color: #29aee4;'>**hombres**</span>, <span style='color: #0c8136;'>**mujeres**</span> y <span style = 'color: #f4a018;'>**brecha**</span>", subtitle = "Primer trimestre de 2022", x = "Nivel alcanzado", y="Tasa de participación laboral", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
+  labs(title ="Participación laboral según nivel educativo para <br><span style = 'color: #29aee4;'>**hombres**</span>, <span style='color: #0c8136;'>**mujeres**</span> y <span style = 'color: #f4a018;'>**brecha**</span>", subtitle = "Primer trimestre 2021", x = "Nivel alcanzado", y="Tasa de participación laboral", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
   theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_text(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), plot.caption = element_markdown(size=8))    
 grafico2
 
@@ -505,7 +532,7 @@ ggsave("grafico2.svg")
 
 
 
-Nuevamente, hay una brecha positiva en la participación para todos los niveles, siendo la mas importante para personas con primario completo, para el que la brecha llega a 30.89%.
+La mayor brecha de participación entre sexos se encuentra en el nivel primario.
 
 Los valores que se presentan y grafican a continuación corresponden al promedio de horas semanales que trabajan tanto hombres como mujeres, desagregados por edad.
 
@@ -594,13 +621,16 @@ tablakg_4 %>%
   column_spec(4, width = "10em")
 ```
 
-
+\newline
+\newline
+**Gráfico 4**
+\newline
 ```{r, fig.height=3.5}
 #Grafico 3
 #Tabla para gráfico
 horastrabajadasgr <- horastrabajadas %>% mutate(horas=round(horas))
 horastrabajadasgr <- horastrabajadasgr %>% pivot_wider(names_from = SEXO, values_from = horas)
-horastrabajadasgr <- horastrabajadasgr %>% filter(Edad != "Igual o mayor a 60 años") #se filtra para graficar SOLO para este trimestre pq los valores dan iguales, por lo tanto, no queda bien en el gráfico. 
+
 
 horastrabajadas_hombres <- horastrabajadas %>% filter(SEXO=="Hombres") %>% mutate(horas=round(horas))
 horastrabajadas_mujeres <- horastrabajadas %>% filter(SEXO=="Mujeres") %>% mutate(horas=round(horas))
@@ -609,7 +639,7 @@ grafico3<- horastrabajadasgr %>% ggplot() + geom_dumbbell(aes(y=Edad, x=Mujeres,
 size=1.2, color="#b2b2b2", size_x=3, size_xend = 3, colour_x =colores[2], colour_xend =colores[1])+
   geom_text(aes(x=Mujeres, y=Edad, label=Mujeres), color="BLACK", size=2.75, vjust=2.5, family="Open Sans") + 
   geom_text(aes(x=Hombres, y=Edad, label=Hombres), color="BLACK", size=2.75, vjust=2.5, family="Open Sans") + 
-  labs(fill="", title = "Carga laboral semanal por edad de <span style='color: #29aee4;'>**Hombres**</span> y <span style='color: #0c8136;'>**Mujeres**</span>", subtitle = "Primer trimestre de 2022", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ", x="Horas trabajadas") + 
+  labs(fill="", title = "Carga laboral semanal por edad de <span style='color: #29aee4;'>**Hombres**</span> y <span style='color: #0c8136;'>**Mujeres**</span>", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ", x="Horas trabajadas") + 
   ylab("")  + 
   theme(axis.title = element_text(), aspect.ratio=0.5, axis.text = element_text(color = "BLACK"), legend.position = "right", title = element_text(), panel.grid.major = element_blank(), legend.text = element_text(), panel.background = element_blank())  + 
   scale_fill_manual(values = colores, aesthetics = "color")  + 
@@ -619,9 +649,9 @@ grafico3
 ggsave("grafico3.svg")
 ```
 
-Se observa que para todos los rangos etarios los hombres tienen una carga laboral superior a las mujeres, dándose las brechas más grandes para las personas de 35 a 44 años.
+Se observa que para todos los rangos etarios los hombres tienen una carga laboral superior a las mujeres, dándose las brechas más grandes para el primer caso, de 13.33 horas en promedio y para los mayores a 60 años de 12.52 horas.
 
-Por último, la tasa de empleo en la Ciudad de Corrientes para el trimestre en cuestión asciende 41.29%, esta tasa se calcula como el cociente entre el total de ocupados y la población total de referencia. Por su parte, la tasa de desocupación, que se calcula como el cociente entre desocupados y la Población Económicamente Activa (PEA), es del 4.29%.
+Por último, la tasa de empleo en la Ciudad de Corrientes para el trimestre en cuestión asciende 39.63%, esta tasa se calcula como el cociente entre el total de ocupados y la población total de referencia. Por su parte, la tasa de desocupación, que se calcula como el cociente entre desocupados y la Población Económicamente Activa (PEA), es del 9.93%.
 
 ```{r include= FALSE}
 ## Tasas
@@ -637,21 +667,23 @@ desocupacion <- eph1t %>% filter(AGLOMERADO==12 & !is.na(DESOCUPADOS))
 desocupacion <- desocupacion %>%  group_by(DESOCUPADOS) %>%  summarise(formattable::percent(sum(PONDERA)/sum(desocupacion$PONDERA)))
 desocupacion
 ```
-
-
+\newline
+\newline
+**Gráfico 5**
+\newline
 ```{r, fig.height=4}
 #Graficos evolución desocupación y empleo
 #Para el gráfico se importa el csv con la evolución de las tasas de empleo y desocupación 
 Tasas<-read.csv("tasas_empleo_desocupacion.csv", sep = ";", colClasses = "character")
 Tasas$empleo <- as.numeric(Tasas$empleo)
 Tasas$desocupacion <- as.numeric(Tasas$desocupacion)
-Tasas <- Tasas %>% mutate(fecha=seq(as.Date("2016/05/01"), by = "quarter", length.out = 24) ) 
+Tasas <- Tasas %>% mutate(fecha=seq(as.Date("2016/04/01"), by = "quarter", length.out = 20) ) 
 
 grafico4 <- Tasas %>%  ggplot(aes(x=fecha, y=empleo)) +  
   geom_col(size=1, show.legend = F, fill="#1ba2d8") + 
   geom_line(aes(x=fecha, y=desocupacion, group = 1), color="#0c8136", size=1) + 
   scale_y_continuous(limits = c(0,0.5), labels = percent_format(accuracy = 1.)) +  
-  labs(y = "", title ="Evolución de Tasas 2016-2022", subtitle ="<span style = 'color:  #1ba2d8 ;'>**Empleo**</span> y <span style='color: #0c8136;'>**Desocupación**</span>", x="", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
+  labs(y = "", title ="Evolución de Tasas 2016-2021", subtitle ="<span style = 'color:  #1ba2d8 ;'>**Empleo**</span> y <span style='color: #0c8136;'>**Desocupación**</span>", x="", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
   theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size=14), plot.title.position = "plot", plot.subtitle = element_markdown(size = 8), axis.title = element_text(size=8), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), legend.title = element_blank(), legend.position = "bottom", aspect.ratio = (0.5), axis.text.x=element_text(angle=60, hjust=1), plot.caption = element_markdown(size = 8)) +
   scale_color_manual(values = colores) + 
   scale_x_date(date_breaks = "4 month", date_labels = "%B %Y") 
@@ -664,7 +696,7 @@ ggsave("grafico4.svg")
 \textcolor{graycustom}{\Large Empleo público y privado}
 \newline
 
-Del total de empleados de la ciudad, el porcentaje de empleados públicos es de 18.87% siendo 81.13% trabajadores pertenecientes al sector privado.
+Del total de empleados de la ciudad, el porcentaje de empleados públicos es de 24.95% siendo 74.19% trabajadores pertenecientes al sector privado, quedando el ínfimo porcentaje restante sin especificar.
 
 ```{r include=FALSE}
 ### Cantidad de empleados
@@ -677,11 +709,12 @@ empleados <- empleados  %>% mutate(porcentaje=(`sum(PONDERA)`/sum(empleados$`sum
   select(EMPLEADOS, porcentaje) %>% 
   mutate(numeros=round(porcentaje*100,0))
 empleados
-
-
 ```
 
-
+\newline
+\newline
+**Gráfico 6**
+\newline
 ```{r, fig.height=3.5}
 #Grafico 5
 #remotes::install_github("hrbrmstr/waffle")
@@ -690,16 +723,16 @@ grafico5 <- empleados %>% ggplot(mapping = aes(fill=EMPLEADOS, values=numeros)) 
   geom_waffle(n_rows=10, size=1.1, show.legend = F, colour = "white") + 
   theme_void() +
   scale_fill_manual(values = colores) +  
-  labs(title="Composición del empleo <span style = 'color: #29aee4;'>**privado**</span> y <span style='color: #0c8136;'>**público**</span> ", subtitle = "Primer trimestre de 2022", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
+  labs(title="Composición del empleo <span style = 'color: #29aee4;'>**privado**</span> y <span style='color: #0c8136;'>**público**</span> ", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con \ndatos obtenidos de INDEC.</span> ") + 
   theme(plot.title = element_markdown(size=14), text = element_text(family = "Open Sans"),  plot.title.position = "plot", plot.caption = element_markdown(size = 8))
 grafico5
 
 ggsave("grafico5.svg")
 ```
 
-En el sector público, el promedio de edad de los trabajadores es de 44 años, mientras que en el sector privado es de 39, trabajando 31 y 35 horas semanales en promedio en el sector público y privado, respectivamente. A su vez, el Estado cuenta con una calificación laboral del 54.06%, mientras que el sector privado, tan solo del 19.72%.
+En el sector público, el promedio de edad de los trabajadores es de 45 años, mientras que en el sector privado es de 38, trabajando 28 y 36 horas semanales en promedio en el sector público y privado, respectivamente. A su vez, el Estado cuenta con una calificación laboral del 53.67%, mientras que el sector privado, tan solo del 23.81%.
 
-Por otro lado, el sector público se compone de una participación de 56.57% mujeres y 43.43% hombres. Mientras que, en el sector privado, el porcentaje de hombres llega al 60.89%.
+Por otro lado, el sector público se compone de una participación de 50.62% hombres y 49.38% mujeres. Mientras que, en el sector privado, el porcentaje de hombres llega al 55.12%.
 
 
 ```{r include=FALSE}
@@ -773,7 +806,7 @@ dona1 <- ggplot(composicionempleadospr, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3
   scale_colour_manual(values=c("#f4a018", "#e22172")) +
   coord_polar(theta="y") +
   xlim(c(-1, 4)) +
-  labs(title = "Empleo privado", subtitle = "Primer trimestre de 2022", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con <br> datos obtenidos de INDEC.</span> ") +
+  labs(title = "Empleo privado", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con <br> datos obtenidos de INDEC.</span> ") +
   theme_void() +
   theme(legend.position = "none", text = element_text(family = "Open Sans"), plot.title =element_text(size = 14), plot.subtitle = element_text(size = 8), legend.text = element_text(size = 8), plot.caption = element_markdown(size=8)) 
 dona1
@@ -800,7 +833,7 @@ dona2 <- ggplot(composicionempleadospu, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3
   scale_colour_manual(values=c("#29aee4","#0c8136")) +
   coord_polar(theta="y") +
   xlim(c(-1, 4)) +
-  labs(title = "Empleo público", subtitle = "Primer trimestre de 2022", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con <br> datos obtenidos de INDEC.</span> ") +
+  labs(title = "Empleo público", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con <br> datos obtenidos de INDEC.</span> ") +
   theme_void() +
   theme(legend.position = "none", text = element_text(family = "Open Sans"), plot.title =element_text(size = 14), plot.subtitle = element_text(size = 8), legend.text = element_text(size = 8), plot.caption = element_markdown(size=8)) 
 
@@ -811,21 +844,23 @@ figure <- ggarrange(dona1, dona2, ncol = 2, nrow = 1)
 figure
 ```
 
-En términos de la composición por sectores en el empleo público (Gráfico 9), la "Administración Pública" cuenta con la mayor participación laboral, ocupando un 49.40% del total de empleos públicos, seguida por la "Enseñanza" en todos sus niveles, con un 28.82% del total de empleos y en tercer lugar el rubro de la "Salud", con un 13.95% de la participación.
+En términos de la composición por sectores en el empleo público (Gráfico 9), la "Administración Pública" cuenta con la mayor participación laboral, ocupando un 44.54% del total de empleos públicos, seguida por la "Enseñanza" en todos sus niveles, con un 30.70% del total de empleos y en tercer lugar el rubro de la "Salud", con un 15.07% de la participación.
 
 ```{r include=FALSE}
 ### Composición por sectores de actividad del sector público
 caract<- eph1t %>% group_by(SECTOR) %>% filter(OCUPADOS==1) %>% count() 
 
-#table(sectores_eph4t$SECTOR_ACT)
-
+table(sectores_eph1t$SECTOR_ACT)
 
 spublico<- sectores_eph1t %>% filter(AGLOMERADO==12 & PP04A==1)
 spublico <- spublico %>% group_by(SECTOR_ACT) %>% summarise(proporcion=(sum(PONDERA)/sum(spublico$PONDERA)), cantidad=sum(PONDERA)) %>% arrange(-proporcion) 
 spublico
 ```
 
-
+\newline
+\newline
+**Gráfico 8**
+\newline
 ```{r, fig.height=4}
 #Gráfico 7
 grafspublico <- spublico %>% mutate(principal=case_when(proporcion<0.10 ~"Otros",
@@ -839,7 +874,7 @@ grafspublico$principal[grafspublico$principal %in% "ADMINISTRACIÓN PÚBLICA Y D
 grafspublico$principal[grafspublico$principal %in% "SALUD HUMANA Y SERVICIOS SOCIALES"] <- "SALUD HUMANA Y \nSERVICIOS SOCIALES"
 
 grafico7 <- grafspublico %>% ggplot(aes(area = porcentaje , label =paste(principal, porcentaje,sep = "|"), fill=principal)) +
-  geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Composición del sector público", subtitle = "Primer trimestre de 2022", fill="", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank(), plot.caption = element_markdown(size=8)) 
+  geom_treemap(show.legend = F) + geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + scale_fill_manual(values=colores)+ labs(title = "Composición del sector público", subtitle = "Primer trimestre 2021", fill="", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") +  theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank(), plot.caption = element_markdown(size=8)) 
 grafico7
 
 ggsave("grafico7.svg")
@@ -847,6 +882,7 @@ ggsave("grafico7.svg")
 ```
 \newpage
 \textcolor{graycustom}{\Large Tasas de informalidad laboral}
+\newline
 
 Para el análisis del trabajo no registrado, se construye una tasa de informalidad que relaciona la cantidad de personas que poseen un empleo en relación de dependencia, pero no perciben aportes jubilatorios por el mismo. En la tabla y el gráfico siguiente se presenta información relacionada a la población que trabaja de manera informal desagregada tanto por edad como por sexo:
 
@@ -960,18 +996,23 @@ tablakg_5 %>%
   sub("\\\\bottomrule", "", .)
 ```
 
+\newline
+\newline
+**Gráfico 9**
+\newline
 ```{r, fig.height=4}
 #Grafico
 graficoinf <- infgraf %>% ggplot(mapping = aes(x=Edad, y=porcentaje, fill=Sexo)) + 
   geom_chicklet(position = position_dodge(width = 0.75), width=0.7, show.legend = F) +
   scale_fill_manual(values=colores) + scale_y_continuous(labels = percent, limits = c(0,1)) + 
-  labs(y = "Tasa de informalidad laboral", title ="Informalidad laboral por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span> ", subtitle ="Primer trimestre de 2022", x = "", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") + 
+  labs(y = "Tasa de informalidad laboral", title ="Informalidad laboral por edad para <span style = 'color: #29aee4;'>**hombres**</span> y <span style='color: #0c8136;'>**mujeres**</span> ", subtitle ="Primer trimestre 2021", x = "", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") + 
   theme(text = element_text(family = "Open Sans"), plot.title = element_markdown(size = 14), plot.title.position = "plot", plot.subtitle = element_text(size = 8), axis.title = element_text(size=8), legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank(), axis.text = element_text(colour = "BLACK", family="Open Sans", size = 7), panel.background = element_blank(), panel.grid.major = element_blank(), plot.caption = element_markdown(size=8)) 
 graficoinf
 
 ggsave("graficoinf.svg")
 ```
 
+Al analizar la informalidad laboral por sector de actividad, los menores valores se encuentran en el sector de enseñanza (4.68%); el sector de administración pública y defensa, planes de seguro social obligatorio (8.81%); actividades financieras y de seguro(10.48%) el sector de información y comunicación (14.86%); suministro de Agua, alcantarillado, gestión de desechos y actividades de saneamiento (19.12%) y Actividades de Organizaciones y Organismos Extraterritoriales (23.79%). Por otro lado, los valores más altos están en el sector de servicio doméstico y actividades para consumo propio (82.49%); actividades científicas y técnicas (80.61%); actividades inmobiliarias (72.51%); el de construcción (71.02%) e industria manufacturera (63.87%).
 
 ```{r include=FALSE}
 ### Tasa de informalidad laboral desagregada por sector de actividad
@@ -990,7 +1031,10 @@ nombres<-(unique(sectores_ephtotal$SECTOR_ACT))
 informalidad_sectores <- bind_rows(lapply(nombres, inforporsector)) 
 ```
 
-
+\newline
+\newline
+**Gráfico 10**
+\newline
 ```{r, fig.height=3.5}
 #Gráfico sectores con mas informalidad
 informalidad_sectores <- informalidad_sectores %>% filter(INFORMALES==1) %>% arrange(-porcentaje) 
@@ -1006,7 +1050,7 @@ PERSONAL DOMÉSTICO" ~ "PERSONAL DOMESTICO",
 grafico8 <- informalidad_sectores %>% ggplot(mapping = aes(x=SECTOR, y=porcentaje)) +
   geom_segment(aes(x=SECTOR, xend=SECTOR, y=0, yend=porcentaje), color= colores[2], size=1.05) +
   geom_point(size=3.5, color=colores[1]) + coord_flip() + 
-  labs(x="", y="", title = "Sectores con mayor informalidad", subtitle = "Primer trimestre de 2022", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") +
+  labs(x="", y="", title = "Sectores con mayor informalidad", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") +
   scale_y_continuous(labels = percent, limits = c(0,1)) + 
   theme(text = element_text(family = "Open Sans"), plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), plot.title.position = "plot", panel.background = element_blank(), axis.text = element_text(size = 8), axis.title.x = element_text(size = 8), plot.caption = element_markdown(size=8))
 grafico8
@@ -1014,8 +1058,10 @@ grafico8
 ggsave("grafico8.svg")
 ```
 
-
-
+\newline
+\newline
+**Gráfico 11**
+\newline
 ```{r, fig.height=3.5}
 #Gráfico sectores con menos informalidad
 menor_informalidad <- bind_rows(lapply(nombres, inforporsector)) 
@@ -1037,15 +1083,13 @@ SECTOR=="INFORMACIÓN Y COMUNICACIÓN" ~ "INFORMACIÓN Y \nCOMUNICACIÓN",
 grafico9 <- menor_informalidad %>%  ggplot(mapping = aes(x=SECTOR, y=porcentaje)) +
   geom_segment(aes(x=SECTOR, xend=SECTOR, y=0, yend=porcentaje), color= colores[2], size=1.05) +
   geom_point(size=3.5, color=colores[1]) + coord_flip() + 
-  labs(x="", y="", title = "Sectores con menor informalidad", subtitle = "Primer trimestre de 2022", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") +
-  scale_y_continuous(labels = percent, limits = c(0,0.4)) + 
+  labs(x="", y="", title = "Sectores con menor informalidad", subtitle = "Primer trimestre 2021", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") +
+  scale_y_continuous(labels = percent, limits = c(0,0.2)) + 
   theme(text = element_text(family = "Open Sans"), plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), plot.title.position = "plot", panel.background = element_blank(), axis.text = element_text(size = 8), axis.title.x = element_text(size = 8), plot.caption = element_markdown(size = 8))
 grafico9
 
 ggsave("grafico9.svg")
 ```
-
-Al analizar la informalidad laboral por sector de actividad, los menores valores se encuentran en el sector de enseñanza (8.54%); el sector de administración pública y defensa, planes de seguro social obligatorio (18.43%);suministro de Agua, alcantarillado, gestión de desechos y actividades de saneamiento (28.97%) transporte y almacenamiento (35.25%) y por último salud humana y servicios sociales (36.95%) . Por otro lado, los valores más altos están en el sector de suministro de gas, vapor y aire acondicionado; construcción; personal doméstico y actividades para consumo propio; otras actividades de servicio; y actividades inmobiliarias. 
 
 \newpage
 \textcolor{graycustom}{\Large Tasas de calificación laboral}
@@ -1053,6 +1097,9 @@ Al analizar la informalidad laboral por sector de actividad, los menores valores
 
 En la EPH se clasifica a los empleados en cuatro categorías: profesionales, técnicos, operarios y trabajadores no calificados. A efectos de este análisis se consideran calificados a los profesionales o técnicos, mientras que a los no calificados se le suman los operarios para determinar la categoría final de no calificados.
 
+Del total de la población de la ciudad, solo el 31.43% son calificados, mientras que el 68.57% restante son no calificados. Del total de los hombres, el 29.92% son calificados, mientras que del total de las mujeres el porcentaje de calificación es del 33%.
+
+Al analizar la calificación laboral por sector de actividad los valores más altos están en los rubros de profesionales, científicos y técnicos (88.54%); enseñanza (85.08%); información y comunicación (80.77%); arte, entretenimiento y recreación (69.31%); y salud humana y servicios sociales (60.41%).
 
 ```{r include=FALSE}
 #Total de la población
@@ -1076,9 +1123,6 @@ calificacionmujeres
 
 ```
 
-Del total de la población de la ciudad, solo el 26.09% son calificados, mientras que el 73.91% restante son no calificados. Del total de los hombres, el 23.38% son calificados, mientras que del total de las mujeres el porcentaje de calificación es del 30.00%.
-
-
 ```{r include=FALSE}
 ### Calificación desagregada por sectores de actividad económica
 califporsector<- function(i) {
@@ -1089,11 +1133,14 @@ califporsector<- function(i) {
 calificacion_sectores <- bind_rows(lapply(nombres, califporsector)) 
 ```
 
-
+\newline
+\newline
+**Gráfico 12**
+\newline
 ```{r, fig.height=4}
 #Grafico
 calificacion_sectores <- calificacion_sectores %>% filter(TIPOCALIFICACION=="Calificado") %>% arrange(-porcentaje) 
-calificacion_sectores <-calificacion_sectores[2:6,] #dsps cambiar pq este trim esta afectado por uno con un solo valor. Hay q ver como manejar eso
+calificacion_sectores <-calificacion_sectores[1:5,]
 calificacion_sectores <- calificacion_sectores %>% 
   mutate(SECTOR= case_when(SECTOR=="ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS" ~ "ACTIVIDADES \nCIENTÍFICAS Y TÉCNICAS",
 SECTOR=="ARTES, ENTRETENIMIENTO Y RECREACIÓN" ~ "ARTE, ENTRETENIMIENTO \nY RECREACIÓN",
@@ -1109,11 +1156,9 @@ calificacion_sectores %>% ggplot(aes(area = porcentaje , label =paste(SECTOR, po
   geom_treemap(show.legend = F) + 
   geom_treemap_text(show.legend = F,min.size = 2, family="Open Sans", grow = TRUE, colour = "white", place = "center") + 
   scale_fill_manual(values=colores) + 
-  labs(title = "Sectores con mayor calificación", subtitle = "Primer trimestre de 2022", fill="", caption = "<span style='color: #5f6368;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") + 
+  labs(title = "Sectores con mayor calificación", subtitle = "Primer trimestre 2021", fill="", caption = "<span style='color: #C0C0C0;'>Fuente: Elaboración propia con datos obtenidos de INDEC.</span>") + 
   theme(text = element_text(family = "Open Sans"),plot.title = element_text(size = 14), plot.subtitle = element_text(size = 8), aspect.ratio = 0.7, plot.background = element_blank(),panel.grid.major = element_blank() ,panel.grid.minor = element_blank(), panel.border = element_blank(), plot.caption = element_markdown(size=8)) 
 
 ggsave("grafico10.svg")
 ```
 
-
-Al analizar la calificación laboral por sector de actividad para este trimestre los valores más altos están en los rubros de enseñanza (83.50%); profesionales, científicos y técnicos (79.50%); salud humana y servicios sociales(73.50%); información y comunicación (73.47%) y arte, entretenimiento y recreación (54.87).
